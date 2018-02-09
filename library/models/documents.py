@@ -49,8 +49,26 @@ class Document(models.Model):
             record = rec_set.first()
             record.user = user
             record.status = 'o'
-            record.due_to = datetime.date.today() + record.get_due_delta()
+            record.due_to = datetime.date.today() + self.get_due_delta(user)
             record.save()
+
+    # TODO: rewrite group conditions
+    def get_due_delta(self, user):
+        delta = 0
+        if isinstance(self, Book):
+            if 'Faculty' in [x.name for x in user.groups.all()]:
+                delta = 4
+            elif self.is_bestseller:
+                delta = 2
+            else:
+                delta = 3
+        else:
+            if 'Students' in [x.name for x in user.groups.all()]:
+                delta = 2
+            else:
+                delta = 3
+
+        return datetime.timedelta(weeks=delta)
 
 
 class Book(Document):

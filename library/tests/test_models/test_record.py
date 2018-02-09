@@ -76,7 +76,7 @@ class RecordTest(TestCase):
     def test_check_out_bestseller_faculty(self):
         """
         TC 04
-        protivorechit TZ
+        Differs with specification, won't work.
         """
 
         user_faculty = User.objects.all()[1]

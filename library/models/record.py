@@ -13,6 +13,7 @@ class Record(models.Model):
     due_to = models.DateField(null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
+    # TODO: make enum
     LOAN_STATUS = (
         ('o', 'On loan'),
         ('a', 'Available'),
@@ -27,27 +28,6 @@ class Record(models.Model):
         # TODO: define permissions
         permissions = ()
 
-    # TODO: rewrite group conditions
-    def get_due_delta(self):
-        delta = 0
-        # groups = self.user.groups.all()
-        # delta_group = Group.objects.create(name='delta')
-
-        if hasattr(self.document, 'book'):
-            if self.user.groups.first().name == 'Faculty':
-                delta = 4
-            elif getattr(self.document, 'book').is_bestseller:
-                delta = 2
-            else:
-                delta = 3
-        else:
-            if self.user.groups.first().name == 'Students':  # For students
-                delta = 2
-            else:
-                delta = 3
-
-        return datetime.timedelta(weeks=delta)
-
     def get_overdue_fine(self):
         days = (datetime.date.today() - self.due_to).days
         if days > 0:
@@ -57,7 +37,7 @@ class Record(models.Model):
             return 0
 
     # TODO: move to Document model.
-    def take_from_user(self, user):
+    def take_from_user(self):
         self.user = None
         self.status = 'a'
         self.due_to = None
