@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from .documents import Document
 
 import uuid
@@ -14,32 +14,34 @@ class Record(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
     LOAN_STATUS = (
-        ('m', 'Maintenance'),
         ('o', 'On loan'),
         ('a', 'Available'),
         ('r', 'Reserved'),
     )
 
     status = models.CharField(max_length=1, choices=LOAN_STATUS,
-                              blank=True, default='m', help_text='Document availability')
+                              blank=True, default='a', help_text='Document availability')
 
     class Meta:
-        ordering = ["due_back"]
+        ordering = ["due_to"]
         # TODO: define permissions
         permissions = ()
 
     # TODO: rewrite group conditions
     def get_due_delta(self):
         delta = 0
-        if getattr(self.document, 'book') is not None:
-            if self.borrower.groups.first().name == 'Faculty':
+        # groups = self.user.groups.all()
+        # delta_group = Group.objects.create(name='delta')
+
+        if hasattr(self.document, 'book'):
+            if self.user.groups.first().name == 'Faculty':
                 delta = 4
-            elif self.document.book.is_bestseller:
+            elif getattr(self.document, 'book').is_bestseller:
                 delta = 2
             else:
                 delta = 3
         else:
-            if self.borrower.groups.first().name == 'Students':  # For students
+            if self.user.groups.first().name == 'Students':  # For students
                 delta = 2
             else:
                 delta = 3
@@ -49,11 +51,14 @@ class Record(models.Model):
     def get_overdue_fine(self):
         days = (datetime.date.today() - self.due_to).days
         if days > 0:
+            # TODO: make magic num constant
             return days * 100
         else:
             return 0
 
-    def give_to_user(self, user):
-        self.user = user
-        status = 'o'
-        due_to = datetime.date.today() + self.get_due_delta()
+    # TODO: move to Document model.
+    def take_from_user(self, user):
+        self.user = None
+        self.status = 'a'
+        self.due_to = None
+        self.save()

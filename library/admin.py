@@ -25,16 +25,16 @@ class BookAdmin(admin.ModelAdmin):
 
 
 @admin.register(Record)
-class DocumentInstanceAdmin(admin.ModelAdmin):
-    list_display = ('document', 'status', 'user', 'due_back', 'id')
-    list_filter = ('status', 'due_back')
+class RecordAdmin(admin.ModelAdmin):
+    list_display = ('document', 'status', 'user', 'due_to', 'id')
+    list_filter = ('status', 'due_to')
 
     fieldsets = (
         (None, {
             'fields': ('document', 'id')
         }),
         ('Availability', {
-            'fields': ('status', 'user', 'due_back')
+            'fields': ('status', 'user', 'due_to')
         })
     )
 

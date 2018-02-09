@@ -4,15 +4,18 @@ from django.urls import reverse
 from .author import Author
 from .tag import Tag
 
+import datetime
+
 
 class Document(models.Model):
     """
     Model representing any document in the system.
     """
     title = models.CharField(max_length=200)
-    price = models.IntegerField()
+    price = models.IntegerField(default=0)
     authors = models.ManyToManyField(Author, help_text='Add authors for this document')
     tags = models.ManyToManyField(Tag, help_text='Add tags for this document')
+    reference = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
@@ -39,6 +42,15 @@ class Document(models.Model):
 
     def display_price(self):
         return self.price
+
+    def give_to_user(self, user):
+        rec_set = self.record_set.filter(status='a')
+        if rec_set.count() != 0 and self.id not in [x.document.id for x in user.record_set.all()] and not self.reference:
+            record = rec_set.first()
+            record.user = user
+            record.status = 'o'
+            record.due_to = datetime.date.today() + record.get_due_delta()
+            record.save()
 
 
 class Book(Document):

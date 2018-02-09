@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest-framework'
 ]
 
 MIDDLEWARE = [
@@ -52,7 +51,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'itp_project.urls'
+ROOT_URLCONF = 'libinno.urls'
 
 TEMPLATES = [
     {
@@ -72,7 +71,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'itp_project.wsgi.application'
+WSGI_APPLICATION = 'libinno.wsgi.application'
 
 
 # Database
