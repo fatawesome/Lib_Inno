@@ -35,10 +35,3 @@ class Record(models.Model):
             return days * 100
         else:
             return 0
-
-    # TODO: move to Document model.
-    def take_from_user(self):
-        self.user = None
-        self.status = 'a'
-        self.due_to = None
-        self.save()

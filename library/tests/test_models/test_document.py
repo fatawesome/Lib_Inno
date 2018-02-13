@@ -178,3 +178,11 @@ class RecordTest(TestCase):
         self.book.give_to_user(user_one)
 
         self.assertEqual(user_one.record_set.all().count(), 0)
+
+    def test_take_from_user(self):
+        user = User.objects.first()
+        self.book.give_to_user(user)
+        self.book.take_from_user(user)
+        record = Record.objects.first()
+
+        self.assertNotEqual(record.user, user)
