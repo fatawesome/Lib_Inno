@@ -3,7 +3,8 @@ from .views import *
 
 
 router = DefaultRouter()
-router.register(r'documents', DocumentViewSet)
+router.register(r'books', BookViewSet)
+router.register(r'articles', ArticleViewSet)
 
 
 urlpatterns = router.urls

@@ -22,7 +22,8 @@ class BookPreviewSerializer(DocumentSerializer):
 class BookDetailSerializer(BookPreviewSerializer):
     class Meta(BookPreviewSerializer.Meta):
         model = Book
-        fields = BookPreviewSerializer.Meta.fields.remove('url') + ['publisher', 'edition']
+        fields = BookPreviewSerializer.Meta.fields + ['publisher', 'edition']
+        fields.remove('url')
 
 
 class ArticlePreviewSerializer(DocumentSerializer):
@@ -33,4 +34,5 @@ class ArticlePreviewSerializer(DocumentSerializer):
 
 class ArticleDetailSerializer(ArticlePreviewSerializer):
     class Meta(ArticlePreviewSerializer.Meta):
-        fields = ArticlePreviewSerializer.Meta.fields.remove('url') + ['editor']
+        fields = ArticlePreviewSerializer.Meta.fields + ['editor']
+        fields.remove('url')
