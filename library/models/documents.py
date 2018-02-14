@@ -53,7 +53,12 @@ class Document(models.Model):
             record.save()
 
     def take_from_user(self, user):
-        pass
+        record = user.record_set.filter(document=self).first()
+        record.due_to = None
+        record.user = None
+        record.status = 'a'
+        record.save()
+        user.save()
 
     # TODO: rewrite group conditions
     def get_due_delta(self, user):
