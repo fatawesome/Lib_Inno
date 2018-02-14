@@ -52,6 +52,9 @@ class Document(models.Model):
             record.due_to = datetime.date.today() + self.get_due_delta(user)
             record.save()
 
+    def take_from_user(self, user):
+        pass
+
     # TODO: rewrite group conditions
     def get_due_delta(self, user):
         delta = 0
