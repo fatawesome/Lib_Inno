@@ -44,6 +44,9 @@ class Document(models.Model):
         return self.price
 
     def give_to_user(self, user):
+        """
+        Gives a document to user
+        """
         rec_set = self.record_set.filter(status='a')
         if rec_set.count() != 0 and self.id not in [x.document.id for x in user.record_set.all()] and not self.reference:
             record = rec_set.first()
@@ -53,7 +56,17 @@ class Document(models.Model):
             record.save()
 
     def take_from_user(self, user):
-        pass
+        """
+        Takes a document from user.
+        :param user:
+        :return:
+        """
+        record = user.record_set.filter(document=self).first()
+        record.due_to = None
+        record.user = None
+        record.status = 'a'
+        record.save()
+        user.save()
 
     # TODO: rewrite group conditions
     def get_due_delta(self, user):
