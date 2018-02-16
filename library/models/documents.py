@@ -68,7 +68,6 @@ class Document(models.Model):
         record.save()
         user.save()
 
-    # TODO: rewrite group conditions
     def get_due_delta(self, user):
         delta = 0
         if isinstance(self, Book):
