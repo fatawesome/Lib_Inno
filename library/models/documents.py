@@ -19,6 +19,14 @@ class Document(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def add_document(self, title, price, reference, Authors, Tags):
+        self.objects.create(title = title, price = price, reference = reference)
+        self.authors.set(Authors.objects.all())
+        self.tags.set(Tags.objects.all())
+
+    def delete_document(self):
+        self.delete()
 
     def get_absolute_url(self):
         """
