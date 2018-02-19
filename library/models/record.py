@@ -1,8 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import Group
-
-from .user import User
 from .documents import Document
+from login.models import CustomUser
 
 import uuid
 import datetime
@@ -13,7 +11,7 @@ class Record(models.Model):
                           help_text='Unique ID for this book for the whole lib')
     document = models.ForeignKey(Document, on_delete=models.SET_NULL, null=True)
     due_to = models.DateField(null=True, blank=True)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True)
 
     # TODO: make enum
     LOAN_STATUS = (
