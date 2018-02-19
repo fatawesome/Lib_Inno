@@ -1,5 +1,7 @@
 from django.db import models
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import Group
+
+from .user import User
 from .documents import Document
 
 import uuid

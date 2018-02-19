@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from library.models import *
+from library.models.user import User
 
 
 @admin.register(Author)
@@ -41,4 +42,9 @@ class RecordAdmin(admin.ModelAdmin):
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
     pass
