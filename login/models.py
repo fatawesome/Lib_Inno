@@ -4,21 +4,78 @@ from django.contrib.auth.models import (
 )
 
 
+class CustomUserManager(BaseUserManager):
+    def create_user(self, email, first_name, last_name, phone_number, address, password=None):
+        """
+        Creates and saves a CustomUser with the given email, password,
+        first name and last name.
+        :param email:
+        :param password:
+        :param first_name:
+        :param last_name:
+        :param phone_number
+        :param address
+        :return:
+        """
+        if not email:
+            raise ValueError('User must have an email address')
+
+        user = self.model(
+            email=self.normalize_email(email),
+            first_name=first_name,
+            last_name=last_name,
+            phone_number=phone_number,
+            address=address
+        )
+
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, first_name, last_name, phone_number, address, password):
+        """
+        Creates and saves a superuser with the
+        :param address:
+        :param phone_number:
+        :param last_name:
+        :param first_name:
+        :param email:
+        :param password:
+        :return:
+        """
+        user = self.create_user(email,
+                                first_name=first_name,
+                                last_name=last_name,
+                                phone_number=phone_number,
+                                address=address,
+                                password=password,
+                                )
+        user.is_admin = True
+        user.save(using=self._db)
+        return user
+
+    def get_by_natural_key(self, email):
+        return self.get(email=email)
+
+
 class CustomUser(AbstractBaseUser):
     email = models.EmailField(
         verbose_name='email address',
         max_length=255,
         unique=True,
     )
-    date_of_birth = models.DateField()
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
+    phone_number = models.CharField(max_length=20)
+    address = models.TextField(max_length=500)
 
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name']
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'phone_number', 'address']
+
+    objects = CustomUserManager()
 
     def get_full_name(self):
         """
@@ -62,37 +119,4 @@ class CustomUser(AbstractBaseUser):
         return self.is_admin
 
 
-class CustomUserManager(BaseUserManager):
-    def create_user(self, email, date_of_birth, first_name, last_name, password=None):
-        """
-        Creates and saves a CustomUser with the given email, date of birth, password,
-        first name and last name.
-        :param email:
-        :param date_of_birth:
-        :param password:
-        :param first_name:
-        :param last_name:
-        :return:
-        """
-        if not email:
-            raise ValueError('User must have an email address')
 
-        user = self.model(
-            email=self.normalize_email(email),
-            date_of_birth=date_of_birth,
-            first_name=first_name,
-            last_name=last_name,
-        )
-
-        user.set_password(password)
-        user.save(using=self._db)
-        return user
-
-    def create_superuser(self, email, date_of_birth, password):
-        """
-        Creates and saves a superuser with the
-        :param email:
-        :param date_of_birth:
-        :param password:
-        :return:
-        """
