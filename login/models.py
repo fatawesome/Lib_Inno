@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
+from django.contrib.auth.models import PermissionsMixin
 
 
 class CustomUserManager(BaseUserManager):
@@ -58,7 +59,7 @@ class CustomUserManager(BaseUserManager):
         return self.get(email=email)
 
 
-class CustomUser(AbstractBaseUser):
+class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(
         verbose_name='email address',
         max_length=255,
@@ -94,14 +95,15 @@ class CustomUser(AbstractBaseUser):
     def __str__(self):
         return self.email
 
-    # TODO: implement method
     def has_perm(self, perm, obj=None):
         """
         Does the user have a specific permission?
         :param perm: permission
         :param obj:
         """
-        return True
+        if self.is_admin or perm in self.get_all_permissions():
+            return True
+        return False
 
     # TODO: implement method
     def has_module_perms(self, app_label):
