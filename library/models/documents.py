@@ -114,9 +114,3 @@ class Audio(Document):
 
 class Video(Document):
     content = models.CharField(max_length=200)
-
-
-
-
-
-
