@@ -86,20 +86,6 @@ class Document(models.Model):
         return datetime.timedelta(weeks=delta)
 
 
-def get_tags(tags):
-    tags_to_add = []
-    for tag in tags:
-        tags_to_add.append(Tag.objects.get(name=tag.name))
-
-
-def get_authors(authors):
-    authors_to_add = []
-    for author in authors:
-        authors_to_add.append(Author.objects.get(first_name=author[0],
-                                                 last_name=author[1]))
-    return authors_to_add
-
-
 # TODO: Add tags to creation method.
 class BookManager(models.Manager):
     def create_book(self, title, price, reference, authors, publisher, is_bestseller, edition):
