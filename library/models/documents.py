@@ -19,14 +19,6 @@ class Document(models.Model):
 
     def __str__(self):
         return self.title
-    
-    def add_document(self, title, price, reference, Authors, Tags):
-        self.objects.create(title = title, price = price, reference = reference)
-        self.authors.set(Authors.objects.all())
-        self.tags.set(Tags.objects.all())
-
-    def delete_document(self):
-        self.delete()
 
     def get_absolute_url(self):
         """
@@ -94,13 +86,48 @@ class Document(models.Model):
         return datetime.timedelta(weeks=delta)
 
 
+def get_tags(tags):
+    tags_to_add = []
+    for tag in tags:
+        tags_to_add.append(Tag.objects.get(name=tag.name))
+
+
+def get_authors(authors):
+    authors_to_add = []
+    for author in authors:
+        authors_to_add.append(Author.objects.get(first_name=author.first_name,
+                                                 last_name=author.last_name))
+    return authors_to_add
+
+
+# TODO: Add tags to creation method.
+class BookManager(models.Manager):
+    def create_book(self, title, price, reference, authors, publisher, is_bestseller, edition):
+        book = self.create(title=title, price=price,
+                           reference=reference, publisher=publisher,
+                           is_bestseller=is_bestseller, edition=edition)
+        book.authors.set(get_authors(authors))
+        book.save()
+        return book
+
+
 class Book(Document):
     """
     Model represents general book.
     """
+    objects = BookManager()
     publisher = models.CharField(max_length=100)
     edition = models.IntegerField(default=1)
     is_bestseller = models.BooleanField(default=False)
+
+
+class ArticleManager(models.Manager):
+    def create_article(self, title, price, reference, authors, editor, journal):
+        article = self.create(title=title, price=price,
+                              reference=reference, editor=editor, journal=journal)
+        article.authors.set(get_authors(authors))
+        article.save()
+        return article
 
 
 class Article(Document):
