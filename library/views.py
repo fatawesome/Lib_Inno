@@ -1,4 +1,8 @@
 from django.shortcuts import render
+from django.views import generic
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 
 from library.models import *
 
@@ -22,3 +26,16 @@ def index(request):
     )
 
 
+class DocumentListView(generic.ListView):
+    """
+    Generic class-based view listing all documents in the system.
+    """
+    model = Document
+    paginate_by = 5
+
+
+class DocumentDetailView(generic.DetailView):
+    """
+    Generic class-based view the particular document page.
+    """
+    model = Document

@@ -3,6 +3,7 @@ from django.test import TestCase
 from library.models.record import Record
 from library.models.documents import Book, Document, Article
 from library.models.author import Author
+from library.models.tag import Tag
 
 from django.contrib.auth.models import User, Group
 
@@ -14,6 +15,7 @@ class RecordTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         Author.objects.create(first_name='test', last_name='test')
+        Tag.objects.create(name='test')
 
         user_student = User.objects.create(username='test_student', email='test_student@test.com', password='test_student')
         group = Group.objects.create(name='Students')
@@ -30,6 +32,7 @@ class RecordTest(TestCase):
     def setUp(self):
         Book.objects.create(title='test')
         Book.objects.first().authors.set(Author.objects.all())
+        Book.objects.first().tags.set(Tag.objects.all())
         self.book = Book.objects.first()
 
         Record.objects.create(document=Book.objects.first())
@@ -186,3 +189,21 @@ class RecordTest(TestCase):
         record = Record.objects.first()
 
         self.assertNotEqual(record.user, user)
+
+    def test_add_document(self):
+        authors = [Author.objects.first()]
+        book = Book.objects.create_book('test', 100, False, authors, 'test_pub', False, 1)
+
+        self.assertTrue(isinstance(book, Document))
+
+    def test_added_doc_can_be_given_to_user(self):
+        authors = [Author.objects.first()]
+        book = Book.objects.create_book('book', 100, False, authors, 'test_pub', False, 1)
+        user_one = User.objects.first()
+        Record.objects.create(document=book)
+
+        doc = Document.objects.get(title='book')
+        doc.give_to_user(user_one)
+        record = Record.objects.get(document=doc)
+
+        self.assertEqual(record.user, user_one)
