@@ -95,8 +95,8 @@ def get_tags(tags):
 def get_authors(authors):
     authors_to_add = []
     for author in authors:
-        authors_to_add.append(Author.objects.get(first_name=author.first_name,
-                                                 last_name=author.last_name))
+        authors_to_add.append(Author.objects.get(first_name=author[0],
+                                                 last_name=author[1]))
     return authors_to_add
 
 
@@ -106,7 +106,7 @@ class BookManager(models.Manager):
         book = self.create(title=title, price=price,
                            reference=reference, publisher=publisher,
                            is_bestseller=is_bestseller, edition=edition)
-        book.authors.set(get_authors(authors))
+        book.authors.set(authors)
         book.save()
         return book
 
@@ -125,7 +125,7 @@ class ArticleManager(models.Manager):
     def create_article(self, title, price, reference, authors, editor, journal):
         article = self.create(title=title, price=price,
                               reference=reference, editor=editor, journal=journal)
-        article.authors.set(get_authors(authors))
+        article.authors.set(authors)
         article.save()
         return article
 
