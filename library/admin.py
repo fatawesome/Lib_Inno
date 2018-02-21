@@ -64,7 +64,7 @@ class CustomUserAdmin(UserAdmin):
             'fields': ('first_name', 'last_name', 'phone_number', 'address')
         }),
         ('Permissions', {
-            'fields': ('is_admin',)
+            'fields': ('is_admin', 'groups')
         }),
     )
 
@@ -73,7 +73,7 @@ class CustomUserAdmin(UserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'first_name', 'last_name', 'phone_number', 'address', 'password1', 'password2')}
+            'fields': ('email', 'first_name', 'last_name', 'phone_number', 'address', 'password1', 'password2', 'groups')}
          ),
     )
     search_fields = ('email', 'first_name', 'last_name')

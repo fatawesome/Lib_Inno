@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from django.contrib.auth.models import Group
 
 from login.models import CustomUser
 
@@ -10,10 +11,12 @@ class CustomUserCreationForm(forms.ModelForm):
     """
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
+    group = forms.ModelChoiceField(queryset=Group.objects.all(),
+                                   required=True)
 
     class Meta:
         model = CustomUser
-        fields = ('email', 'first_name', 'last_name', 'phone_number', 'address',)
+        fields = ('email', 'first_name', 'last_name', 'phone_number', 'address', 'group')
 
     def clean_password2(self):
         """
