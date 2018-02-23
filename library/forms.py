@@ -19,8 +19,7 @@ class UserForm(ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = ['email', 'password' 'first_name', 'last_name', 'phone_number', 'address']
-        fields = ['title', 'authors', 'tags', 'reference', 'publisher', 'edition', 'is_bestseller', 'price']
+        fields = ['email', 'password', 'first_name', 'last_name', 'phone_number', 'address']
 
 
 class ArticleForm(ModelForm):
@@ -28,10 +27,12 @@ class ArticleForm(ModelForm):
         model = Article
         fields = ['title', 'authors', 'tags', 'reference', 'editor', 'journal', 'price']
 
+
 class AudioForm(ModelForm):
     class Meta:
         model = Article
         fields = ['title', 'authors', 'tags', 'price']
+
 
 class VideoForm(ModelForm):
     class Meta:
