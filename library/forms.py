@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-
+from login.models import *
 from .models import *
 
 
@@ -13,4 +13,3 @@ class ArticleForm(ModelForm):
     class Meta:
         model = Article
         fields = ['title', 'authors', 'tags', 'reference', 'editor', 'journal', 'price']
-
