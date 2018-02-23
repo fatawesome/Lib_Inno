@@ -5,6 +5,7 @@ from django.urls import reverse
 
 from library.models import *
 from .forms import BookForm
+from .forms import ArticleForm
 
 
 def index(request):
@@ -12,10 +13,10 @@ def index(request):
     View function for home page of site.
     """
     num_docs = Document.objects.all().count()
-    num_instances = Record.objects.all().count() # number of copies of this document
+    num_instances = Record.objects.all().count()  # number of copies of this document
     num_instances_available = Record.objects.filter(
-        status='a').count() # number of available copies of this document
-    num_authors = Author.objects.count() # number of authors
+        status='a').count()  # number of available copies of this document
+    num_authors = Author.objects.count()  # number of authors
 
     return render(
         request,
@@ -58,6 +59,7 @@ def add_book(request):
     """
     if request.method == 'POST':
         form = BookForm(request.POST)
+        form.as_p
         if form.is_valid():
             # Book.objects.create_book(form.title, form.price, form.reference,
             #                          form.authors, form.publisher, form.is_bestseller, form.edition)
@@ -69,6 +71,20 @@ def add_book(request):
         form = BookForm()
 
     return render(request, 'add_book.html', {'form': form})
+
+
+def add_article(request):
+    if request.method == 'POST':
+        form = ArticleForm(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+            return HttpResponseRedirect('../')
+        else:
+            return HttpResponseRedirect('document_detail/1')
+    else:
+        form = ArticleForm()
+
+    return render(request, 'add_article.html', {'form': form})
 
 
 # TODO: rewrite using class-based view.
