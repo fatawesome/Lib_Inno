@@ -13,3 +13,13 @@ class ArticleForm(ModelForm):
     class Meta:
         model = Article
         fields = ['title', 'authors', 'tags', 'reference', 'editor', 'journal', 'price']
+
+class AudioForm(ModelForm):
+    class Meta:
+        model = Article
+        fields = ['title', 'authors', 'tags', 'price']
+
+class VideoForm(ModelForm):
+    class Meta:
+        model = Article
+        fields = ['title', 'authors', 'tags', 'price']
