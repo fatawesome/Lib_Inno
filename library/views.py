@@ -7,7 +7,9 @@ from django.contrib.auth.decorators import permission_required
 
 from library.models import *
 from .forms import BookForm
-
+from .forms import ArticleForm
+from .forms import *
+from login.forms import *
 
 def index(request):
     """
@@ -38,7 +40,7 @@ class DocumentListView(generic.ListView):
 
 class AuthorListView(generic.ListView):
     """
-    Generic class-based view listing all authors in the system.
+    Generic class-based v   iew listing all authors in the system.
     """
     model = Author
     paginate_by = 10
@@ -60,6 +62,7 @@ def add_book(request):
     """
     if request.method == 'POST':
         form = BookForm(request.POST)
+        form.as_p
         if form.is_valid():
             document = form.save(commit=True)
             for _ in range(form.cleaned_data['num_of_copies']):
@@ -72,6 +75,65 @@ def add_book(request):
 
     return render(request, 'add_book.html', {'form': form})
 
+def add_user(request):
+    """
+    View function for adding a book.
+    :param request:
+    :return:
+    """
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            # Book.objects.create_book(form.title, form.price, form.reference,
+            #                          form.authors, form.publisher, form.is_bestseller, form.edition)
+            form.save(commit=True)
+            return HttpResponseRedirect('../')
+        else:
+            return HttpResponseRedirect('document_detail/1') # DOCUMENT_DETAIL
+    else:
+        form = CustomUserCreationForm()
+
+    return render(request, 'add_user.html', {'form': form})
+
+
+def add_article(request):
+    if request.method == 'POST':
+        form = ArticleForm(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+            return HttpResponseRedirect('../')
+        else:
+            return HttpResponseRedirect('document_detail/1')
+    else:
+        form = ArticleForm()
+
+    return render(request, 'add_article.html', {'form': form})
+
+def add_audio(request):
+    if request.method == 'POST':
+        form = AudioForm(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+            return HttpResponseRedirect('../')
+        else:
+            return HttpResponseRedirect('document_detail/1')
+    else:
+        form = AudioForm()
+
+    return render(request, 'add_audio.html', {'form': form})
+
+def add_video(request):
+    if request.method == 'POST':
+        form = VideoForm(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+            return HttpResponseRedirect('../')
+        else:
+            return HttpResponseRedirect('document_detail/1')
+    else:
+        form = VideoForm()
+
+    return render(request, 'add_video.html', {'form': form})
 
 # TODO: complete this view.
 class BookCreateView(CreateView):
