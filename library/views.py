@@ -9,7 +9,6 @@ from .forms import ArticleForm
 from .forms import *
 from login.forms import *
 
-
 def index(request):
     """
     View function for home page of site.
@@ -39,7 +38,7 @@ class DocumentListView(generic.ListView):
 
 class AuthorListView(generic.ListView):
     """
-    Generic class-based view listing all authors in the system.
+    Generic class-based v   iew listing all authors in the system.
     """
     model = Author
     paginate_by = 5
@@ -108,6 +107,31 @@ def add_article(request):
 
     return render(request, 'add_article.html', {'form': form})
 
+def add_audio(request):
+    if request.method == 'POST':
+        form = AudioForm(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+            return HttpResponseRedirect('../')
+        else:
+            return HttpResponseRedirect('document_detail/1')
+    else:
+        form = AudioForm()
+
+    return render(request, 'add_audio.html', {'form': form})
+
+def add_video(request):
+    if request.method == 'POST':
+        form = VideoForm(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+            return HttpResponseRedirect('../')
+        else:
+            return HttpResponseRedirect('document_detail/1')
+    else:
+        form = VideoForm()
+
+    return render(request, 'add_video.html', {'form': form})
 
 # TODO: rewrite using class-based view.
 def claim_document(request, pk):
