@@ -31,6 +31,7 @@
                 <hr>
                 <li>Librarians</li>
                 <li><a href="{% url 'add_book' %}">Add book</a></li>
+                <li><a href="{% url 'add_user' %}">Add user</a></li>
             {% endif %}
           {% else %}
             <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>

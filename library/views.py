@@ -4,7 +4,8 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 
 from library.models import *
-from .forms import BookForm
+from .forms import *
+from login.forms import *
 
 
 def index(request):
@@ -69,6 +70,26 @@ def add_book(request):
         form = BookForm()
 
     return render(request, 'add_book.html', {'form': form})
+
+def add_user(request):
+    """
+    View function for adding a book.
+    :param request:
+    :return:
+    """
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            # Book.objects.create_book(form.title, form.price, form.reference,
+            #                          form.authors, form.publisher, form.is_bestseller, form.edition)
+            form.save(commit=True)
+            return HttpResponseRedirect('../')
+        else:
+            return HttpResponseRedirect('document_detail/1') # DOCUMENT_DETAIL
+    else:
+        form = CustomUserCreationForm()
+
+    return render(request, 'add_user.html', {'form': form})
 
 
 # TODO: rewrite using class-based view.

@@ -7,5 +7,6 @@ urlpatterns = [
     path('document/<int:pk>', views.DocumentDetailView.as_view(), name='document-detail'),
     path('authors/', views.AuthorListView.as_view(), name='authors'),
     path('add_book/', views.add_book, name='add_book'),
+    path('add_user/', views.add_user, name='add_user'),
     path('document/<int:pk>/claim/', views.claim_document, name='claim'),
 ]
