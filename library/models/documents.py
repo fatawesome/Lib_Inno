@@ -17,6 +17,11 @@ class Document(models.Model):
     tags = models.ManyToManyField(Tag, help_text='Add tags for this document')
     reference = models.BooleanField(default=False)
 
+    class Meta:
+        permissions = (('can_create', 'Create new document'),
+                       ('can_delete', 'Delete document'),
+                       ('can_change', 'Change document'))
+
     def __str__(self):
         return self.title
 
