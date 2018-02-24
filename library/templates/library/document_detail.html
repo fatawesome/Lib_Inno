@@ -13,7 +13,12 @@
     {% if document|is_owned_by_user:user %}
       <p><a class="btn btn-success" disabled="disabled">Claim</a></p>
       <div class="alert alert-success" role="alert">
-          You have already checked out this book! Return date is: {{ document.get_due_data }}
+          You have already checked out this book! Return date is: {{ document|due_to:user }}
+      </div>
+    {% elif document.record_set.all|length == 0 %}
+      <p><a class="btn btn-success" disabled="disabled">Claim</a></p>
+      <div class="alert alert-success" role="alert">
+          No more copies. Sorry.
       </div>
     {% else %}
       <p><a class="btn btn-success" href="{% url 'claim' document.id %}">Claim</a></p>
