@@ -11,6 +11,7 @@ from .forms import ArticleForm
 from .forms import *
 from login.forms import *
 
+
 def index(request):
     """
     View function for home page of site.

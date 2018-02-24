@@ -1,4 +1,5 @@
 {% extends "base_generic.html" %}
+{% load library_extras %}
 
 {% block content %}
   <h1>Title: {{ document.title }}</h1>
@@ -6,8 +7,18 @@
   <p><strong>Author:</strong> <a href=""> {% for author in document.authors.all %} {{ author }} {% if not forloop.last %}, {% endif %}{% endfor %}</a></p> <!-- author detail link not yet defined -->
   <p><strong>Tags:</strong> {% for tag in document.tags.all %} {{ tag }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
   <p><strong>Price:</strong> {{ document.price }}</p>
+
   {% if user.is_authenticated and not user.is_admin %}
-    <p><a class="btn btn-success" href="{% url 'claim' document.id %}">Claim</a></p>
+
+    {% if document|is_owned_by_user:user %}
+      <p><a class="btn btn-success" disabled="disabled">Claim</a></p>
+      <div class="alert alert-success" role="alert">
+          You have already checked out this book! Return date is: {{ document.get_due_data }}
+      </div>
+    {% else %}
+      <p><a class="btn btn-success" href="{% url 'claim' document.id %}">Claim</a></p>
+    {% endif %}
+
   {% endif %}
 
   {% if user.is_admin %}
