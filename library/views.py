@@ -62,7 +62,6 @@ def add_book(request):
     """
     if request.method == 'POST':
         form = BookForm(request.POST)
-        form.as_p
         if form.is_valid():
             document = form.save(commit=True)
             for _ in range(form.cleaned_data['num_of_copies']):
