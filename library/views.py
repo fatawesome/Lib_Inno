@@ -74,6 +74,7 @@ def add_book(request):
 
     return render(request, 'add_book.html', {'form': form})
 
+
 def add_user(request):
     """
     View function for adding a book.
@@ -83,8 +84,6 @@ def add_user(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            # Book.objects.create_book(form.title, form.price, form.reference,
-            #                          form.authors, form.publisher, form.is_bestseller, form.edition)
             form.save(commit=True)
             return HttpResponseRedirect('../')
         else:
@@ -108,6 +107,7 @@ def add_article(request):
 
     return render(request, 'add_article.html', {'form': form})
 
+
 def add_audio(request):
     if request.method == 'POST':
         form = AudioForm(request.POST)
@@ -121,6 +121,7 @@ def add_audio(request):
 
     return render(request, 'add_audio.html', {'form': form})
 
+
 def add_video(request):
     if request.method == 'POST':
         form = VideoForm(request.POST)
@@ -133,6 +134,7 @@ def add_video(request):
         form = VideoForm()
 
     return render(request, 'add_video.html', {'form': form})
+
 
 # TODO: complete this view.
 class BookCreateView(CreateView):
