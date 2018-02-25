@@ -3,15 +3,14 @@
 
 {% block content %}
 
-    <h1>Add user</h1>
+    <h1>Add book</h1>
 
     <form method="POST">
     {% csrf_token %}
         {{ form | crispy }}
-        <input class="btn btn-primary" type="submit" value="Submit" />
-    <br>
-    <br>
+        <input class="btn btn-primary" type="submit" value="Submit"/>
+        <br>
+        <br>
     </form>
-
 
 {% endblock %}

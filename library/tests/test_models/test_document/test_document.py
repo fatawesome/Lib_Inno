@@ -5,7 +5,9 @@ from library.models.documents import Book, Document, Article
 from library.models.author import Author
 from library.models.tag import Tag
 
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import Group
+from login.models import CustomUser
+from login.models import CustomUserManager
 
 import datetime
 
@@ -17,15 +19,21 @@ class RecordTest(TestCase):
         Author.objects.create(first_name='test', last_name='test')
         Tag.objects.create(name='test')
 
-        user_student = User.objects.create(username='test_student', email='test_student@test.com', password='test_student')
+        # email = self.normalize_email(email),
+        # first_name = first_name,
+        # last_name = last_name,
+        # phone_number = phone_number,
+        # address = address
+
+        user_student = CustomUser.objects.create(email="user@student.com", first_name='test', last_name="testtest", phone_number="test", address="test")
         group = Group.objects.create(name='Students')
         user_student.groups.add(group)
 
-        user_faculty = User.objects.create(username='test_faculty', email='test_faculty@test.com', password='test_faculty')
+        user_faculty = CustomUser.objects.create(email="user@faculty.com", first_name='test', last_name="testtest", phone_number="test", address="test")
         group = Group.objects.create(name='Faculty')
         user_faculty.groups.add(group)
 
-        user_librarian = User.objects.create(username='test_librarian', email='test_lib@test.com', password='test_lib')
+        user_librarian = CustomUser.objects.create(email="user@librarian.com", first_name='test', last_name="testtest", phone_number="test", address="test")
         group = Group.objects.create(name='Librarians')
         user_librarian.groups.add(group)
 
@@ -38,7 +46,7 @@ class RecordTest(TestCase):
         Record.objects.create(document=Book.objects.first())
 
     def test_give_to_user(self):
-        user = User.objects.first()
+        user = CustomUser.objects.first()
 
         self.book.give_to_user(user)
         record = Record.objects.first()
@@ -49,14 +57,15 @@ class RecordTest(TestCase):
         TC 01
         """
         Record.objects.create(document=Book.objects.first())
-        user_patron = User.objects.first()
+        user_patron = CustomUser.objects.first()
 
         self.book.give_to_user(user_patron)
         record_one = Record.objects.first()
         record_two = Record.objects.all()[1]
 
-        self.assertEqual(record_one.user, user_patron)
-        self.assertEqual(record_two.user, None)
+        self.assertTrue((record_one.user == user_patron and record_two.user is None) or (record_one.user == None and record_two.user == user_patron))
+        # self.assertEqual(record_one.user, user_patron)
+        # self.assertEqual(record_two.user, None)
 
     def test_check_out_unknown_author(self):
         """
@@ -69,7 +78,7 @@ class RecordTest(TestCase):
         TC 03
         """
 
-        user_faculty = User.objects.all()[1]
+        user_faculty = CustomUser.objects.all()[1]
         self.book.give_to_user(user_faculty)
         record = Record.objects.first()
 
@@ -82,7 +91,7 @@ class RecordTest(TestCase):
         Differs with specification, won't work.
         """
 
-        user_faculty = User.objects.all()[1]
+        user_faculty = CustomUser.objects.all()[1]
         Book.objects.first().is_bestseller = True
 
         self.book.give_to_user(user_faculty)
@@ -98,10 +107,10 @@ class RecordTest(TestCase):
 
         Record.objects.create(document=Book.objects.first())
 
-        user_one = User.objects.all()[0]
-        user_two = User.objects.all()[1]
+        user_one = CustomUser.objects.all()[0]
+        user_two = CustomUser.objects.all()[1]
 
-        user_three = User.objects.create(username='test_patron', email='test_patron@test.com', password='test_patron')
+        user_three = CustomUser.objects.create(email="user@user_three.com", first_name='test', last_name="testtest", phone_number="test", address="test")
         group = Group.objects.first()
         user_three.groups.add(group)
 
@@ -122,8 +131,8 @@ class RecordTest(TestCase):
 
         Record.objects.create(document=Book.objects.first())
         b = Book.objects.create(title='test2')
-        user_one = User.objects.all()[0]
-        user_two = User.objects.all()[2]
+        user_one = CustomUser.objects.all()[0]
+        user_two = CustomUser.objects.all()[2]
 
         self.book.give_to_user(user_one)
         self.book.give_to_user(user_one)
@@ -136,8 +145,8 @@ class RecordTest(TestCase):
         """
 
         Record.objects.create(document=Book.objects.first())
-        user_one = User.objects.all()[0]
-        user_two = User.objects.all()[1]
+        user_one = CustomUser.objects.all()[0]
+        user_two = CustomUser.objects.all()[1]
 
         self.book.give_to_user(user_one)
         self.book.give_to_user(user_two)
@@ -149,7 +158,7 @@ class RecordTest(TestCase):
         TC 08
         """
 
-        user_student = User.objects.all()[0]
+        user_student = CustomUser.objects.all()[0]
         self.book.give_to_user(user_student)
         record = Record.objects.first()
 
@@ -161,7 +170,7 @@ class RecordTest(TestCase):
 
         Not working
         """
-        user_student = User.objects.all()[0]
+        user_student = CustomUser.objects.all()[0]
         self.book.is_bestseller = True
 
         self.book.give_to_user(user_student)
@@ -174,8 +183,8 @@ class RecordTest(TestCase):
         TC 10
         """
 
-        user_one = User.objects.all()[0]
-        user_two = User.objects.all()[2]
+        user_one = CustomUser.objects.all()[0]
+        user_two = CustomUser.objects.all()[2]
 
         self.book.reference = True
         self.book.give_to_user(user_one)
@@ -183,7 +192,7 @@ class RecordTest(TestCase):
         self.assertEqual(user_one.record_set.all().count(), 0)
 
     def test_take_from_user_takes_from_user(self):
-        user = User.objects.first()
+        user = CustomUser.objects.first()
         self.book.give_to_user(user)
         self.book.take_from_user(user)
         record = Record.objects.first()
@@ -199,7 +208,7 @@ class RecordTest(TestCase):
     def test_added_doc_can_be_given_to_user(self):
         authors = [Author.objects.first()]
         book = Book.objects.create_book('book', 100, False, authors, 'test_pub', False, 1)
-        user_one = User.objects.first()
+        user_one = CustomUser.objects.first()
         Record.objects.create(document=book)
 
         doc = Document.objects.get(title='book')
@@ -207,3 +216,20 @@ class RecordTest(TestCase):
         record = Record.objects.get(document=doc)
 
         self.assertEqual(record.user, user_one)
+
+    def test_book_is_owned_by_user_return_True_then_owned(self):
+        authors = [Author.objects.first()]
+        book = Book.objects.create_book('book', 100, False, authors, 'test_pub', False, 1)
+        Record.objects.create(document=book)
+
+        user_one = CustomUser.objects.first()
+        book.give_to_user(user_one)
+
+        self.assertTrue(book.is_owned_by_user(user_one))
+
+    def test_many_records_for_a_document_can_be_created_in_cycle(self):
+        authors = [Author.objects.first()]
+        book = Book.objects.create_book('book', 100, False, authors, 'test_pub', False, 1)
+        for _ in range(10):
+            Record.objects.create(document=book)
+        self.assertTrue(book.record_set.count() == 10)

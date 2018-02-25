@@ -6,13 +6,14 @@ from library.models.author import Author
 
 from django.contrib.auth.models import User, Group
 
-
+from login.models import CustomUser
+from login.models import CustomUserManager
 class TakeFromUserMethodTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
         Author.objects.create(first_name='test', last_name='test')
-        user = User.objects.create(username='user1', email='test@test.com', password='test')
+        user = CustomUser.objects.create(email="user@user.com", first_name='test', last_name="testtest", phone_number="test", address="test")
         group = Group.objects.create(name='Students')
 
         user.groups.add(group)
@@ -25,7 +26,7 @@ class TakeFromUserMethodTest(TestCase):
         self.record = Record.objects.create(document=self.book)
 
     def test_take_from_user_takes_from_user(self):
-        user = User.objects.first()
+        user = CustomUser.objects.first()
         self.book.give_to_user(user)
         self.book.take_from_user(user)
         record = Record.objects.first()
@@ -33,7 +34,7 @@ class TakeFromUserMethodTest(TestCase):
         self.assertNotEqual(record.user, user)
 
     def test_take_from_user_reset_status(self):
-        user = User.objects.first()
+        user = CustomUser.objects.first()
         self.book.give_to_user(user)
         self.book.take_from_user(user)
         record = Record.objects.first()
@@ -41,7 +42,7 @@ class TakeFromUserMethodTest(TestCase):
         self.assertEqual(record.status, 'a')
 
     def test_take_from_user_reset_due_to(self):
-        user = User.objects.first()
+        user = CustomUser.objects.first()
         self.book.give_to_user(user)
         self.book.take_from_user(user)
         record = Record.objects.first()

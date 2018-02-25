@@ -17,6 +17,11 @@ class Document(models.Model):
     tags = models.ManyToManyField(Tag, help_text='Add tags for this document')
     reference = models.BooleanField(default=False)
 
+    class Meta:
+        permissions = (('can_create', 'Create new document'),
+                       ('can_delete', 'Delete document'),
+                       ('can_change', 'Change document'))
+
     def __str__(self):
         return self.title
 
@@ -55,6 +60,14 @@ class Document(models.Model):
             record.due_to = datetime.date.today() + self.get_due_delta(user)
             record.save()
 
+    def delete_document(self):
+        """
+        Delete current document and all it's records
+        """
+        for rec in self.record_set.all():
+            rec.delete()
+        self.delete()
+
     def take_from_user(self, user):
         """
         Takes a document from user.
@@ -69,6 +82,11 @@ class Document(models.Model):
         user.save()
 
     def get_due_delta(self, user):
+        """
+        Counts for how many weeks document can be taken
+        :param user:
+        :return:
+        """
         delta = 0
         if isinstance(self, Book):
             if 'Faculty' in [x.name for x in user.groups.all()]:
@@ -84,6 +102,22 @@ class Document(models.Model):
                 delta = 3
 
         return datetime.timedelta(weeks=delta)
+
+    def get_number_of_available_copies(self):
+        """
+        Gets number of available copies of current document
+        :return:
+        """
+
+        return self.record_set.filter(status="a").count()
+
+    def is_owned_by_user(self, user):
+        """
+        Evaluate if current document is owned by a user
+        :param user:
+        :return: true if document is already taken by user
+        """
+        return self.record_set.filter(user=user).count() == 1
 
 
 # TODO: Add tags to creation method.
