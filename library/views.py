@@ -75,20 +75,6 @@ def add_book(request):
 
     return render(request, 'add_book.html', {'form': form})
 
-def delete_book(request):
-    if request.method == 'POST':
-        form = BookDeleteForm(request.POST)
-        if form.is_valid():
-            title = form.cleaned_data['title']
-            Book.objects.all().filter(title=title).delete()
-            return HttpResponseRedirect('../')
-    else:
-        form = BookDeleteForm()
-
-    return render(request, 'delete_book.html', {'form' : form})
-
-
-
 def add_user(request):
     """
     View function for adding a book.
