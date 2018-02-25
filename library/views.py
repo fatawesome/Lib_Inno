@@ -84,9 +84,7 @@ def add_user(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            document = form.save(commit=True)
-            for _ in range(form.cleaned_data['num_of_copies']):
-                Record.objects.create(document=document)
+            form.save()
             return HttpResponseRedirect('../')
         else:
             return HttpResponseRedirect('document_detail/1') # DOCUMENT_DETAIL
