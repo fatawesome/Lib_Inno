@@ -84,7 +84,9 @@ def add_user(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            form.save(commit=True)
+            document = form.save(commit=True)
+            for _ in range(form.cleaned_data['num_of_copies']):
+                Record.objects.create(document=document)
             return HttpResponseRedirect('../')
         else:
             return HttpResponseRedirect('document_detail/1') # DOCUMENT_DETAIL
@@ -98,7 +100,9 @@ def add_article(request):
     if request.method == 'POST':
         form = ArticleForm(request.POST)
         if form.is_valid():
-            form.save(commit=True)
+            document = form.save(commit=True)
+            for _ in range(form.cleaned_data['num_of_copies']):
+                Record.objects.create(document=document)
             return HttpResponseRedirect('../')
         else:
             return HttpResponseRedirect('document_detail/1')
@@ -112,7 +116,9 @@ def add_audio(request):
     if request.method == 'POST':
         form = AudioForm(request.POST)
         if form.is_valid():
-            form.save(commit=True)
+            document = form.save(commit=True)
+            for _ in range(form.cleaned_data['num_of_copies']):
+                Record.objects.create(document=document)
             return HttpResponseRedirect('../')
         else:
             return HttpResponseRedirect('document_detail/1')
@@ -126,7 +132,9 @@ def add_video(request):
     if request.method == 'POST':
         form = VideoForm(request.POST)
         if form.is_valid():
-            form.save(commit=True)
+            document = form.save(commit=True)
+            for _ in range(form.cleaned_data['num_of_copies']):
+                Record.objects.create(document=document)
             return HttpResponseRedirect('../')
         else:
             return HttpResponseRedirect('document_detail/1')
