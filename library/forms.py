@@ -22,18 +22,21 @@ class UserForm(ModelForm): ""
 
 
 class ArticleForm(ModelForm):
+    num_of_copies = forms.IntegerField()
     class Meta:
         model = Article
         fields = ['title', 'authors', 'tags', 'reference', 'editor', 'journal', 'price']
 
 
 class AudioForm(ModelForm):
+    num_of_copies = forms.IntegerField()
     class Meta:
         model = Article
         fields = ['title', 'authors', 'tags', 'price']
 
 
 class VideoForm(ModelForm):
+    num_of_copies = forms.IntegerField()
     class Meta:
         model = Article
         fields = ['title', 'authors', 'tags', 'price']
