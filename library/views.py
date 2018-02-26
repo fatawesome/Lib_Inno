@@ -38,14 +38,12 @@ class DocumentListView(generic.ListView):
     model = Document
     paginate_by = 20
 
-
 class AuthorListView(generic.ListView):
     """
-    Generic class-based v   iew listing all authors in the system.
+    Generic class-based view listing all authors in the system.
     """
     model = Author
     paginate_by = 20
-
 
 class DocumentDetailView(generic.DetailView):
     """

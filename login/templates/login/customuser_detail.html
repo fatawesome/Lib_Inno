@@ -1,0 +1,27 @@
+{% extends "base_generic.html" %}
+{% load library_extras %}
+
+{% block content %}
+    <h1>E-maul: {{ customuser.email }}</h1>
+    <p><strong>First name:</strong> {{ customuser.first_name }}</p>
+    <p><strong>Last name:</strong> {{ customuser.last_name }}</p>
+    <p><strong>Phone number:</strong> {{ customuser.phone_number }}</p>
+    <p><strong>Address:</strong> {{ customuser.address }}</p>
+    <p><strong>Is admin:</strong> {{ customuser.is_admin }}</p>
+
+    <p><strong>Documents:</strong> <a href=""> {% for rec in customuser.record_set.all %} {{ rec.document }} {% if not forloop.last %}, {% endif %}{% endfor %}</a></p>
+
+    <div>
+  {% if user.is_authenticated and user.is_admin %}
+    {% if customuser.record_set.all.count != 0 %}
+      <p><a class="btn btn-danger" disabled="disabled">Delete</a></p>
+      <div class="alert alert-success" role="alert">
+        This user has taken some books
+      </div>
+    {% else %}
+      <p><a class="btn btn-danger" href="{% url 'delete' user.email %}">Delete</a></p>
+    {% endif %}
+  {% endif %}
+
+  </div>
+{% endblock %}

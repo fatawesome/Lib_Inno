@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
+from django.urls import reverse
 from django.contrib.auth.models import PermissionsMixin
 
 
@@ -32,6 +33,12 @@ class CustomUserManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
         return user
+
+    def delete_user(self):
+        """
+        Delete current user
+        """
+        self.delete()
 
     def create_superuser(self, email, first_name, last_name, phone_number, address, password):
         """
@@ -77,6 +84,12 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['first_name', 'last_name', 'phone_number', 'address']
 
     objects = CustomUserManager()
+
+    def get_absolute_url(self):
+        """
+        :return: the url to access a particular Document instance.
+        """
+        return reverse('user-detail', args=[str(self.email)])
 
     def get_full_name(self):
         """
