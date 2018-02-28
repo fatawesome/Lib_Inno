@@ -5,23 +5,23 @@ from django.views import generic
 from django.contrib.auth.forms import UserCreationForm
 from .models import *
 
-class UserListView(generic.ListView):
+class CustomUserListView(generic.ListView):
     """
     Generic class-based view listing all users in the system.
     """
     model = CustomUser
     paginate_by = 20
 
-class UserDetailView(generic.DetailView):
+class CustomUserDetailView(generic.DetailView):
     """
     Generic class-based view the particular user.
     """
     model = CustomUser
 
-def delete_user(request, email):
-    user = CustomUser.objects.get(email=email)
+def delete_user(request, pk):
+    user = CustomUser.objects.get(pk=pk)
     user.delete_user()
-    return HttpResponseRedirect('../')
+    return HttpResponseRedirect(reverse('users'))
 
 
 def login(request):

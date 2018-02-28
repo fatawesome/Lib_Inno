@@ -34,12 +34,6 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def delete_user(self):
-        """
-        Delete current user
-        """
-        self.delete()
-
     def create_superuser(self, email, first_name, last_name, phone_number, address, password):
         """
         Creates and saves a superuser with the
@@ -85,11 +79,17 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     objects = CustomUserManager()
 
+    def delete_user(self): # TODO Move it to user manager
+        """
+        Delete current user
+        """
+        self.delete()
+
     def get_absolute_url(self):
         """
         :return: the url to access a particular Document instance.
         """
-        return reverse('user-detail', args=[str(self.email)])
+        return reverse('customuser_detail', args=[str(self.id)])
 
     def get_full_name(self):
         """

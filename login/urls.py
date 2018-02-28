@@ -4,9 +4,9 @@ from . import views
 
 urlpatterns = [
     path('login/', login_views.login, name='login'),
-    path('users/', views.UserListView.as_view(), name='users'),
-    path('users/(?P<email>[\w\-]+)/', views.UserDetailView.as_view(), name='customuser-detail'),
-    path('users/(?P<email>[\w\-]+)/deleteuser/', views.delete_user, name='deleteuser'),
+    path('users/', views.CustomUserListView.as_view(), name='users'),
+    path('users/<int:pk>', views.CustomUserDetailView.as_view(), name='customuser_detail'),
+    path('users/<int:pk>/deleteuser/', views.delete_user, name='deleteuser'),
     path('logout/', login_views.logout, name='logout'),
     # path('register/', login_views.register, name='register')
 ]
