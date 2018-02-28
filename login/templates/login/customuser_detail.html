@@ -19,7 +19,7 @@
         This user has taken some books
       </div>
     {% else %}
-      <p><a class="btn btn-danger" href="{% url 'delete' user.email %}">Delete</a></p>
+      <p><a class="btn btn-danger" href="{% url 'deleteuser' user.email %}">Delete</a></p>
     {% endif %}
   {% endif %}
 
