@@ -4,7 +4,6 @@ from django.contrib.auth.models import Group
 
 from login.models import CustomUser
 
-
 class CustomUserCreationForm(forms.ModelForm):
     """
     A form for creating users. Includes all required fields and a repeated password.
@@ -30,6 +29,7 @@ class CustomUserCreationForm(forms.ModelForm):
         return password2
 
     def save(self, commit=True):
+
         """
         Saves the provided password in hashed format
         """
@@ -46,17 +46,16 @@ class CustomUserChangeForm(forms.ModelForm):
     A form for updating users. Includes all the fields on the user,
     but replaces the password field with admin's password hash display field.
     """
-    password = ReadOnlyPasswordHashField()
+    group = forms.ModelChoiceField(queryset=Group.objects.all(),
+                                   required=True)
 
     class Meta:
         model = CustomUser
-        fields = ('email',
-                  'password',
-                  'first_name',
+        fields = ('first_name',
                   'last_name',
                   'phone_number',
+                  'group',
                   'address',
-                  'is_active',
                   'is_admin',
         )
 

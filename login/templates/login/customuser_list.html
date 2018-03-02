@@ -1,0 +1,39 @@
+{% extends "base_generic.html" %}
+{% load login_extras %}
+
+{% block content %}
+
+    <h1>User List</h1>
+
+    {% if customuser_list %}
+    <ul>
+      {% for user in customuser_list %}
+      <li>
+        <a href = "{{ user.get_absolute_url }}">{{ user.email }}</a> ({{user.first_name}} {{user.last_name}})
+      <br>
+      <br>
+      </li>
+      {% endfor %}
+
+    <h2>Debtors:</h2>
+    {% if customuser_list|someone_overdue %}
+        {% for user in customuser_list|overdue_list %}
+        <li>
+            <a>{{ user.email }}</a> ({{user.first_name}} {{user.last_name}})
+            :
+            {% for document in customuser_list|overdue_books_list:user %}
+                <br>
+                <a href="{{ document.get_absolute_url }}">{{ document.title }}</a> ({{document.display_authors}})
+            {% endfor %}
+        </li>
+      {% endfor %}
+    {% else %}
+        There is no overdue users
+    {% endif %}
+
+    </ul>
+    {% else %}
+      <p>There are no users in the system.</p>
+    {% endif %}
+
+{% endblock %}
