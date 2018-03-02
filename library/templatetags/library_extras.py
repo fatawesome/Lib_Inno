@@ -20,7 +20,7 @@ def is_reserved_by_someone(document):
 def owned_by(document):
     users = list()
     for rec in document.record_set.filter(status='o'):
-        users.append((rec.user.email, rec.user.first_name, rec.user.last_name))
+        users.append((rec.user.email, rec.user.first_name, rec.user.last_name, rec.due_to))
     return users
 
 @register.filter

@@ -30,7 +30,10 @@
                 <div class="alert alert-success" role="alert">
                     <h4>Documents:</h4>
                     {% for rec in customuser.record_set.all %}
-                        <p><a href="{{ rec.document.get_absolute_url }}"> {{ rec.document }}</a></p>
+                        <p>
+                            <a href="{{ rec.document.get_absolute_url }}"> {{ rec.document }}</a>
+                            <a class="btn btn-success" href="{% url 'take' customuser.id rec.document.id %}">Collect</a>
+                        </p>
                     {% endfor %}
                 </div>
             {% else %}

@@ -73,24 +73,6 @@ def add_book(request):
 
     return render(request, 'add_book.html', {'form': form})
 
-def add_user(request):
-    """
-    View function for adding a book.
-    :param request:
-    :return:
-    """
-    if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('../')
-        else:
-            return HttpResponseRedirect('document_detail/1') # DOCUMENT_DETAIL
-    else:
-        form = CustomUserCreationForm()
-
-    return render(request, 'add_user.html', {'form': form})
-
 
 def add_article(request):
     if request.method == 'POST':
@@ -146,9 +128,50 @@ class BookCreateView(CreateView):
     form_class = BookForm
 
 
+def take_document(request, pk, doc_id):
+    user = CustomUser.objects.get(id=pk)
+    doc = Document.objects.get(id=doc_id)
+    doc.take_from_user(user)
+    return HttpResponseRedirect(user.get_absolute_url())
+
+
 # TODO: rewrite using class-based view.
-def claim_document(request, pk):
-    doc = Document.objects.get(id=pk)
+def claim(request, pk):
+    if Book.objects.all().filter(id=pk).count() != 0:
+        print('------------------')
+        print()
+        print('Book')
+        print()
+        print('------------------')
+        doc = Book.objects.get(id=pk)
+    elif Article.objects.all().filter(id=pk).count() != 0:
+        print('------------------')
+        print()
+        print('Article')
+        print()
+        print('------------------')
+        doc = Article.objects.get(id=pk)
+    elif Audio.objects.all().filter(id=pk).count() != 0:
+        print('------------------')
+        print()
+        print('Audio')
+        print()
+        print('------------------')
+        doc = Audio.objects.get(id=pk)
+    elif Video.objects.all().filter(id=pk).count() != 0:
+        print('------------------')
+        print()
+        print('Video')
+        print()
+        print('------------------')
+        doc = Video.objects.get(id=pk)
+    else:
+        print('------------------')
+        print()
+        print('ERROR')
+        print()
+        print('------------------')
+        doc = None
     doc.give_to_user(request.user)
     return HttpResponseRedirect(reverse('documents'))
 
@@ -157,3 +180,41 @@ def delete_document(request, pk):
     doc = Document.objects.get(id=pk)
     doc.delete_document()
     return HttpResponseRedirect(reverse('documents'))
+
+
+def edit_document(request, pk):
+    """
+    View function for editing a document.
+    :param request:
+    """
+    doc = Document.objects.get(id=pk)
+    print('------------------------')
+    print(doc)
+    print(type(doc))
+    print(hasattr(doc, 'edition'))
+    print(isinstance(doc, Book))
+    print('------------------------')
+    if request.method == 'POST':
+        if hasattr(doc, 'edition'):
+            form = BookChangeForm(request.POST)
+        if form.is_valid():
+            doc.title = form.cleaned_data['title']
+            doc.authors = form.cleaned_data['authors']
+            doc.tags = form.cleaned_data['tags']
+            doc.reference = form.cleaned_data['reference']
+            doc.price = form.cleaned_data['price']
+
+            if isinstance(doc, Book):
+                doc.publisher = form.cleaned_data['publisher']
+                doc.edition = form.cleaned_data['edition']
+                doc.is_bestseller = form.cleaned_data['is_bestseller']
+
+            doc.save()
+            return HttpResponseRedirect('../')
+    else:
+        if isinstance(doc, Book):
+            form = BookChangeForm(instance=doc)
+        else:
+            form = BookChangeForm(instance=doc) # TODO delete this line
+
+    return render(request, 'library/edit_document.html', {'form': form})

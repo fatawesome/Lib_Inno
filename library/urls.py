@@ -8,10 +8,11 @@ urlpatterns = [
     path('authors/', views.AuthorListView.as_view(), name='authors'),
     # path('add_book/', views.BookCreateView.as_view(), name='add_book'),
     path('add_book/', views.add_book, name='add_book'),
-    path('add_user/', views.add_user, name='add_user'),
     path('add_audio/', views.add_audio, name='add_audio'),
     path('add_video/', views.add_video, name='add_video'),
-    path('document/<int:pk>/claim/', views.claim_document, name='claim'),
+    path('document/<int:pk>/claim/', views.claim, name='claim'),
+    path('document/<int:pk>/take/<int:doc_id>', views.take_document, name='take'),
     path('document/<int:pk>/delete/', views.delete_document, name='delete'),
+    path('document/<int:pk>/editdocument/', views.edit_document, name='editdocument'),
     path('add_article/', views.add_article, name='add_article')
 ]

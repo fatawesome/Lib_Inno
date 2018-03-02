@@ -87,7 +87,6 @@ class Document(models.Model):
         :param user:
         :return:
         """
-        delta = 0
         if isinstance(self, Book):
             if 'Faculty' in [x.name for x in user.groups.all()]:
                 delta = 4

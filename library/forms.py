@@ -5,7 +5,6 @@ from login.models import *
 from .models import *
 from login.models import CustomUser
 
-
 class BookForm(ModelForm):
     num_of_copies = forms.IntegerField()
     class Meta:
@@ -14,10 +13,21 @@ class BookForm(ModelForm):
                   'publisher', 'edition', 'is_bestseller', 'price']
 
 
-class UserForm(ModelForm):
+class BookChangeForm(forms.ModelForm):
+    """
+    A form for updating books
+    """
     class Meta:
-        model = CustomUser
-        fields = ['email', 'password', 'first_name', 'last_name', 'phone_number', 'address']
+        model = Book
+        fields = ('title',
+                  'authors',
+                  'price',
+                  'tags',
+                  'reference',
+                  'publisher',
+                  'edition',
+                  'is_bestseller',
+        )
 
 
 class ArticleForm(ModelForm):
