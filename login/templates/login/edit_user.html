@@ -1,0 +1,15 @@
+{% extends "base_generic.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <h1>Edit user</h1>
+
+    <form method="POST" autocomplete="on">
+    {% csrf_token %}
+        {{ form | crispy }}
+        <input class="btn btn-primary" type="submit" value="Submit" />
+    <br>
+    <br>
+    </form>
+{% endblock %}

@@ -2,9 +2,13 @@
 {% load library_extras %}
 
 {% block content %}
-    <h1>E-mail: {{ customuser.email }}</h1>
-    <p><strong>First name:</strong> {{ customuser.first_name }}</p>
-    <p><strong>Last name:</strong> {{ customuser.last_name }}</p>
+    <h1> {{ customuser.first_name }} {{ customuser.last_name }}
+        {% if user.is_authenticated and user.is_admin %}
+            <a class="btn btn-primary" href="{% url 'edituser' customuser.id %}">Edit</a>
+        {% endif %}
+    </h1>
+
+    <p><strong>E-mail:</strong> {{ customuser.email }} </p>
     <p><strong>Phone number:</strong> {{ customuser.phone_number }}</p>
     <p><strong>Address:</strong> {{ customuser.address }}</p>
     <p><strong>Is admin:</strong> {{ customuser.is_admin }}</p>

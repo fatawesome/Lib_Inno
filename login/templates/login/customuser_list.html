@@ -15,7 +15,7 @@
       </li>
       {% endfor %}
 
-    <h2>Overdue users:</h2>
+    <h2>Debtors:</h2>
     {% if customuser_list|someone_overdue %}
         {% for user in customuser_list|overdue_list %}
         <li>

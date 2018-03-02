@@ -4,6 +4,7 @@ from django.contrib import auth
 from django.views import generic
 from django.contrib.auth.forms import UserCreationForm
 from .models import *
+from .forms import *
 
 class CustomUserListView(generic.ListView):
     """
@@ -23,6 +24,26 @@ def delete_user(request, pk):
     user.delete_user()
     return HttpResponseRedirect(reverse('users'))
 
+def edit_user(request, pk):
+    """
+    View function for editing a user.
+    :param request:
+    """
+    user = CustomUser.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = CustomUserChangeForm(request.POST)
+        if form.is_valid():
+            user.first_name = form.cleaned_data['first_name']
+            user.last_name = form.cleaned_data['last_name']
+            user.phone_number = form.cleaned_data['phone_number']
+            user.address = form.cleaned_data['address']
+            user.is_admin = form.cleaned_data['is_admin']
+            user.save()
+            return HttpResponseRedirect('../')
+    else:
+        form = CustomUserChangeForm(instance=user)
+
+    return render(request, 'login/edit_user.html', {'form': form})
 
 def login(request):
     """
