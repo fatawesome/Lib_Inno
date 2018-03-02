@@ -27,6 +27,21 @@ class BookAdmin(admin.ModelAdmin):
     pass
 
 
+@admin.register(Article)
+class ArticleAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Audio)
+class AudioAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Video)
+class VideoAdmin(admin.ModelAdmin):
+    pass
+
+
 @admin.register(Record)
 class RecordAdmin(admin.ModelAdmin):
     list_display = ('document', 'status', 'user', 'due_to', 'id')
