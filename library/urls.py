@@ -12,5 +12,6 @@ urlpatterns = [
     path('add_audio/', views.add_audio, name='add_audio'),
     path('add_video/', views.add_video, name='add_video'),
     path('document/<int:pk>/claim/', views.claim_document, name='claim'),
+    path('document/<int:pk>/delete/', views.delete_document, name='delete'),
     path('add_article/', views.add_article, name='add_article')
 ]

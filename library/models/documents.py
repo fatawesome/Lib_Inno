@@ -60,6 +60,14 @@ class Document(models.Model):
             record.due_to = datetime.date.today() + self.get_due_delta(user)
             record.save()
 
+    def delete_document(self):
+        """
+        Delete current document and all it's records
+        """
+        for rec in self.record_set.all():
+            rec.delete()
+        self.delete()
+
     def take_from_user(self, user):
         """
         Takes a document from user.

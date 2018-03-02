@@ -1,0 +1,45 @@
+{% extends "base_generic.html" %}
+{% load library_extras %}
+
+{% block content %}
+    <h1> {{ customuser.first_name }} {{ customuser.last_name }}
+        {% if user.is_authenticated and user.is_admin %}
+            <a class="btn btn-primary" href="{% url 'edituser' customuser.id %}">Edit</a>
+        {% endif %}
+    </h1>
+
+    <p><strong>E-mail:</strong> {{ customuser.email }} </p>
+    <p><strong>Phone number:</strong> {{ customuser.phone_number }}</p>
+    <p><strong>Address:</strong> {{ customuser.address }}</p>
+    <p><strong>Is admin:</strong> {{ customuser.is_admin }}</p>
+
+    <p><strong>Taken documents:</strong>
+        {% if not customuser.record_set.all %}
+            user does not have any documents at the moment
+        {% endif %}
+        {% for rec in customuser.record_set.all %}
+            <a href="{{ rec.document.get_absolute_url }}"> {{ rec.document }} </a>
+            {% if not forloop.last %}, {% endif %}
+        {% endfor %}
+    </p>
+
+    <div>
+        {% if user.is_authenticated and user.is_admin %}
+            {% if customuser.record_set.all.count != 0 %}
+                <p><a class="btn btn-danger" disabled="disabled">Delete</a></p>
+                <div class="alert alert-success" role="alert">
+                    This user has taken some books
+                </div>
+            {% else %}
+                {% if user.id == customuser.id %}
+                    <p><a class="btn btn-danger" disabled="disabled">Delete</a></p>
+                    <div class="alert alert-success" role="alert">
+                        You can not delete yourself
+                    </div>
+                {% else %}
+                    <p><a class="btn btn-danger" href="{% url 'deleteuser' customuser.id %}">Delete</a></p>
+                {% endif %}
+            {% endif %}
+        {% endif %}
+    </div>
+{% endblock %}

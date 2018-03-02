@@ -19,6 +19,7 @@
     <br>
 
     <div class="row">
+
         <div class="col-sm-2">
             {% block sidebar %}
                 <ul class="nav nav-stacked nav-pills">
@@ -49,10 +50,14 @@
                             <li class="{% if request.path == '/add_video/' %}active{% endif %}"><a
                                     href="{% url 'add_video' %}">Add video</a></li>
                             <hr>
+                            <li class="{% if request.path == '/users/' %}active{% endif %}"><a
+                                    href="{% url 'users' %}">Users</a></li>
                             <li class="{% if request.path == '/add_user/' %}active{% endif %}"><a
                                     href="{% url 'add_user' %}">Add user</a></li>
+
                         {% endif %}
                     {% else %}
+
                         <li class="{% if request.path == '/login/' %}active{% endif %}"><a
                                 href="{% url 'login' %}?next={{ request.path }}">Login</a></li>
                     {% endif %}
@@ -68,6 +73,7 @@
         </div>
         </div>
         </div>
+
     </div>
 
 </div>

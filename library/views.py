@@ -38,14 +38,12 @@ class DocumentListView(generic.ListView):
     model = Document
     paginate_by = 20
 
-
 class AuthorListView(generic.ListView):
     """
-    Generic class-based v   iew listing all authors in the system.
+    Generic class-based view listing all authors in the system.
     """
     model = Author
     paginate_by = 20
-
 
 class DocumentDetailView(generic.DetailView):
     """
@@ -75,7 +73,6 @@ def add_book(request):
 
     return render(request, 'add_book.html', {'form': form})
 
-
 def add_user(request):
     """
     View function for adding a book.
@@ -85,7 +82,7 @@ def add_user(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            form.save(commit=True)
+            form.save()
             return HttpResponseRedirect('../')
         else:
             return HttpResponseRedirect('document_detail/1') # DOCUMENT_DETAIL
@@ -99,7 +96,9 @@ def add_article(request):
     if request.method == 'POST':
         form = ArticleForm(request.POST)
         if form.is_valid():
-            form.save(commit=True)
+            document = form.save(commit=True)
+            for _ in range(form.cleaned_data['num_of_copies']):
+                Record.objects.create(document=document)
             return HttpResponseRedirect('../')
         else:
             return HttpResponseRedirect('document_detail/1')
@@ -113,7 +112,9 @@ def add_audio(request):
     if request.method == 'POST':
         form = AudioForm(request.POST)
         if form.is_valid():
-            form.save(commit=True)
+            document = form.save(commit=True)
+            for _ in range(form.cleaned_data['num_of_copies']):
+                Record.objects.create(document=document)
             return HttpResponseRedirect('../')
         else:
             return HttpResponseRedirect('document_detail/1')
@@ -127,7 +128,9 @@ def add_video(request):
     if request.method == 'POST':
         form = VideoForm(request.POST)
         if form.is_valid():
-            form.save(commit=True)
+            document = form.save(commit=True)
+            for _ in range(form.cleaned_data['num_of_copies']):
+                Record.objects.create(document=document)
             return HttpResponseRedirect('../')
         else:
             return HttpResponseRedirect('document_detail/1')
@@ -147,4 +150,10 @@ class BookCreateView(CreateView):
 def claim_document(request, pk):
     doc = Document.objects.get(id=pk)
     doc.give_to_user(request.user)
+    return HttpResponseRedirect(reverse('documents'))
+
+
+def delete_document(request, pk):
+    doc = Document.objects.get(id=pk)
+    doc.delete_document()
     return HttpResponseRedirect(reverse('documents'))
