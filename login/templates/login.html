@@ -17,19 +17,17 @@
 
 <form method="POST" action="{% url 'login' %}">
 {% csrf_token %}
-    <div>
-        <label for="username">User name</label>
-        <input type="text" name="username" id="username">
-    </div>
-    <div>
+    <br>
+    <div class="col-md-5">
+        <label for="username">E-mail</label>
+        <input type="text" class="textinput textInput form-control" name="username" id="username">
         <label for="password">Password</label>
-        <input type="password" name="password" id="password">
-    </div>
-    <div>
+        <input type="password" class="textinput textInput form-control" name="password" id="password">
         {% if login_error %}
             <label class="error">{{ login_error }}</label>
         {% endif %}
-        <input type="submit" value="Log in">
+        <br>
+        <input class="btn btn-success" type="submit" value="Log in">
     </div>
 
 {#    <p class="register"><a href="{% url 'register' %}">Not registered yet? Sign up</a></p>#}
