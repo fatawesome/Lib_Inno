@@ -52,6 +52,10 @@ class DocumentDetailView(generic.DetailView):
     model = Document
 
 
+def my_documents(request, pk):
+    return render(request, 'library/my_documents_list.html', {'user' : CustomUser.objects.get(id=pk)})
+
+
 @permission_required('library.can_create')
 def add_book(request):
     """
@@ -72,24 +76,6 @@ def add_book(request):
         form = BookForm()
 
     return render(request, 'add_book.html', {'form': form})
-
-def add_user(request):
-    """
-    View function for adding a book.
-    :param request:
-    :return:
-    """
-    if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('../')
-        else:
-            return HttpResponseRedirect('document_detail/1') # DOCUMENT_DETAIL
-    else:
-        form = CustomUserCreationForm()
-
-    return render(request, 'add_user.html', {'form': form})
 
 
 def add_article(request):
@@ -140,15 +126,52 @@ def add_video(request):
     return render(request, 'add_video.html', {'form': form})
 
 
+def add_copies(request, pk):
+    doc = Document.objects.get(id=pk)
+    if request.method == 'POST':
+        form = AddCopies(request.POST)
+        if form.is_valid():
+            number_of_copies = form.cleaned_data['number_of_copies']
+            for _ in range(number_of_copies):
+                Record.objects.create(document=doc)
+        else:
+            render(request, 'library/document_detail.html', {'add_copies_form': form})
+        return HttpResponseRedirect(reverse('documents'))
+    else:
+        form = AddCopies()
+
+    return render(request, 'document_detail.html', {'add_copies_form': form})
+
 # TODO: complete this view.
 class BookCreateView(CreateView):
     model = Book
     form_class = BookForm
 
 
+def take_document(request, pk, doc_id):
+    user = CustomUser.objects.get(id=pk)
+    doc = Document.objects.get(id=doc_id)
+    doc.take_from_user(user)
+    return HttpResponseRedirect(user.get_absolute_url())
+
+
+def get_object_of_class(pk):
+    if Book.objects.all().filter(id=pk).count() != 0:
+        doc = Book.objects.get(id=pk)
+    elif Article.objects.all().filter(id=pk).count() != 0:
+        doc = Article.objects.get(id=pk)
+    elif Audio.objects.all().filter(id=pk).count() != 0:
+        doc = Audio.objects.get(id=pk)
+    elif Video.objects.all().filter(id=pk).count() != 0:
+        doc = Video.objects.get(id=pk)
+
+    return doc
+
+
 # TODO: rewrite using class-based view.
-def claim_document(request, pk):
-    doc = Document.objects.get(id=pk)
+def claim(request, pk):
+    doc = get_object_of_class(pk)
+
     doc.give_to_user(request.user)
     return HttpResponseRedirect(reverse('documents'))
 
@@ -157,3 +180,50 @@ def delete_document(request, pk):
     doc = Document.objects.get(id=pk)
     doc.delete_document()
     return HttpResponseRedirect(reverse('documents'))
+
+
+def edit_document(request, pk):
+    """
+    View function for editing a document.
+    :param request:
+    """
+
+    doc = get_object_of_class(pk)
+
+    if request.method == 'POST':
+        if isinstance(doc, Book):
+            form = BookChangeForm(request.POST)
+        elif isinstance(doc, Article):
+            form = ArticleChangeForm(request.POST)
+        elif isinstance(doc, Audio):
+            form = AudioChangeForm(request.POST)
+        elif isinstance(doc, Video):
+            form = VideoChangeForm(request.POST)
+
+        if form.is_valid():
+            doc.title = form.cleaned_data['title']
+            doc.authors.set(form.cleaned_data['authors'])
+            doc.tags.set(form.cleaned_data['tags'])
+            doc.price = form.cleaned_data['price']
+
+            if isinstance(doc, Book):
+                doc.publisher = form.cleaned_data['publisher']
+                doc.edition = form.cleaned_data['edition']
+                doc.is_bestseller = form.cleaned_data['is_bestseller']
+            elif isinstance(doc, Article):
+                doc.editor = form.cleaned_data['editor']
+                doc.journal = form.cleaned_data['journal']
+
+            doc.save()
+            return HttpResponseRedirect('../')
+    else:
+        if isinstance(doc, Book):
+            form = BookChangeForm(instance=doc)
+        elif isinstance(doc, Article):
+            form = ArticleChangeForm(instance=doc)
+        elif isinstance(doc, Audio):
+            form = AudioChangeForm(instance=doc)
+        elif isinstance(doc, Video):
+            form = VideoChangeForm(instance=doc)
+
+    return render(request, 'library/edit_document.html', {'form': form})

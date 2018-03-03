@@ -70,6 +70,23 @@ def login(request):
     else:
         return render(request, 'login.html', context)
 
+def add_user(request):
+    """
+    View function for adding a book.
+    :param request:
+    :return:
+    """
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('../')
+        else:
+            return HttpResponseRedirect('document_detail/1') # DOCUMENT_DETAIL
+    else:
+        form = CustomUserCreationForm()
+
+    return render(request, 'add_user.html', {'form': form})
 
 def logout(request):
     auth.logout(request)

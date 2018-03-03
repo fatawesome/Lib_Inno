@@ -1,90 +1,121 @@
 {% extends "base_generic.html" %}
 {% load library_extras %}
+{% load crispy_forms_tags %}
 
 {% block content %}
-  <h1>{{ document.title }}</h1>
+    <h1>{{ document.title }}
+        {% if user.is_authenticated and user.is_admin %}
+            <a class="btn btn-primary" href="{% url 'editdocument' document.id %}">Edit&nbsp;&nbsp;<i class="glyphicon glyphicon-edit"></i></a>
+        {% endif %}
+    </h1>
 
-  <p><strong>Author:</strong> <a href=""> {% for author in document.authors.all %} {{ author }} {% if not forloop.last %}, {% endif %}{% endfor %}</a></p> <!-- author detail link not yet defined -->
-  <p><strong>Tags:</strong> {% for tag in document.tags.all %} {{ tag }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
-  <p><strong>Price:</strong> {{ document.price }}</p>
+    <p><strong>Author:</strong> <a href=""> {% for author in document.authors.all %} {{ author }} {% if not forloop.last %}, {% endif %}{% endfor %}</a></p> <!-- author detail link not yet defined -->
+    <p><strong>Tags:</strong> {% for tag in document.tags.all %} {{ tag }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+    <p><strong>Price:</strong> {{ document.price }}</p>
 
-  {% if user.is_authenticated and not user.is_admin %}
+    {% if user.is_authenticated and not user.is_admin %}
 
-    {% if document|is_owned_by_user:user %}
-      <p><a class="btn btn-success" disabled="disabled">Claim</a></p>
-      <div class="alert alert-success" role="alert">
-          You have already checked out this book! Return date is: {{ document|due_to:user }}
-      </div>
-    {% elif document.record_set.all|length == 0 %}
-      <p><a class="btn btn-success" disabled="disabled">Claim</a></p>
-      <div class="alert alert-success" role="alert">
-          No more copies. Sorry.
-      </div>
-    {% else %}
-      <p><a class="btn btn-success" href="{% url 'claim' document.id %}">Claim</a></p>
+        {% if document|is_owned_by_user:user %}
+            <p><a class="btn btn-success" disabled="disabled">Claim</a></p>
+            <div class="alert alert-success" role="alert">
+                You have already checked out this book! Return date is: {{ document|due_to:user }}
+            </div>
+        {% elif document.record_set.all|length == 0 %}
+            <p><a class="btn btn-success" disabled="disabled">Claim</a></p>
+            <div class="alert alert-success" role="alert">
+                No more copies. Sorry.
+            </div>
+        {% else %}
+            <p><a class="btn btn-success" href="{% url 'claim' document.id %}">Claim</a></p>
+        {% endif %}
     {% endif %}
 
-  {% endif %}
 
-
-  {% if user.is_authenticated and user.is_admin %}
-
-    {% if document|is_owned_by_someone or document|is_reserved_by_someone %}
-      <p><a class="btn btn-danger" disabled="disabled">Delete</a></p>
-        <div class="alert alert-success" role="alert">
-        You cannot delete it, because:
-        {% if document|is_owned_by_someone != 0 %}
-            <div class="alert alert-success" role="alert">
-                This book is owned by :
-                <table>
-                <tr>
-                    <th>E-mail</th>
-                    <th>First name</th>
-                    <th>Last name</th>
-                </tr>
-                {% for user in document|owned_by%}
-                    <tr>
-                    {% for info in user %}
-                        <td>
-                            {{ info }}
-                        </td>
-                    {% endfor %}
-                    </tr>
-                {% endfor %}
-                </table>
+    <br>
+    {% if user.is_authenticated and user.is_admin %}
+        <div class="row">
+            <div class="col-lg-2">
+                <h4><strong>Add copies:</strong></h4>
             </div>
-        {% endif %}
-        {% if document|is_reserved_by_someone %}
-            <div class="alert alert-success" role="alert">
-                This book is reserved by :
-                <table>
-                <tr>
-                    <th>E-mail</th>
-                    <th>First name</th>
-                    <th>Last name</th>
-                </tr>
-                {% for user in document|reserved_by%}
-                    <tr>
-                    {% for info in user %}
-                        <td>
-                            {{ info }}
-                        </td>
-                    {% endfor %}
-                    </tr>
-                {% endfor %}
-                </table>
+            <div class="col-lg-3">
+                <div class="input-group">
+                    <form method="POST" action="{% url 'add_copies' document.id %}">
+                    {% csrf_token %}
+                        <div class="input-group-btn">
+                            <input type="text" class="form-control" id="number_of_copies" name="number_of_copies" placeholder="Numbers of copies to add">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="glyphicon glyphicon-plus"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
+        </div>
+
+        <br>
+
+        {% if document|is_owned_by_someone or document|is_reserved_by_someone %}
+            <p><a class="btn btn-danger" disabled="disabled">Delete document</a></p>
+            <div class="alert alert-success" role="alert">
+                {% if document|is_owned_by_someone != 0 %}
+                    This book is owned by :
+                    <table>
+                        <tr>
+                            <th>E-mail</th>
+                            <th>First name</th>
+                            <th>Last name</th>
+                            <th>Due to</th>
+                        </tr>
+                        {% for user in document|owned_by%}
+                            <tr>
+                                {% for info in user %}
+                                    <td>
+                                        {% if not forloop.last %}
+                                            {{ info }}
+                                        {% else %}
+                                            <p><a class="btn btn-primary" href="{{ info.get_absolute_url }}">Show user</a>
+                                        {% endif %}
+                                    </td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% endif %}
+                {% if document|is_reserved_by_someone %}
+                    <div class="alert alert-success" role="alert">
+                        This book is reserved by :
+                        <table>
+                            <tr>
+                                <th>E-mail</th>
+                                <th>First name</th>
+                                <th>Last name</th>
+                            </tr>
+                            {% for user in document|reserved_by%}
+                                <tr>
+                                    {% for info in user %}
+                                        <td>
+                                            {% if not forloop.last %}
+                                                {{ info }}
+                                            {% else %}
+                                                <p><a class="btn btn-primary" href="{{ info.get_absolute_url }}">Show user</a>
+                                            {% endif %}
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                {% endif %}
+            </div>
+        {% else %}
+            <p><a class="btn btn-danger" href="{% url 'delete' document.id %}">Delete document</a></p>
         {% endif %}
-      </div>
-    {% else %}
-      <p><a class="btn btn-danger" href="{% url 'delete' document.id %}">Delete</a></p>
+
     {% endif %}
 
-  {% endif %}
 
-
-  {% if user.is_admin %}
-      <div style="margin-left:20px;margin-top:20px">
+    {% if user.is_admin %}
+        <div style="margin-left:20px;margin-top:20px">
         <h4>Copies</h4>
         {% for copy in document.record_set.all %}
             <hr>
@@ -92,7 +123,7 @@
             {% if copy.status != 'a' %}<p><strong>Due to be returned:</strong> {{copy.due_back}}</p>{% endif %}
             <p class="text-muted"><strong>Id:</strong> {{copy.id}}</p>
         {% endfor %}
-  {% endif %}
+    {% endif %}
 
-  </div>
+</div>
 {% endblock %}

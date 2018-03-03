@@ -36,14 +36,14 @@ class Document(models.Model):
         Creates a string for the list of authors.
         :return: string of authors.
         """
-        return ''.join([str(author) for author in self.authors.all()])
+        return ', '.join([str(author) for author in self.authors.all()])
 
     def display_tags(self):
         """
         Creates a string for the list of tags
         :return: string of tags
         """
-        return ''.join([tag.name for tag in self.tags.all()])
+        return ', '.join([tag.name for tag in self.tags.all()])
 
     def display_price(self):
         return self.price
@@ -87,7 +87,6 @@ class Document(models.Model):
         :param user:
         :return:
         """
-        delta = 0
         if isinstance(self, Book):
             if 'Faculty' in [x.name for x in user.groups.all()]:
                 delta = 4

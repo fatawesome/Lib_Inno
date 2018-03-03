@@ -6,36 +6,81 @@ from .models import *
 from login.models import CustomUser
 
 
+class AddCopies(forms.Form):
+    number_of_copies = forms.IntegerField()
+
+
+class DocumentChangeForm(forms.ModelForm):
+    class Meta:
+        model = Document
+        fields = ('title',
+                  'authors',
+                  'price',
+                  'tags'
+        )
+
 class BookForm(ModelForm):
     num_of_copies = forms.IntegerField()
+
     class Meta:
         model = Book
         fields = ['title', 'authors', 'tags', 'reference',
                   'publisher', 'edition', 'is_bestseller', 'price']
 
 
-class UserForm(ModelForm):
+class BookChangeForm(DocumentChangeForm):
+    """
+    A form for updating books
+    """
     class Meta:
-        model = CustomUser
-        fields = ['email', 'password', 'first_name', 'last_name', 'phone_number', 'address']
+        model = Book
+        fields = DocumentChangeForm.Meta.fields + ('reference',
+                  'publisher',
+                  'edition',
+                  'is_bestseller'
+                )
 
 
 class ArticleForm(ModelForm):
     num_of_copies = forms.IntegerField()
+
     class Meta:
         model = Article
         fields = ['title', 'authors', 'tags', 'reference', 'editor', 'journal', 'price']
 
 
-class AudioForm(ModelForm):
-    num_of_copies = forms.IntegerField()
+class ArticleChangeForm(DocumentChangeForm):
     class Meta:
         model = Article
+        fields = DocumentChangeForm.Meta.fields + (
+            'editor',
+            'journal',
+        )
+
+
+class AudioForm(ModelForm):
+    num_of_copies = forms.IntegerField()
+
+    class Meta:
+        model = Audio
         fields = ['title', 'authors', 'tags', 'price']
+
+
+class AudioChangeForm(DocumentChangeForm):
+    class Meta:
+        model = Audio
+        fields = DocumentChangeForm.Meta.fields
 
 
 class VideoForm(ModelForm):
     num_of_copies = forms.IntegerField()
+
     class Meta:
-        model = Article
+        model = Video
         fields = ['title', 'authors', 'tags', 'price']
+
+
+class VideoChangeForm(DocumentChangeForm):
+    class Meta:
+        model = Video
+        fields = DocumentChangeForm.Meta.fields

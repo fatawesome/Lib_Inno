@@ -19,7 +19,6 @@
     <br>
 
     <div class="row">
-
         <div class="col-sm-2">
             {% block sidebar %}
                 <ul class="nav nav-stacked nav-pills">
@@ -29,6 +28,9 @@
                     <li class="{% if request.path == '/authors/' %}active{% endif %}"><a href="{% url 'authors' %}"><i class="glyphicon glyphicon-text-background"></i>&nbsp;&nbsp;All
                         authors</a></li>
                     {% if user.is_authenticated %}
+                        {% if user.is_authenticated %}
+                            <li class="{% if '/my_documents/' in request.path %}active{% endif %}"><a href="{% url 'my_documents' user.id %}"><i class="glyphicon glyphicon-file"></i>&nbsp;&nbsp;My documents</a></li>
+                        {% endif %}
                         <hr>
                         &nbsp;&nbsp;<i class="glyphicon glyphicon-user"></i>
 {#                        <div class="panel panel-default">#}
@@ -37,29 +39,29 @@
 {#                            </div>#}
 {#                        </div>#}
                         <li class="{% if request.path == '/logout/' %}active{% endif %}"><a
-                                href="{% url 'logout' %}?next={{ request.path }}">Logout</a></li>
+                                href="{% url 'logout' %}?next={{ request.path }}"><i class="glyphicon glyphicon-off"></i>&nbsp;&nbsp;Logout</a></li>
                         {% if user.is_admin %}
                             <hr>
                             <h4><strong id="librarian-header">&nbsp;&nbsp;Librarians</strong></h4>
                             <li class="{% if request.path == '/add_book/' %}active{% endif %}"><a
-                                    href="{% url 'add_book' %}">Add book</a></li>
+                                    href="{% url 'add_book' %}"><i class="glyphicon glyphicon-plus"></i>&nbsp;Add book</a></li>
                             <li class="{% if request.path == '/add_article/' %}active{% endif %}"><a
-                                    href="{% url 'add_article' %}">Add article</a></li>
+                                    href="{% url 'add_article' %}"><i class="glyphicon glyphicon-plus"></i>&nbsp;Add article</a></li>
                             <li class="{% if request.path == '/add_audio/' %}active{% endif %}"><a
-                                    href="{% url 'add_audio' %}">Add audio</a></li>
+                                    href="{% url 'add_audio' %}"><i class="glyphicon glyphicon-plus"></i>&nbsp;Add audio</a></li>
                             <li class="{% if request.path == '/add_video/' %}active{% endif %}"><a
-                                    href="{% url 'add_video' %}">Add video</a></li>
+                                    href="{% url 'add_video' %}"><i class="glyphicon glyphicon-plus"></i>&nbsp;Add video</a></li>
                             <hr>
                             <li class="{% if request.path == '/users/' %}active{% endif %}"><a
-                                    href="{% url 'users' %}">Users</a></li>
+                                    href="{% url 'users' %}"><i class="	glyphicon glyphicon-globe"></i>&nbsp;Users</a></li>
                             <li class="{% if request.path == '/add_user/' %}active{% endif %}"><a
-                                    href="{% url 'add_user' %}">Add user</a></li>
+                                    href="{% url 'add_user' %}"><i class="glyphicon glyphicon-plus-sign"></i>&nbsp;Add user</a></li>
 
                         {% endif %}
                     {% else %}
 
                         <li class="{% if request.path == '/login/' %}active{% endif %}"><a
-                                href="{% url 'login' %}?next={{ request.path }}">Login</a></li>
+                                href="{% url 'login' %}?next={{ request.path }}"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Login</a></li>
                     {% endif %}
                     <hr>
                 </ul>
@@ -73,7 +75,6 @@
         </div>
         </div>
         </div>
-
     </div>
 
 </div>

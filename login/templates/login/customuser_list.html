@@ -19,7 +19,7 @@
     {% if customuser_list|someone_overdue %}
         {% for user in customuser_list|overdue_list %}
         <li>
-            <a>{{ user.email }}</a> ({{user.first_name}} {{user.last_name}})
+            <a href="{{ user.get_absolute_url }}">{{ user.email }}</a> ({{user.first_name}} {{user.last_name}})
             :
             {% for document in customuser_list|overdue_books_list:user %}
                 <br>
