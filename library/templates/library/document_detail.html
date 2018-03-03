@@ -1,5 +1,6 @@
 {% extends "base_generic.html" %}
 {% load library_extras %}
+{% load crispy_forms_tags %}
 
 {% block content %}
     <h1>{{ document.title }}
@@ -33,23 +34,23 @@
     <br>
     {% if user.is_authenticated and user.is_admin %}
         <div class="row">
-            <div class="col-lg-3">
-                <h4><strong>Add some copies:</strong></h4>
+            <div class="col-lg-2">
+                <h4><strong>Add copies:</strong></h4>
             </div>
             <div class="col-lg-3">
                 <div class="input-group">
                     <form method="POST" action="{% url 'add_copies' document.id %}">
-                        {% crsf_token %}
-                        <input type="text" class="form-control" id="number_of_copies" name="number_of_copies" placeholder="Numbers of copies to add">
+                    {% csrf_token %}
                         <div class="input-group-btn">
+                            <input type="text" class="form-control" id="number_of_copies" name="number_of_copies" placeholder="Numbers of copies to add">
                             <button class="btn btn-primary" type="submit">
                                 <i class="glyphicon glyphicon-plus"></i>
                             </button>
                         </div>
+                    </form>
                 </div>
             </div>
         </div>
-        </form>
 
         <br>
 

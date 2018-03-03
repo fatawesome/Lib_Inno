@@ -128,7 +128,6 @@ def add_video(request):
 
 def add_copies(request, pk):
     doc = Document.objects.get(id=pk)
-    print('\n\nOK\n\n')
     if request.method == 'POST':
         form = AddCopies(request.POST)
         if form.is_valid():
@@ -168,6 +167,7 @@ def get_object_of_class(pk):
 
     return doc
 
+
 # TODO: rewrite using class-based view.
 def claim(request, pk):
     doc = get_object_of_class(pk)
@@ -189,10 +189,6 @@ def edit_document(request, pk):
     """
 
     doc = get_object_of_class(pk)
-    print('---------------\n')
-    print(type(doc))
-    print(isinstance(doc, Book))
-    print('\n---------------')
 
     if request.method == 'POST':
         if isinstance(doc, Book):
