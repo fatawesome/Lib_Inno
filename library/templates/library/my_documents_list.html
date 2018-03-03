@@ -1,0 +1,20 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+    <h1>My documents:</h1>
+    {% if user.record_set.all %}
+        <ul>
+            {% for rec in user.record_set.all %}
+                <li>
+                    <a href="{{ rec.document.get_absolute_url }}">{{ rec.document.title }}</a>
+                    ({{rec.document.display_authors}})
+                    <h4>Due to: {{ rec.due_to }}</h4>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You have not taken any document</p>
+    {% endif %}
+
+{% endblock %}

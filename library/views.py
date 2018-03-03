@@ -51,6 +51,8 @@ class DocumentDetailView(generic.DetailView):
     """
     model = Document
 
+def my_documents(request, pk):
+    return render(request, 'library/my_documents_list.html', {'user' : CustomUser.objects.get(id=pk)})
 
 @permission_required('library.can_create')
 def add_book(request):
@@ -135,43 +137,22 @@ def take_document(request, pk, doc_id):
     return HttpResponseRedirect(user.get_absolute_url())
 
 
-# TODO: rewrite using class-based view.
-def claim(request, pk):
+def get_object_of_class(pk):
     if Book.objects.all().filter(id=pk).count() != 0:
-        print('------------------')
-        print()
-        print('Book')
-        print()
-        print('------------------')
         doc = Book.objects.get(id=pk)
     elif Article.objects.all().filter(id=pk).count() != 0:
-        print('------------------')
-        print()
-        print('Article')
-        print()
-        print('------------------')
         doc = Article.objects.get(id=pk)
     elif Audio.objects.all().filter(id=pk).count() != 0:
-        print('------------------')
-        print()
-        print('Audio')
-        print()
-        print('------------------')
         doc = Audio.objects.get(id=pk)
     elif Video.objects.all().filter(id=pk).count() != 0:
-        print('------------------')
-        print()
-        print('Video')
-        print()
-        print('------------------')
         doc = Video.objects.get(id=pk)
-    else:
-        print('------------------')
-        print()
-        print('ERROR')
-        print()
-        print('------------------')
-        doc = None
+
+    return doc
+
+# TODO: rewrite using class-based view.
+def claim(request, pk):
+    doc = get_object_of_class(pk)
+
     doc.give_to_user(request.user)
     return HttpResponseRedirect(reverse('documents'))
 
@@ -187,34 +168,47 @@ def edit_document(request, pk):
     View function for editing a document.
     :param request:
     """
-    doc = Document.objects.get(id=pk)
-    print('------------------------')
-    print(doc)
+
+    doc = get_object_of_class(pk)
+    print('---------------\n')
     print(type(doc))
-    print(hasattr(doc, 'edition'))
     print(isinstance(doc, Book))
-    print('------------------------')
+    print('\n---------------')
+
     if request.method == 'POST':
-        if hasattr(doc, 'edition'):
+        if isinstance(doc, Book):
             form = BookChangeForm(request.POST)
+        elif isinstance(doc, Article):
+            form = ArticleChangeForm(request.POST)
+        elif isinstance(doc, Audio):
+            form = AudioChangeForm(request.POST)
+        elif isinstance(doc, Video):
+            form = VideoChangeForm(request.POST)
+
         if form.is_valid():
             doc.title = form.cleaned_data['title']
-            doc.authors = form.cleaned_data['authors']
-            doc.tags = form.cleaned_data['tags']
-            doc.reference = form.cleaned_data['reference']
+            doc.authors.set(form.cleaned_data['authors'])
+            doc.tags.set(form.cleaned_data['tags'])
             doc.price = form.cleaned_data['price']
 
             if isinstance(doc, Book):
                 doc.publisher = form.cleaned_data['publisher']
                 doc.edition = form.cleaned_data['edition']
                 doc.is_bestseller = form.cleaned_data['is_bestseller']
+            elif isinstance(doc, Article):
+                doc.editor = form.cleaned_data['editor']
+                doc.journal = form.cleaned_data['journal']
 
             doc.save()
             return HttpResponseRedirect('../')
     else:
         if isinstance(doc, Book):
             form = BookChangeForm(instance=doc)
-        else:
-            form = BookChangeForm(instance=doc) # TODO delete this line
+        elif isinstance(doc, Article):
+            form = ArticleChangeForm(instance=doc)
+        elif isinstance(doc, Audio):
+            form = AudioChangeForm(instance=doc)
+        elif isinstance(doc, Video):
+            form = VideoChangeForm(instance=doc)
 
     return render(request, 'library/edit_document.html', {'form': form})

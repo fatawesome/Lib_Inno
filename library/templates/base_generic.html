@@ -22,6 +22,9 @@
       <ul class="sidebar-nav">
           <li><a href="{% url 'index' %}">Home</a></li>
           <li><a href="{% url 'documents' %}">All documents</a></li>
+          {% if user.is_authenticated %}
+              <li><a href="{% url 'my_documents' user.id %}">My documents</a></li>
+          {% endif %}
           <li><a href="{% url 'authors' %}">All authors</a></li>
           {% if user.is_authenticated %}
             <hr>

@@ -15,22 +15,28 @@ class BookForm(ModelForm):
                   'publisher', 'edition', 'is_bestseller', 'price']
 
 
-class BookChangeForm(forms.ModelForm):
-    """
-    A form for updating books
-    """
-
+class DocumentChangeForm(forms.ModelForm):
     class Meta:
-        model = Book
+        model = Document
         fields = ('title',
                   'authors',
                   'price',
-                  'tags',
-                  'reference',
+                  'tags'
+        )
+
+
+
+class BookChangeForm(DocumentChangeForm):
+    """
+    A form for updating books
+    """
+    class Meta:
+        model = Book
+        fields = DocumentChangeForm.Meta.fields + ('reference',
                   'publisher',
                   'edition',
-                  'is_bestseller',
-                  )
+                  'is_bestseller'
+                )
 
 
 class ArticleForm(ModelForm):
@@ -41,6 +47,15 @@ class ArticleForm(ModelForm):
         fields = ['title', 'authors', 'tags', 'reference', 'editor', 'journal', 'price']
 
 
+class ArticleChangeForm(DocumentChangeForm):
+    class Meta:
+        model = Article
+        fields = DocumentChangeForm.Meta.fields + (
+            'editor',
+            'journal',
+        )
+
+
 class AudioForm(ModelForm):
     num_of_copies = forms.IntegerField()
 
@@ -49,9 +64,21 @@ class AudioForm(ModelForm):
         fields = ['title', 'authors', 'tags', 'price']
 
 
+class AudioChangeForm(DocumentChangeForm):
+    class Meta:
+        model = Audio
+        fields = DocumentChangeForm.Meta.fields
+
+
 class VideoForm(ModelForm):
     num_of_copies = forms.IntegerField()
 
     class Meta:
-        model = Audio
+        model = Video
         fields = ['title', 'authors', 'tags', 'price']
+
+
+class VideoChangeForm(DocumentChangeForm):
+    class Meta:
+        model = Video
+        fields = DocumentChangeForm.Meta.fields

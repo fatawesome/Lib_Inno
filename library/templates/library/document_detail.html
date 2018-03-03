@@ -48,7 +48,11 @@
                             <tr>
                                 {% for info in user %}
                                     <td>
-                                        {{ info }}
+                                        {% if not forloop.last %}
+                                            {{ info }}
+                                        {% else %}
+                                            <p><a class="btn btn-primary" href="{{ info.get_absolute_url }}">Show user</a>
+                                        {% endif %}
                                     </td>
                                 {% endfor %}
                             </tr>
@@ -68,7 +72,11 @@
                                 <tr>
                                     {% for info in user %}
                                         <td>
-                                            {{ info }}
+                                            {% if not forloop.last %}
+                                                {{ info }}
+                                            {% else %}
+                                                <p><a class="btn btn-primary" href="{{ info.get_absolute_url }}">Show user</a>
+                                            {% endif %}
                                         </td>
                                     {% endfor %}
                                 </tr>
