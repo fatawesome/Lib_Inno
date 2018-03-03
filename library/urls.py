@@ -10,6 +10,7 @@ urlpatterns = [
     path('add_book/', views.add_book, name='add_book'),
     path('add_audio/', views.add_audio, name='add_audio'),
     path('add_video/', views.add_video, name='add_video'),
+    path('add_copies/<int:pk>/', views.add_copies, name='add_copies'),
     path('document/<int:pk>/claim/', views.claim, name='claim'),
     path('document/<int:pk>/take/<int:doc_id>', views.take_document, name='take'),
     path('document/<int:pk>/delete/', views.delete_document, name='delete'),

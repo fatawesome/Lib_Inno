@@ -51,8 +51,10 @@ class DocumentDetailView(generic.DetailView):
     """
     model = Document
 
+
 def my_documents(request, pk):
     return render(request, 'library/my_documents_list.html', {'user' : CustomUser.objects.get(id=pk)})
+
 
 @permission_required('library.can_create')
 def add_book(request):
@@ -123,6 +125,23 @@ def add_video(request):
 
     return render(request, 'add_video.html', {'form': form})
 
+
+def add_copies(request, pk):
+    doc = Document.objects.get(id=pk)
+    print('\n\nOK\n\n')
+    if request.method == 'POST':
+        form = AddCopies(request.POST)
+        if form.is_valid():
+            number_of_copies = form.cleaned_data['number_of_copies']
+            for _ in range(number_of_copies):
+                Record.objects.create(document=doc)
+        else:
+            render(request, 'library/document_detail.html', {'add_copies_form': form})
+        return HttpResponseRedirect(reverse('documents'))
+    else:
+        form = AddCopies()
+
+    return render(request, 'document_detail.html', {'add_copies_form': form})
 
 # TODO: complete this view.
 class BookCreateView(CreateView):

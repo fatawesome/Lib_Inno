@@ -30,10 +30,31 @@
     {% endif %}
 
 
+    <br>
     {% if user.is_authenticated and user.is_admin %}
+        <div class="row">
+            <div class="col-lg-3">
+                <h4><strong>Add some copies:</strong></h4>
+            </div>
+            <div class="col-lg-3">
+                <div class="input-group">
+                    <form method="POST" action="{% url 'add_copies' document.id %}">
+                        {% crsf_token %}
+                        <input type="text" class="form-control" id="number_of_copies" name="number_of_copies" placeholder="Numbers of copies to add">
+                        <div class="input-group-btn">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="glyphicon glyphicon-plus"></i>
+                            </button>
+                        </div>
+                </div>
+            </div>
+        </div>
+        </form>
+
+        <br>
 
         {% if document|is_owned_by_someone or document|is_reserved_by_someone %}
-            <p><a class="btn btn-danger" disabled="disabled">Delete</a></p>
+            <p><a class="btn btn-danger" disabled="disabled">Delete document</a></p>
             <div class="alert alert-success" role="alert">
                 {% if document|is_owned_by_someone != 0 %}
                     This book is owned by :
@@ -86,7 +107,7 @@
                 {% endif %}
             </div>
         {% else %}
-            <p><a class="btn btn-danger" href="{% url 'delete' document.id %}">Delete</a></p>
+            <p><a class="btn btn-danger" href="{% url 'delete' document.id %}">Delete document</a></p>
         {% endif %}
 
     {% endif %}
