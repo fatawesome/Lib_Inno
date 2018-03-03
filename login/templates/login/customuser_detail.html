@@ -4,7 +4,7 @@
 {% block content %}
     <h1> {{ customuser.first_name }} {{ customuser.last_name }}
         {% if user.is_authenticated and user.is_admin %}
-            <a class="btn btn-primary" href="{% url 'edituser' customuser.id %}">Edit</a>
+            <a class="btn btn-primary" href="{% url 'edituser' customuser.id %}">Edit&nbsp;&nbsp;<i class="glyphicon glyphicon-edit"></i></a>
         {% endif %}
     </h1>
 

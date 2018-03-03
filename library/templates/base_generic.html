@@ -2,57 +2,116 @@
 <html lang="en">
 <head>
 
-  {% block title %}<title>Local Library</title>{% endblock %}
-  <meta et="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    {% block title %}<title>Local Library</title>{% endblock %}
+    <meta et="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-  <!-- Add additional CSS in static file -->
-  {% load static %}
-  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!-- Add additional CSS in static file -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 
 <body>
 
-  <div class="container-fluid">
+<div class="container-fluid">
+
+    <br>
 
     <div class="row">
-      <div class="col-sm-2">
-      {% block sidebar %}
-      <ul class="sidebar-nav">
-          <li><a href="{% url 'index' %}">Home</a></li>
-          <li><a href="{% url 'documents' %}">All documents</a></li>
-          {% if user.is_authenticated %}
-              <li><a href="{% url 'my_documents' user.id %}">My documents</a></li>
-          {% endif %}
-          <li><a href="{% url 'authors' %}">All authors</a></li>
-          {% if user.is_authenticated %}
-            <hr>
-            <li>User: {{ user.get_username }}</li>
-            <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
-            {% if user.is_admin %}
-                <hr>
-                <li>Librarians</li>
-                <li><a href="{% url 'add_book' %}">Add book</a></li>
-                <li><a href="{% url 'add_article' %}">Add article</a></li>
-                <li><a href="{% url 'add_audio' %}">Add audio</a></li>
-                <li><a href="{% url 'add_video' %}">Add video</a></li>
-                <hr>
-                <li><a href="{% url 'users' %}">All users</a></li>
-                <li><a href="{% url 'add_user' %}">Add user</a></li>
-            {% endif %}
-          {% else %}
-            <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
-          {% endif %}
-          <hr>
-      </ul>
-     {% endblock %}
-      </div>
-      <div class="col-sm-10 ">
-      {% block content %}{% endblock %}
-      </div>
+        <div class="col-sm-2">
+            {% block sidebar %}
+                <ul class="nav nav-stacked nav-pills">
+                    <li class="{% if request.path == '/' %}active{% endif %}"><a href="{% url 'index' %}"><i class="glyphicon glyphicon-home"></i>&nbsp;&nbsp;Home</a></li>
+                    <li class="{% if request.path == '/documents/' %}active{% endif %}"><a href="{% url 'documents' %}"><i class="glyphicon glyphicon-book"></i>&nbsp;&nbsp;All
+                        documents</a></li>
+                    <li class="{% if request.path == '/authors/' %}active{% endif %}"><a href="{% url 'authors' %}"><i class="glyphicon glyphicon-text-background"></i>&nbsp;&nbsp;All
+                        authors</a></li>
+                    {% if user.is_authenticated %}
+                        {% if user.is_authenticated %}
+                            <li class="{% if '/my_documents/' in request.path %}active{% endif %}"><a href="{% url 'my_documents' user.id %}"><i class="glyphicon glyphicon-file"></i>&nbsp;&nbsp;My documents</a></li>
+                        {% endif %}
+                        <hr>
+                        &nbsp;&nbsp;<i class="glyphicon glyphicon-user"></i>
+{#                        <div class="panel panel-default">#}
+{#                            <div class = "panel-body">#}
+                        <strong id="you_are_user"> User: {{ user.get_username }} </strong>
+{#                            </div>#}
+{#                        </div>#}
+                        <li class="{% if request.path == '/logout/' %}active{% endif %}"><a
+                                href="{% url 'logout' %}?next={{ request.path }}"><i class="glyphicon glyphicon-off"></i>&nbsp;&nbsp;Logout</a></li>
+                        {% if user.is_admin %}
+                            <hr>
+                            <h4><strong id="librarian-header">&nbsp;&nbsp;Librarians</strong></h4>
+                            <li class="{% if request.path == '/add_book/' %}active{% endif %}"><a
+                                    href="{% url 'add_book' %}"><i class="glyphicon glyphicon-plus"></i>&nbsp;Add book</a></li>
+                            <li class="{% if request.path == '/add_article/' %}active{% endif %}"><a
+                                    href="{% url 'add_article' %}"><i class="glyphicon glyphicon-plus"></i>&nbsp;Add article</a></li>
+                            <li class="{% if request.path == '/add_audio/' %}active{% endif %}"><a
+                                    href="{% url 'add_audio' %}"><i class="glyphicon glyphicon-plus"></i>&nbsp;Add audio</a></li>
+                            <li class="{% if request.path == '/add_video/' %}active{% endif %}"><a
+                                    href="{% url 'add_video' %}"><i class="glyphicon glyphicon-plus"></i>&nbsp;Add video</a></li>
+                            <hr>
+                            <li class="{% if request.path == '/users/' %}active{% endif %}"><a
+                                    href="{% url 'users' %}"><i class="	glyphicon glyphicon-globe"></i>&nbsp;Users</a></li>
+                            <li class="{% if request.path == '/add_user/' %}active{% endif %}"><a
+                                    href="{% url 'add_user' %}"><i class="glyphicon glyphicon-plus-sign"></i>&nbsp;Add user</a></li>
+
+                        {% endif %}
+                    {% else %}
+
+                        <li class="{% if request.path == '/login/' %}active{% endif %}"><a
+                                href="{% url 'login' %}?next={{ request.path }}"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Login</a></li>
+                    {% endif %}
+                    <hr>
+                </ul>
+            {% endblock %}
+        </div>
+        <div class="col-sm-10 ">
+        <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-md-11">
+            {% block content %}{% endblock %}
+        </div>
+        </div>
+        </div>
     </div>
 
-  </div>
+</div>
 </body>
+<style>
+    {##you_are_user{#}
+    {#    color: #005000;#}
+    {#}#}
+    {##librarian-header {#}
+    {#    color: #005000;#}
+    {#}#}
+
+    .nav li a {
+        color: green;
+    }
+     .nav li a {
+        background: whitesmoke;
+        opacity: 0.7;
+    }
+
+    .nav li.active a {
+        background: green;
+
+    }
+
+    .nav li.active a:hover {
+        background: #005000;
+    }
+
+    body {
+
+        {#background: url("{% static "351322_900.jpg" %}");#}
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+
+</style>
 </html>

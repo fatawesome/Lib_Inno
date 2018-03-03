@@ -19,10 +19,15 @@
 {% csrf_token %}
     <br>
     <div class="col-md-5">
-        <label for="username">E-mail</label>
-        <input type="text" class="textinput textInput form-control" name="username" id="username">
-        <label for="password">Password</label>
-        <input type="password" class="textinput textInput form-control" name="password" id="password">
+    <div class="input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+        <input type="text" class="form-control" name="username" id="username" placeholder="E-mail" autofocus>
+    </div>
+    <br>
+    <div class="input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+        <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+    </div>
         {% if login_error %}
             <label class="error">{{ login_error }}</label>
         {% endif %}
