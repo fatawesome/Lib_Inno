@@ -6,6 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import *
 from .forms import *
 
+
 class CustomUserListView(generic.ListView):
     """
     Generic class-based view listing all users in the system.
@@ -13,16 +14,19 @@ class CustomUserListView(generic.ListView):
     model = CustomUser
     paginate_by = 20
 
+
 class CustomUserDetailView(generic.DetailView):
     """
     Generic class-based view the particular user.
     """
     model = CustomUser
 
+
 def delete_user(request, pk):
     user = CustomUser.objects.get(pk=pk)
     user.delete_user()
     return HttpResponseRedirect(reverse('users'))
+
 
 def edit_user(request, pk):
     """
@@ -44,6 +48,7 @@ def edit_user(request, pk):
         form = CustomUserChangeForm(instance=user)
 
     return render(request, 'login/edit_user.html', {'form': form})
+
 
 def login(request):
     """
@@ -70,6 +75,7 @@ def login(request):
     else:
         return render(request, 'login.html', context)
 
+
 def add_user(request):
     """
     View function for adding a book.
@@ -82,11 +88,12 @@ def add_user(request):
             form.save()
             return HttpResponseRedirect('../')
         else:
-            return HttpResponseRedirect('document_detail/1') # DOCUMENT_DETAIL
+            return HttpResponseRedirect('document_detail/1')  # DOCUMENT_DETAIL
     else:
         form = CustomUserCreationForm()
 
     return render(request, 'add_user.html', {'form': form})
+
 
 def logout(request):
     auth.logout(request)
