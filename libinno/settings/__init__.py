@@ -136,3 +136,9 @@ LOGOUT_REDIRECT_URL = '/'
 AUTH_USER_MODEL = 'login.CustomUser'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_HOST_USER = 'fatawesomeee@yandex.ru'
+EMAIL_HOST_PASSWORD = 'Fatawesome_123'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True

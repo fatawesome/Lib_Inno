@@ -15,5 +15,6 @@ urlpatterns = [
     path('document/<int:pk>/take/<int:doc_id>', views.take_document, name='take'),
     path('document/<int:pk>/delete/', views.delete_document, name='delete'),
     path('document/<int:pk>/editdocument/', views.edit_document, name='editdocument'),
-    path('add_article/', views.add_article, name='add_article')
+    path('add_article/', views.add_article, name='add_article'),
+    path('document/<int:pk>/ask/<int:doc_id>', views.ask_for_return, name='ask'),
 ]

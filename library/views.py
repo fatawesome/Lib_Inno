@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.views import generic
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.views.generic.edit import CreateView
 from django.contrib.auth.decorators import permission_required
+from django.core.mail import send_mail, BadHeaderError
 
 from library.models import *
 from .forms import BookForm
@@ -38,12 +39,14 @@ class DocumentListView(generic.ListView):
     model = Document
     paginate_by = 20
 
+
 class AuthorListView(generic.ListView):
     """
     Generic class-based view listing all authors in the system.
     """
     model = Author
     paginate_by = 20
+
 
 class DocumentDetailView(generic.DetailView):
     """
@@ -53,7 +56,7 @@ class DocumentDetailView(generic.DetailView):
 
 
 def my_documents(request, pk):
-    return render(request, 'library/my_documents_list.html', {'user' : CustomUser.objects.get(id=pk)})
+    return render(request, 'library/my_documents_list.html', {'user': CustomUser.objects.get(id=pk)})
 
 
 @permission_required('library.can_create')
@@ -78,6 +81,7 @@ def add_book(request):
     return render(request, 'add_book.html', {'form': form})
 
 
+@permission_required('library.can_create')
 def add_article(request):
     if request.method == 'POST':
         form = ArticleForm(request.POST)
@@ -94,6 +98,7 @@ def add_article(request):
     return render(request, 'add_article.html', {'form': form})
 
 
+@permission_required('library.can_create')
 def add_audio(request):
     if request.method == 'POST':
         form = AudioForm(request.POST)
@@ -110,6 +115,7 @@ def add_audio(request):
     return render(request, 'add_audio.html', {'form': form})
 
 
+@permission_required('library.can_create')
 def add_video(request):
     if request.method == 'POST':
         form = VideoForm(request.POST)
@@ -126,6 +132,7 @@ def add_video(request):
     return render(request, 'add_video.html', {'form': form})
 
 
+@permission_required('library.can_create')
 def add_copies(request, pk):
     doc = Document.objects.get(id=pk)
     if request.method == 'POST':
@@ -142,13 +149,13 @@ def add_copies(request, pk):
 
     return render(request, 'document_detail.html', {'add_copies_form': form})
 
-# TODO: complete this view.
-class BookCreateView(CreateView):
-    model = Book
-    form_class = BookForm
 
-
+@permission_required('library.can_change')
 def take_document(request, pk, doc_id):
+    """
+    Return a document to the system.
+    :return:
+    """
     user = CustomUser.objects.get(id=pk)
     doc = Document.objects.get(id=doc_id)
     doc.take_from_user(user)
@@ -168,7 +175,6 @@ def get_object_of_class(pk):
     return doc
 
 
-# TODO: rewrite using class-based view.
 def claim(request, pk):
     doc = get_object_of_class(pk)
 
@@ -176,12 +182,14 @@ def claim(request, pk):
     return HttpResponseRedirect(reverse('documents'))
 
 
+@permission_required('library.can_delete')
 def delete_document(request, pk):
     doc = Document.objects.get(id=pk)
     doc.delete_document()
     return HttpResponseRedirect(reverse('documents'))
 
 
+@permission_required('library.can_change')
 def edit_document(request, pk):
     """
     View function for editing a document.
@@ -227,3 +235,21 @@ def edit_document(request, pk):
             form = VideoChangeForm(instance=doc)
 
     return render(request, 'library/edit_document.html', {'form': form})
+
+
+@permission_required('can_delete')
+def ask_for_return(request, pk, doc_id):
+    user = CustomUser.objects.get(id=pk)
+    doc = Document.objects.get(id=doc_id)
+    send_mail(
+        'Return document',
+        'Please, return ' + doc.title + ' back to the library.',
+        'fatawesomeee@yandex.ru',
+        [user.email],
+        fail_silently=False
+    )
+    return HttpResponseRedirect(user.get_absolute_url())
+
+
+
+
