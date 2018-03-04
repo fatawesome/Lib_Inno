@@ -2,16 +2,47 @@
 
 {% block content %}
 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <h1>Author List</h1>
 
     {% if author_list %}
-    <ul>
-      {% for author in author_list %}
-      <li>
-        <a href="">{{ author.first_name }} {{ author.last_name }} ({{ author.date_of_birth }} - {{ author.date_of_death }})</a>
-      </li>
-      {% endfor %}
-    </ul>
+    <div class="col-md-*">
+            <input class="form-control" id="myInput" type="text" placeholder="Search..">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>Period of life</th>
+                </tr>
+                </thead>
+                <tbody id="AuthorList">
+                    {% for author in author_list %}
+                        <tr>
+                            <td><a href="">{{ author.first_name }}</a></td>
+                            <td><a href="">{{ author.last_name }}</a></td>
+                            <td>{{ author.date_of_birth }} - {{ author.date_of_death }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+         <script>
+            $(document).ready(function(){
+                $("#myInput").on("keyup", function() {
+                    var value = $(this).val().toLowerCase();
+                    $("#AuthorList tr").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                });
+            });
+        </script>
+        </div>
     {% else %}
       <p>There are no authors in library.</p>
     {% endif %}
