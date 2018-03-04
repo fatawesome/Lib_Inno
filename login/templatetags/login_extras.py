@@ -14,14 +14,11 @@ def overdue_list(customuser_list):
     return res
 
 @register.filter
-def someone_overdue(customuser_list):
-    res = []
-    for user in customuser_list:
-        for rec in user.record_set.all():
-            if rec.due_to < datetime.date.today():
-                res.append(user)
-                break
-    return len(res) != 0
+def is_debtor(user):
+    for rec in user.record_set.all():
+        if rec.due_to < datetime.date.today():
+            return True
+    return False
 
 @register.filter
 def overdue_books_list(customuser_list, user):

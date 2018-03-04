@@ -2,16 +2,49 @@
 
 {% block content %}
 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <h1>Document List</h1>
 
     {% if document_list %}
-    <ul>
-      {% for doc in document_list %}
-      <li>
-        <a href="{{ doc.get_absolute_url }}">{{ doc.title }}</a> ({{doc.display_authors}})
-      </li>
-      {% endfor %}
-    </ul>
+        <div class="col-md-*">
+            <input class="form-control" id="myInput" type="text" placeholder="Search..">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Authors</th>
+                </tr>
+                </thead>
+                <tbody id="DocumentList">
+                {% for doc in document_list %}
+                    <tr>
+                    <td><a href = "{{ doc.get_absolute_url }}">{{ doc.title }}</a></td>
+                    <td>
+                        {% for author in doc.display_authors %}
+{#                            <a href="{{ author.get_absolute_url }}">#}{{ author.first_name }} {{ author.last_name }}{% if not forloop.last %},{% endif %}{#</a>#} {# TODO uncomment it #}
+                    {% endfor %}
+                    </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+         <script>
+            $(document).ready(function(){
+                $("#myInput").on("keyup", function() {
+                    var value = $(this).val().toLowerCase();
+                    $("#DocumentList tr").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                });
+            });
+        </script>
+        </div>
     {% else %}
       <p>There are no documents in the library.</p>
     {% endif %}
