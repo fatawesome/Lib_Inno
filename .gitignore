@@ -1,5 +1,5 @@
 migrations.bat
-.idea/*
+.idea/
 *.pyc
 *~
 __pycache__
