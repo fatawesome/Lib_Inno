@@ -4,7 +4,7 @@
 
 {% block content %}
     <h1>{{ document.title }}
-        {% if user.is_authenticated and user.is_admin %}
+        {% if user.is_authenticated and perms.library.can_change %}
             <a class="btn btn-primary" href="{% url 'editdocument' document.id %}">Edit&nbsp;&nbsp;<i class="glyphicon glyphicon-edit"></i></a>
         {% endif %}
     </h1>
@@ -13,7 +13,7 @@
     <p><strong>Tags:</strong> {% for tag in document.tags.all %} {{ tag }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
     <p><strong>Price:</strong> {{ document.price }}</p>
 
-    {% if user.is_authenticated and not user.is_admin %}
+    {% if user.is_authenticated and not perms.library.can_change %}
 
         {% if document|is_owned_by_user:user %}
             <p><a class="btn btn-success" disabled="disabled">Claim</a></p>
@@ -32,7 +32,7 @@
 
 
     <br>
-    {% if user.is_authenticated and user.is_admin %}
+    {% if user.is_authenticated and perms.library.can_change %}
         <div class="row">
             <div class="col-lg-2">
                 <h4><strong>Add copies:</strong></h4>
@@ -114,7 +114,7 @@
     {% endif %}
 
 
-    {% if user.is_admin %}
+    {% if perms.library.can_change %}
         <div style="margin-left:20px;margin-top:20px">
         <h4>Copies</h4>
         {% for copy in document.record_set.all %}

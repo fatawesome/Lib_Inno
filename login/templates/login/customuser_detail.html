@@ -3,7 +3,7 @@
 
 {% block content %}
     <h1> {{ customuser.first_name }} {{ customuser.last_name }}
-        {% if user.is_authenticated and user.is_admin %}
+        {% if user.is_authenticated and perms.library.can_change %}
             <a class="btn btn-primary" href="{% url 'edituser' customuser.id %}">Edit&nbsp;&nbsp;<i class="glyphicon glyphicon-edit"></i></a>
         {% endif %}
     </h1>
@@ -24,7 +24,7 @@
     </p>
 
     <div>
-        {% if user.is_authenticated and user.is_admin %}
+        {% if user.is_authenticated and perms.library.can_change %}
             {% if customuser.record_set.all.count != 0 %}
                 <p><a class="btn btn-danger" disabled="disabled">Delete</a></p>
                 <div class="alert alert-success" role="alert">

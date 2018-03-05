@@ -43,7 +43,7 @@ def edit_user(request, pk):
             user.phone_number = form.cleaned_data['phone_number']
             user.address = form.cleaned_data['address']
             user.is_admin = form.cleaned_data['is_admin']
-            user.is_staff = form.cleaned_data['is_staff']
+            user.groups.set([form.cleaned_data['group']])
             user.save()
             return HttpResponseRedirect('../')
     else:
