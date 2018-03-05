@@ -1,18 +1,30 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-<h1>LibInno Home</h1>
-
-  <p>Welcome to <em>LibInno</em>, the best library manage system in Innopolis!</p>
+    <div class="page-header">
+        <h1><p align="right">LibInno Home</p></h1>
+        <small><p align="right">Welcome to <em>LibInno</em>, the best library manage system in Innopolis!</p></small>
+    </div>
 
 <h2>Content</h2>
 
   <p>The library has the following record counts:</p>
-  <ul>
-    <li><strong>Documents:</strong> {{ num_docs }}</li>
-    <li><strong>Copies:</strong> {{ num_instances }}</li>
-    <li><strong>Copies available:</strong> {{ num_instances_available }}</li>
-    <li><strong>Authors:</strong> {{ num_authors }}</li>
-  </ul>
+
+
+  <p><ul class="list-group">
+
+      <li class="list-group-item">
+          <strong>Documents:</strong><span class="badge">{{ num_docs }}</span>
+      </li>
+      <li class="list-group-item">
+          <strong>Copies:</strong><span class="badge">{{ num_instances }}</span>
+      </li>
+      <li class="list-group-item">
+          <strong>Copies available:</strong><span class="badge">{{ num_instances_available }}</span>
+      </li>
+      <li class="list-group-item">
+          <strong>Authors:</strong><span class="badge">{{ num_authors }}</span>
+      </li>
+  </ul></p>
 
 {% endblock %}

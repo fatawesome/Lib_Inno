@@ -5,9 +5,9 @@
     <h1>Document List</h1>
 
     {% if document_list %}
-    <ul>
+    <ul class="list-group">
       {% for doc in document_list %}
-      <li>
+      <li class="list-group-item">
         <a href="{{ doc.get_absolute_url }}">{{ doc.title }}</a> ({{doc.display_authors}})
       </li>
       {% endfor %}
