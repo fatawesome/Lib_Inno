@@ -5,6 +5,7 @@ from django.views import generic
 from django.contrib.auth.forms import UserCreationForm
 from .models import *
 from .forms import *
+from django.contrib.auth.models import Group
 
 
 class CustomUserListView(generic.ListView):
@@ -42,6 +43,7 @@ def edit_user(request, pk):
             user.phone_number = form.cleaned_data['phone_number']
             user.address = form.cleaned_data['address']
             user.is_admin = form.cleaned_data['is_admin']
+            user.is_staff = form.cleaned_data['is_staff']
             user.save()
             return HttpResponseRedirect('../')
     else:
@@ -82,6 +84,9 @@ def add_user(request):
     :param request:
     :return:
     """
+    print('---------')
+    print(Group.objects.all())
+    print('---------')
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():

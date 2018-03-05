@@ -62,6 +62,7 @@ class TagAdmin(admin.ModelAdmin):
     pass
 
 
+@admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
     form = CustomUserChangeForm
     add_form = CustomUserCreationForm
@@ -73,13 +74,13 @@ class CustomUserAdmin(UserAdmin):
     list_filter = ('is_admin',)
     fieldsets = (
         (None, {
-            'fields': ('email', 'password')
+            'fields': ('email',)
         }),
         ('Personal info', {
             'fields': ('first_name', 'last_name', 'phone_number', 'address')
         }),
         ('Permissions', {
-            'fields': ('is_admin', 'groups')
+            'fields': ('is_admin', 'group')
         }),
     )
 
@@ -88,12 +89,10 @@ class CustomUserAdmin(UserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'first_name', 'last_name', 'phone_number', 'address', 'password1', 'password2', 'groups')}
+            'fields': ('email', 'first_name', 'last_name', 'phone_number',
+                       'address', 'group', 'password1', 'password2',)}
          ),
     )
     search_fields = ('email', 'first_name', 'last_name')
     ordering = ('email',)
     filter_horizontal = ()
-
-
-admin.site.register(CustomUser, CustomUserAdmin)

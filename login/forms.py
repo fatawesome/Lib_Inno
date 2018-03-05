@@ -4,6 +4,7 @@ from django.contrib.auth.models import Group
 
 from login.models import CustomUser
 
+
 class CustomUserCreationForm(forms.ModelForm):
     """
     A form for creating users. Includes all required fields and a repeated password.
@@ -15,7 +16,14 @@ class CustomUserCreationForm(forms.ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = ('email', 'first_name', 'last_name', 'phone_number', 'address', 'group')
+        fields = ('email',
+                  'first_name',
+                  'last_name',
+                  'phone_number',
+                  'address',
+                  'is_admin',
+                  'group',
+                  )
 
     def clean_password2(self):
         """
@@ -57,7 +65,8 @@ class CustomUserChangeForm(forms.ModelForm):
                   'group',
                   'address',
                   'is_admin',
-        )
+                  'is_active',
+                  )
 
     def clean_password(self):
         """

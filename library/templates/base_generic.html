@@ -40,7 +40,7 @@
 {#                        </div>#}
                         <li class="{% if request.path == '/logout/' %}active{% endif %}"><a
                                 href="{% url 'logout' %}?next={{ request.path }}"><i class="glyphicon glyphicon-off"></i>&nbsp;&nbsp;Logout</a></li>
-                        {% if user.is_admin %}
+                        {% if perms.library.can_delete %}
                             <hr>
                             <h4><strong id="librarian-header">&nbsp;&nbsp;Librarians</strong></h4>
                             <li class="{% if request.path == '/add_book/' %}active{% endif %}"><a
