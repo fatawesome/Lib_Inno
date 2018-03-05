@@ -84,13 +84,11 @@ def add_user(request):
     :param request:
     :return:
     """
-    print('---------')
-    print(Group.objects.all())
-    print('---------')
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
+            user.groups.set([form.cleaned_data['group']])
             return HttpResponseRedirect('../')
         else:
             return HttpResponseRedirect('document_detail/1')  # DOCUMENT_DETAIL

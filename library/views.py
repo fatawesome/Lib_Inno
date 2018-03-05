@@ -237,7 +237,7 @@ def edit_document(request, pk):
     return render(request, 'library/edit_document.html', {'form': form})
 
 
-@permission_required('can_delete')
+@permission_required('library.can_delete')
 def ask_for_return(request, pk, doc_id):
     user = CustomUser.objects.get(id=pk)
     doc = Document.objects.get(id=doc_id)
