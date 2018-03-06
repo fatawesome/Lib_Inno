@@ -48,13 +48,14 @@ class Document(models.Model):
     def display_price(self):
         return self.price
 
-    def give_to_user(self, user, record):
+    def give_to_user(self, user, record, date = datetime.date.today()):
         """
         Gives a document to user
         """
-        record.status = 'o'
-        record.due_to = datetime.date.today() + self.get_due_delta(user)
-        record.save()
+        if record.status == 'r':
+            record.status = 'o'
+            record.due_to = date + self.get_due_delta(user)
+            record.save()
 
     def reserve_by_user(self, user):
         """
@@ -91,8 +92,6 @@ class Document(models.Model):
     def get_due_delta(self, user):
         """
         Counts for how many weeks document can be taken
-        :param user:
-        :return:
         """
         if isinstance(self, Book):
             if 'Faculty' in [x.name for x in user.groups.all()]:
@@ -102,10 +101,7 @@ class Document(models.Model):
             else:
                 delta = 3
         else:
-            if 'Students' in [x.name for x in user.groups.all()]:
-                delta = 2
-            else:
-                delta = 3
+            delta = 2
 
         return datetime.timedelta(weeks=delta)
 
