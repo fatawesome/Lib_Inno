@@ -16,7 +16,6 @@ class Document(models.Model):
     authors = models.ManyToManyField(Author, help_text='Add authors for this document')
     tags = models.ManyToManyField(Tag, help_text='Add tags for this document')
     reference = models.BooleanField(default=False)
-    year = models.IntegerField(default=2000)
 
     class Meta:
         permissions = (('can_create', 'Create new document'),
@@ -54,7 +53,8 @@ class Document(models.Model):
         Gives a document to user
         """
         rec_set = self.record_set.filter(status='a')
-        if rec_set.count() != 0 and self.id not in [x.document.id for x in user.record_set.all()] and not self.reference:
+        if rec_set.count() != 0 and self.id not in [x.document.id for x in
+                                                    user.record_set.all()] and not self.reference:
             record = rec_set.first()
             record.user = user
             record.status = 'o'
@@ -144,6 +144,7 @@ class Book(Document):
     publisher = models.CharField(max_length=100)
     edition = models.IntegerField(default=1)
     is_bestseller = models.BooleanField(default=False)
+    year = models.IntegerField(default=2000)
 
 
 class ArticleManager(models.Manager):
