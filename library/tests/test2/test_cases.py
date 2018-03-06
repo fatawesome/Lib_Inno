@@ -140,6 +140,17 @@ class TestCases(TestCase):
 
         lib.groups.add(group_librarian)
 
+    def setup_remove(self):
+        b1 = Document.objects.filter(title='Introduction to Algorithms').first()
+        b3 = Document.objects.filter(title='The Mythical Man-month').first()
+        p2 = CustomUser.objects.get(pk=2)
+
+        b1.record_set.first().delete()
+        b1.record_set.first().delete()
+        b3.record_set.first().delete()
+
+        p2.delete_user()
+
     def test_librarian_add_documents_and_users(self):
         """
         TC 1
@@ -157,15 +168,7 @@ class TestCases(TestCase):
         """
         TC 2
         """
-        b1 = Document.objects.filter(title='Introduction to Algorithms').first()
-        b3 = Document.objects.filter(title='The Mythical Man-month').first()
-        p2 = CustomUser.objects.get(pk=2)
-
-        b1.record_set.first().delete()
-        b1.record_set.first().delete()
-        b3.record_set.first().delete()
-
-        p2.delete_user()
+        self.setup_remove()
 
         self.assertTrue(Record.objects.count() == 5 and CustomUser.objects.count() == 3)
 
@@ -173,18 +176,7 @@ class TestCases(TestCase):
         """
         TC 3
         """
-
-        """Initial state"""
-        b1 = Document.objects.filter(title='Introduction to Algorithms').first()
-        b3 = Document.objects.filter(title='The Mythical Man-month').first()
-        p2 = CustomUser.objects.get(pk=2)
-
-        b1.record_set.first().delete()
-        b1.record_set.first().delete()
-        b3.record_set.first().delete()
-
-        p2.delete_user()
-        """Initial state"""
+        self.setup_remove()
 
         p1 = CustomUser.objects.get(pk=1)
         self.assertTrue(p1.first_name=="Sergey" and p1.last_name=="Afonso" and p1.address=="Via Margutta, 3" and p1.phone_number=='30001')
@@ -200,18 +192,7 @@ class TestCases(TestCase):
         """
         TC 4
         """
-
-        """Initial state"""
-        b1 = Document.objects.filter(title='Introduction to Algorithms').first()
-        b3 = Document.objects.filter(title='The Mythical Man-month').first()
-        p2 = CustomUser.objects.get(pk=2)
-
-        b1.record_set.first().delete()
-        b1.record_set.first().delete()
-        b3.record_set.first().delete()
-
-        p2.delete_user()
-        """Initial state"""
+        self.setup_remove()
 
         self.assertTrue(CustomUser.objects.filter(id=2).count() == 0)
 
@@ -225,19 +206,12 @@ class TestCases(TestCase):
         """
         TC 5
         """
-        """Initial state"""
-        b1 = Document.objects.filter(title='Introduction to Algorithms').first()
-        b3 = Document.objects.filter(title='The Mythical Man-month').first()
-        p2 = CustomUser.objects.get(id=2)
-
-        b1.record_set.first().delete()
-        b1.record_set.first().delete()
-        b3.record_set.first().delete()
-
-        p2.delete_user()
-        """Initial state"""
+        self.setup_remove()
 
         self.assertTrue(CustomUser.objects.filter(id=2).count() == 0)
 
         # b1.give_to_user(p2)
 
+    # how dafuq name this idk
+    def test_case_eight(self):
+        pass
