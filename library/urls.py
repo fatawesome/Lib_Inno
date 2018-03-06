@@ -7,6 +7,7 @@ urlpatterns = [
     path('my_documents/<int:pk>/', views.my_documents, name='my_documents'),
     path('document/<int:pk>/', views.DocumentDetailView.as_view(), name='document-detail'),
     path('authors/', views.AuthorListView.as_view(), name='authors'),
+    path('add_author/', views.add_author, name='add_author'),
     path('add_book/', views.add_book, name='add_book'),
     path('add_audio/', views.add_audio, name='add_audio'),
     path('add_video/', views.add_video, name='add_video'),

@@ -19,3 +19,11 @@ class Author(models.Model):
 
     def __str__(self):
         return '{1} {0}'.format(self.first_name, self.last_name)
+
+
+class AuthorManager(models.Manager):
+    def create_author(self, first_name, last_name, date_of_birth, date_of_death):
+        author = self.create(first_name=first_name, last_name=last_name,
+                           date_of_birth=date_of_birth, date_of_death=date_of_death)
+        author.save()
+        return author
