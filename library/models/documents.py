@@ -48,17 +48,23 @@ class Document(models.Model):
     def display_price(self):
         return self.price
 
-    def give_to_user(self, user):
+    def give_to_user(self, user, record):
         """
         Gives a document to user
         """
+        record.status = 'o'
+        record.due_to = datetime.date.today() + self.get_due_delta(user)
+        record.save()
+
+    def reserve_by_user(self, user):
+        """
+        Reserve a document by user
+        """
         rec_set = self.record_set.filter(status='a')
-        if rec_set.count() != 0 and self.id not in [x.document.id for x in
-                                                    user.record_set.all()] and not self.reference:
+        if rec_set.count() != 0 and self.id not in [x.document.id for x in user.record_set.all()] and not self.reference:# Why do we check it second time?
             record = rec_set.first()
             record.user = user
-            record.status = 'o'
-            record.due_to = datetime.date.today() + self.get_due_delta(user)
+            record.status = 'r'
             record.save()
 
     def delete_document(self):

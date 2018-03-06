@@ -1,11 +1,16 @@
 from django import template
+from library.models.documents import Book
 import datetime
 
 register = template.Library()
 
 @register.filter
 def is_owned_by_user(document, user):
-    return document.record_set.filter(user=user).count() == 1
+    return document.record_set.filter(user=user).count() == 1 and document.record_set.get(user=user).status == 'o'
+
+@register.filter
+def is_reserved_by_user(document, user):
+    return document.record_set.filter(user=user).count() == 1 and document.record_set.get(user=user).status == 'r'
 
 @register.filter
 def is_owned_by_someone(document):
@@ -33,3 +38,13 @@ def reserved_by(document):
 def due_to(document, user):
     record = document.record_set.get(user=user)
     return record.due_to
+
+@register.filter
+def is_reference_book(document):
+    if Book.objects.all().filter(id=document.id).count() != 0:
+        return Book.objects.get(id=document.id).reference
+    return False
+
+@register.filter
+def available_copies_exist(document):
+    return document.record_set.filter(status='a').count != 0

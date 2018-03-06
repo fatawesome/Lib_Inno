@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.views.generic.edit import CreateView
 from django.contrib.auth.decorators import permission_required
 from django.core.mail import send_mail, BadHeaderError
+from library import views
 
 from library.models import *
 from .forms import BookForm
@@ -185,26 +186,8 @@ def add_copies(request, pk):
             number_of_copies = form.cleaned_data['number_of_copies']
             for _ in range(number_of_copies):
                 Record.objects.create(document=doc)
-        else:
-            render(request, 'library/document_detail.html')
-        return HttpResponseRedirect(reverse('documents'))
+        return HttpResponseRedirect(reverse('document-detail', args=[pk]))
 
-    return render(request, 'document_detail.html')
-
-
-@permission_required('library.can_create')
-def add_author(request):
-    if request.method == 'POST':
-        form = AddAuthor(request.POST)
-        if form.is_valid():
-            form.save()
-        else:
-            render(request, 'library/add_book.html')
-        return HttpResponseRedirect(reverse('documents'))
-    else:
-        form = AddAuthor()
-
-    return render(request, 'document_book.html', {'add_copies_form': form})
 
 @permission_required('library.can_change')
 def take_document(request, pk, doc_id):
@@ -231,11 +214,22 @@ def get_object_of_class(pk):
     return doc
 
 
-def claim(request, pk):
-    doc = get_object_of_class(pk)
+def reserve(request, doc_id):
+    doc = get_object_of_class(doc_id)
 
-    doc.give_to_user(request.user)
-    return HttpResponseRedirect(reverse('documents'))
+    doc.reserve_by_user(request.user)
+    pk = doc_id
+    return HttpResponseRedirect(reverse('document-detail', args=[pk]))
+
+
+@permission_required('library.can_change')
+def give_document(request, doc_id, user_id):
+    doc = get_object_of_class(doc_id)
+    user = CustomUser.objects.get(id=user_id)
+    rec = user.record_set.get(document=doc)
+
+    doc.give_to_user(request.user, rec)
+    return HttpResponseRedirect(reverse('customuser_detail', args=[user_id]))
 
 
 @permission_required('library.can_delete')
