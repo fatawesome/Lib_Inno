@@ -89,12 +89,7 @@ class Document(models.Model):
         :return:
         """
         if isinstance(self, Book):
-            print('----------\n')
-            print(user.groups.all())
             if 'Faculty' in [x.name for x in user.groups.all()]:
-                print('----------\n')
-                print(user.groups.all())
-                print('----------\n')
                 delta = 4
             elif self.is_bestseller:
                 delta = 2
