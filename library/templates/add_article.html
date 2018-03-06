@@ -3,13 +3,56 @@
 
 {% block content %}
 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <h1>Add article</h1>
+     <p align="right">
+        <button type="button" class="btn btn-info btn" data-toggle="modal" data-target="#AddAuthor">Add author</button>
+        <button type="button" class="btn btn-info btn" data-toggle="modal" data-target="#AddTag">Add tag</button>
+    </p>
+
+    <div class="container">
+        <div class="modal fade" id="AddAuthor" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h3>Add author</h3>
+                        <hr>
+                        <form method="POST">
+                            {% csrf_token %}
+                            {{ author_form | crispy }}
+                            <input class="btn btn-primary" type="submit" value="Submit"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="AddTag" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h3>Add tag</h3>
+                        <hr>
+                        <form method="POST">
+                            {% csrf_token %}
+                            {{ tag_form | crispy }}
+                            <input class="btn btn-primary" type="submit" value="Submit"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <form method="POST">
     {% csrf_token %}
-        {{ form | crispy }}
+        {{ article_form | crispy }}
         <input class="btn btn-primary" type="submit" value="Submit" />
-    <br>
-    <br>
     </form>
 {% endblock %}

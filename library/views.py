@@ -67,69 +67,113 @@ def add_book(request):
     :return:
     """
     if request.method == 'POST':
-        form = BookForm(request.POST)
-        if form.is_valid():
-            document = form.save(commit=True)
-            for _ in range(form.cleaned_data['num_of_copies']):
+        author_form = AuthorForm(request.POST)
+        book_form = BookForm(request.POST)
+        tag_form = TagForm(request.POST)
+
+        if tag_form.is_valid():
+            tag_form.save(commit=True)
+            return HttpResponseRedirect(reverse('add_book'))
+
+        if author_form.is_valid():
+            author_form.save(commit=True)
+            return HttpResponseRedirect(reverse('add_book'))
+
+        if book_form.is_valid():
+            document = book_form.save(commit=True)
+            for _ in range(book_form.cleaned_data['num_of_copies']):
                 Record.objects.create(document=document)
             return HttpResponseRedirect('../')
-        else:
-            return HttpResponseRedirect('document_detail/1')
     else:
-        form = BookForm()
+        author_form = AuthorForm()
+        book_form = BookForm()
+        tag_form = TagForm()
 
-    return render(request, 'add_book.html', {'form': form})
+    return render(request, 'add_book.html', {'book_form': book_form, 'author_form': author_form, 'tag_form': tag_form})
 
 
 @permission_required('library.can_create')
 def add_article(request):
     if request.method == 'POST':
-        form = ArticleForm(request.POST)
-        if form.is_valid():
-            document = form.save(commit=True)
-            for _ in range(form.cleaned_data['num_of_copies']):
+        author_form = AuthorForm(request.POST)
+        article_form = ArticleForm(request.POST)
+        tag_form = TagForm(request.POST)
+
+        if tag_form.is_valid():
+            tag_form.save(commit=True)
+            return HttpResponseRedirect(reverse('add_article'))
+
+        if author_form.is_valid():
+            author_form.save(commit=True)
+            return HttpResponseRedirect(reverse('add_article'))
+
+        if article_form.is_valid():
+            document = article_form.save(commit=True)
+            for _ in range(article_form.cleaned_data['num_of_copies']):
                 Record.objects.create(document=document)
             return HttpResponseRedirect('../')
-        else:
-            return HttpResponseRedirect('document_detail/1')
     else:
-        form = ArticleForm()
+        author_form = AuthorForm()
+        article_form = ArticleForm()
+        tag_form = TagForm()
 
-    return render(request, 'add_article.html', {'form': form})
+    return render(request, 'add_article.html', {'article_form': article_form, 'author_form': author_form, 'tag_form': tag_form})
 
 
 @permission_required('library.can_create')
 def add_audio(request):
     if request.method == 'POST':
-        form = AudioForm(request.POST)
-        if form.is_valid():
-            document = form.save(commit=True)
-            for _ in range(form.cleaned_data['num_of_copies']):
+        author_form = AuthorForm(request.POST)
+        audio_form = AudioForm(request.POST)
+        tag_form = TagForm(request.POST)
+
+        if tag_form.is_valid():
+            tag_form.save(commit=True)
+            return HttpResponseRedirect(reverse('add_audio'))
+
+        if author_form.is_valid():
+            author_form.save(commit=True)
+            return HttpResponseRedirect(reverse('add_audio'))
+
+        if audio_form.is_valid():
+            document = audio_form.save(commit=True)
+            for _ in range(audio_form.cleaned_data['num_of_copies']):
                 Record.objects.create(document=document)
             return HttpResponseRedirect('../')
-        else:
-            return HttpResponseRedirect('document_detail/1')
     else:
-        form = AudioForm()
+        author_form = AuthorForm()
+        audio_form = AudioForm()
+        tag_form = TagForm()
 
-    return render(request, 'add_audio.html', {'form': form})
+    return render(request, 'add_audio.html', {'audio_form': audio_form, 'author_form': author_form, 'tag_form': tag_form})
 
 
 @permission_required('library.can_create')
 def add_video(request):
     if request.method == 'POST':
-        form = VideoForm(request.POST)
-        if form.is_valid():
-            document = form.save(commit=True)
-            for _ in range(form.cleaned_data['num_of_copies']):
+        author_form = AuthorForm(request.POST)
+        video_form = VideoForm(request.POST)
+        tag_form = TagForm(request.POST)
+
+        if tag_form.is_valid():
+            tag_form.save(commit=True)
+            return HttpResponseRedirect(reverse('add_video'))
+
+        if author_form.is_valid():
+            author_form.save(commit=True)
+            return HttpResponseRedirect(reverse('add_video'))
+
+        if video_form.is_valid():
+            document = video_form.save(commit=True)
+            for _ in range(video_form.cleaned_data['num_of_copies']):
                 Record.objects.create(document=document)
             return HttpResponseRedirect('../')
-        else:
-            return HttpResponseRedirect('document_detail/1')
     else:
-        form = VideoForm()
+        author_form = AuthorForm()
+        video_form = VideoForm()
+        tag_form = TagForm()
 
-    return render(request, 'add_video.html', {'form': form})
+    return render(request, 'add_video.html', {'video_form': video_form, 'author_form': author_form, 'tag_form': tag_form})
 
 
 @permission_required('library.can_create')
@@ -142,13 +186,25 @@ def add_copies(request, pk):
             for _ in range(number_of_copies):
                 Record.objects.create(document=doc)
         else:
-            render(request, 'library/document_detail.html', {'add_copies_form': form})
+            render(request, 'library/document_detail.html')
+        return HttpResponseRedirect(reverse('documents'))
+
+    return render(request, 'document_detail.html')
+
+
+@permission_required('library.can_create')
+def add_author(request):
+    if request.method == 'POST':
+        form = AddAuthor(request.POST)
+        if form.is_valid():
+            form.save()
+        else:
+            render(request, 'library/add_book.html')
         return HttpResponseRedirect(reverse('documents'))
     else:
-        form = AddCopies()
+        form = AddAuthor()
 
-    return render(request, 'document_detail.html', {'add_copies_form': form})
-
+    return render(request, 'document_book.html', {'add_copies_form': form})
 
 @permission_required('library.can_change')
 def take_document(request, pk, doc_id):

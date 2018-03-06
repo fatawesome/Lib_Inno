@@ -6,6 +6,18 @@ from .models import *
 from login.models import CustomUser
 
 
+class TagForm(ModelForm):
+    class Meta:
+        model = Tag
+        fields = ['name']
+
+
+class AuthorForm(ModelForm):
+    class Meta:
+        model = Author
+        fields = ['first_name', 'last_name', 'date_of_birth', 'date_of_death']
+
+
 class AddCopies(forms.Form):
     number_of_copies = forms.IntegerField()
 
@@ -18,6 +30,7 @@ class DocumentChangeForm(forms.ModelForm):
                   'price',
                   'tags'
         )
+
 
 class BookForm(ModelForm):
     num_of_copies = forms.IntegerField()
