@@ -128,10 +128,10 @@ class Document(models.Model):
 
 # TODO: Add tags to creation method.
 class BookManager(models.Manager):
-    def create_book(self, title, price, reference, authors, publisher, is_bestseller, edition):
+    def create_book(self, title, price, reference, authors, publisher, is_bestseller, edition, year):
         book = self.create(title=title, price=price,
                            reference=reference, publisher=publisher,
-                           is_bestseller=is_bestseller, edition=edition)
+                           is_bestseller=is_bestseller, edition=edition, year=year)
         book.authors.set(authors)
         book.save()
         return book
@@ -145,6 +145,7 @@ class Book(Document):
     publisher = models.CharField(max_length=100)
     edition = models.IntegerField(default=1)
     is_bestseller = models.BooleanField(default=False)
+    year = models.IntegerField(default=2000)
 
 
 class ArticleManager(models.Manager):
@@ -161,9 +162,29 @@ class Article(Document):
     journal = models.CharField(max_length=100)
 
 
+class AudioManager(models.Manager):
+    def create_audio(self, title, authors, price, content):
+        audio = self.create(title=title, price=price,
+                            content=content)
+        audio.authors.set(authors)
+        audio.save()
+        return audio
+
+
 class Audio(Document):
+    objects = AudioManager()
     content = models.CharField(max_length=200)
 
 
+class VideoManager(models.Manager):
+    def create_video(self, title, authors, price, content):
+        video = self.create(title=title, price=price,
+                            content=content)
+        video.authors.set(authors)
+        video.save()
+        return video
+
+
 class Video(Document):
+    objects = VideoManager()
     content = models.CharField(max_length=200)

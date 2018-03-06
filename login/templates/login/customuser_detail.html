@@ -24,7 +24,7 @@
     </p>
 
     <div>
-        {% if user.is_authenticated and perms.library.can_change %}
+        {% if user.is_authenticated and perms.library.can_delete %}
             {% if customuser.record_set.all.count != 0 %}
                 <p><a class="btn btn-danger" disabled="disabled">Delete</a></p>
                 <div class="alert alert-success" role="alert">

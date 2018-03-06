@@ -21,7 +21,6 @@ class CustomUserCreationForm(forms.ModelForm):
                   'last_name',
                   'phone_number',
                   'address',
-                  'is_admin',
                   'group',
                   )
 

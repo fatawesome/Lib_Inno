@@ -8,12 +8,14 @@ from django.contrib.auth.models import User, Group
 
 from login.models import CustomUser
 from login.models import CustomUserManager
-class TakeFromUserMethodTest(TestCase):
 
+
+class TakeFromUserMethodTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         Author.objects.create(first_name='test', last_name='test')
-        user = CustomUser.objects.create(email="user@user.com", first_name='test', last_name="testtest", phone_number="test", address="test")
+        user = CustomUser.objects.create(email="user@user.com", first_name='test', last_name="testtest",
+                                         phone_number="test", address="test")
         group = Group.objects.create(name='Students')
 
         user.groups.add(group)
