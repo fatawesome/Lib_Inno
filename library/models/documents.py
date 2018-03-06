@@ -16,6 +16,7 @@ class Document(models.Model):
     authors = models.ManyToManyField(Author, help_text='Add authors for this document')
     tags = models.ManyToManyField(Tag, help_text='Add tags for this document')
     reference = models.BooleanField(default=False)
+    year = models.IntegerField(default=2000)
 
     class Meta:
         permissions = (('can_create', 'Create new document'),
