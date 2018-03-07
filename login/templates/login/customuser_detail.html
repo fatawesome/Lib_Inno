@@ -83,6 +83,7 @@
                                 <th>Due to</th>
                                 <th>Collect</th>
                                 <th>Ask for return</th>
+                                <th>Delete this copy</th>
                             </tr>
                             </thead>
                             <tbody id="DocumentTakenList">
@@ -102,6 +103,7 @@
                                     <td>{{ rec.due_to }}</td>
                                     <td><a class="btn btn-success" href="{% url 'take' rec.document.id customuser.id %}">Collect</a></td>
                                     <td><a class="btn btn-warning" href="{% url 'ask' rec.document.id customuser.id %}">Ask for return</a></td>
+                                    <td><a class="btn btn-danger" href="{% url 'delete_copy' rec.document.id customuser.id %}">Delete this copy</a></td>
                                 </tr>
                             {% endfor %}
                             </tbody>
