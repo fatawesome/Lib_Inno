@@ -11,15 +11,87 @@
 
     <h1>User List</h1>
 
-    {% if customuser_list %}
+
+    <button type="button" class="btn btn-success" data-toggle="collapse" data-target="#demo">Show users with books only</button>
+    <br>
+    <br>
+    <div id="demo" class="collapse">
+        <div class="alert alert-success">
+            <h3>Users with books</h3>
+            <div class="col-md-*">
+            <input class="form-control" id="UserBooksSearch" type="text" placeholder="Search..">
+            {% if customuser_list|users_with_books %}
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>First name</th>
+                        <th>Last name</th>
+                        <th>Type</th>
+                        <th>Books</th>
+                    </tr>
+                    </thead>
+                    <tbody id="UserBooksList">
+                    {% for user in customuser_list|users_with_books %}
+                        {% if user|is_debtor %}
+                            <tr class="danger">
+                        {% else %}
+                            <tr>
+                        {% endif %}
+                        <td><a href = "{{ user.get_absolute_url }}">{{ user.email }}</a></td>
+                        <td><a href = "{{ user.get_absolute_url }}">{{user.first_name}}</a></td>
+                        <td><a href = "{{ user.get_absolute_url }}">{{user.last_name}}</a></td>
+                        <td> {{ user.groups.all.first }}</td>
+                        <td>
+                            {% for book in customuser_list|books_of_user:user %}
+                                {% for info in book %}
+                                    {% if forloop.last %}
+                                        (Due to: {{ info }})
+                                    {% else %}
+                                        <a href="{{ info.get_absolute_url }}">{{ info.title }}</a>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if not forloop.last %},{% endif %}
+                            {% endfor %}
+                        </td>
+                        {% if user|is_debtor %}
+                            <td style="display:none">debtors overdue</td>
+                        {% endif %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                There is no users without books in the system
+            {% endif %}
+        </div>
+
+        To show all debtors search for "debtor" or "overdue"
+
+         <script>
+            $(document).ready(function(){
+                $("#UserBooksSearch").on("keyup", function() {
+                    var value = $(this).val().toLowerCase();
+                    $("#UserBooksList tr").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                });
+            });
+        </script>
+        </div>
+    </div>
+
+    <div class="alert alert-info">
+        <h3>All users</h3>
         <div class="col-md-*">
-            <input class="form-control" id="myInput" type="text" placeholder="Search..">
+            <input class="form-control" id="UsersSearch" type="text" placeholder="Search..">
             <table class="table table-bordered table-striped table-hover">
                 <thead>
                 <tr>
                     <th>Email</th>
                     <th>First name</th>
                     <th>Last name</th>
+                    <th>Type</th>
                 </tr>
                 </thead>
                 <tbody id="UserList">
@@ -32,8 +104,9 @@
                     <td><a href = "{{ user.get_absolute_url }}">{{ user.email }}</a></td>
                     <td><a href = "{{ user.get_absolute_url }}">{{user.first_name}}</a></td>
                     <td><a href = "{{ user.get_absolute_url }}">{{user.last_name}}</a></td>
+                    <td>{{user.groups.all.first }}</td>
                     {% if user|is_debtor %}
-                        <td style="display:none">debtor overdue</td>
+                        <td style="display:none">debtors overdue</td>
                     {% endif %}
                     </tr>
                 {% endfor %}
@@ -45,7 +118,7 @@
 
          <script>
             $(document).ready(function(){
-                $("#myInput").on("keyup", function() {
+                $("#UsersSearch").on("keyup", function() {
                     var value = $(this).val().toLowerCase();
                     $("#UserList tr").filter(function() {
                         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
@@ -53,8 +126,6 @@
                 });
             });
         </script>
-    {% else %}
-        <p>There are no users in the system.</p>
-    {% endif %}
+    </div>
 
 {% endblock %}

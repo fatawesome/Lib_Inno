@@ -2,6 +2,7 @@
 {% load login_extras %}
 
 {% block content %}
+
     <h1> {{ customuser.first_name }} {{ customuser.last_name }}
         {% if user.is_authenticated and perms.library.can_change %}
             <a class="btn btn-primary" href="{% url 'edituser' customuser.id %}">Edit&nbsp;&nbsp;<i class="glyphicon glyphicon-edit"></i></a>
@@ -11,17 +12,7 @@
     <p><strong>E-mail:</strong> {{ customuser.email }} </p>
     <p><strong>Phone number:</strong> {{ customuser.phone_number }}</p>
     <p><strong>Address:</strong> {{ customuser.address }}</p>
-    <p><strong>Is admin:</strong> {{ customuser.is_admin }}</p>
-
-    <p><strong>Taken documents:</strong>
-        {% if not customuser.record_set.all %}
-            user does not have any documents at the moment
-        {% endif %}
-        {% for rec in customuser.record_set.all %}
-            <a href="{{ rec.document.get_absolute_url }}"> {{ rec.document }} </a>
-            {% if not forloop.last %}, {% endif %}
-        {% endfor %}
-    </p>
+    <p><strong>Type:</strong> {{ customuser.groups.first }}</p>
 
     <div>
         {% if user.is_authenticated and perms.library.can_delete %}
@@ -33,8 +24,8 @@
                         {% for rec in customuser|taken_books_list %}
                             <p>
                                 <a href="{{ rec.document.get_absolute_url }}"> {{ rec.document }}</a>
-                                <a class="btn btn-success" href="{% url 'take' customuser.id rec.document.id %}">Collect</a>
-                                <a class="btn btn-success" href="{% url 'ask' customuser.id rec.document.id %}">Ask for return</a>
+                                <a class="btn btn-success" href="{% url 'take' rec.document.id customuser.id %}">Collect</a>
+                                <a class="btn btn-success" href="{% url 'ask' rec.document.id customuser.id %}">Ask for return</a>
                             </p>
                         {% endfor %}
                     {% else %}

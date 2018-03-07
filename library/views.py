@@ -190,13 +190,13 @@ def add_copies(request, pk):
 
 
 @permission_required('library.can_change')
-def take_document(request, pk, doc_id):
+def take_document(request, pk, user_id):
     """
     Return a document to the system.
     :return:
     """
-    user = CustomUser.objects.get(id=pk)
-    doc = Document.objects.get(id=doc_id)
+    user = CustomUser.objects.get(id=user_id)
+    doc = Document.objects.get(id=pk)
     doc.take_from_user(user)
     return HttpResponseRedirect(user.get_absolute_url())
 
@@ -288,9 +288,9 @@ def edit_document(request, pk):
 
 
 @permission_required('library.can_delete')
-def ask_for_return(request, pk, doc_id):
-    user = CustomUser.objects.get(id=pk)
-    doc = Document.objects.get(id=doc_id)
+def ask_for_return(request, pk, user_id):
+    user = CustomUser.objects.get(id=user_id)
+    doc = Document.objects.get(id=pk)
     send_mail(
         'Return document',
         'Please, return ' + doc.title + ' back to the library.',

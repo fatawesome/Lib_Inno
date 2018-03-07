@@ -11,13 +11,11 @@ urlpatterns = [
     path('add_audio/', views.add_audio, name='add_audio'),
     path('add_video/', views.add_video, name='add_video'),
     path('add_copies/<int:pk>/', views.add_copies, name='add_copies'),
-
     path('document/<int:doc_id>/give/<int:user_id>', views.give_document, name='give_document'),
     path('document/<int:doc_id>/reserve/', views.reserve, name='reserve'),
-
-    path('document/<int:pk>/take/<int:doc_id>', views.take_document, name='take'),
+    path('document/<int:pk>/take/<int:user_id>', views.take_document, name='take'),
     path('document/<int:pk>/delete/', views.delete_document, name='delete'),
     path('document/<int:pk>/editdocument/', views.edit_document, name='editdocument'),
     path('add_article/', views.add_article, name='add_article'),
-    path('document/<int:pk>/ask/<int:doc_id>', views.ask_for_return, name='ask'),
+    path('document/<int:pk>/ask/<int:user_id>', views.ask_for_return, name='ask'),
 ]

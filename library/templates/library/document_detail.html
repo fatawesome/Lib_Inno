@@ -21,7 +21,7 @@
                 This book is a reference book
             </div>
         {% elif document|is_owned_by_user:user %}
-            <p><a class="btn btn-success" disabled="disabled">Reserve</a></p>
+            <p><a class="btn btn-success" disabled="disabled">Checked out</a></p>
             <div class="alert alert-success" role="alert">
                 You have already checked out this book. Return date is: {{ document|due_to:user }}
             </div>
