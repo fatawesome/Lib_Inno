@@ -140,6 +140,17 @@ class TestCases(TestCase):
 
         lib.groups.add(group_librarian)
 
+    def setup_remove(self):
+        b1 = Document.objects.filter(title='Introduction to Algorithms').first()
+        b3 = Document.objects.filter(title='The Mythical Man-month').first()
+        p2 = CustomUser.objects.get(pk=2)
+
+        b1.record_set.first().delete()
+        b1.record_set.first().delete()
+        b3.record_set.first().delete()
+
+        p2.delete_user()
+
     def test_librarian_add_documents_and_users(self):
         """
         TC 1
@@ -157,15 +168,7 @@ class TestCases(TestCase):
         """
         TC 2
         """
-        b1 = Document.objects.filter(title='Introduction to Algorithms').first()
-        b3 = Document.objects.filter(title='The Mythical Man-month').first()
-        p2 = CustomUser.objects.get(pk=2)
-
-        b1.record_set.first().delete()
-        b1.record_set.first().delete()
-        b3.record_set.first().delete()
-
-        p2.delete_user()
+        self.setup_remove()
 
         self.assertTrue(Record.objects.count() == 5 and CustomUser.objects.count() == 3)
 
@@ -173,18 +176,7 @@ class TestCases(TestCase):
         """
         TC 3
         """
-
-        """Initial state"""
-        b1 = Document.objects.filter(title='Introduction to Algorithms').first()
-        b3 = Document.objects.filter(title='The Mythical Man-month').first()
-        p2 = CustomUser.objects.get(pk=2)
-
-        b1.record_set.first().delete()
-        b1.record_set.first().delete()
-        b3.record_set.first().delete()
-
-        p2.delete_user()
-        """Initial state"""
+        self.setup_remove()
 
         p1 = CustomUser.objects.get(pk=1)
         self.assertTrue(p1.first_name=="Sergey" and p1.last_name=="Afonso" and p1.address=="Via Margutta, 3" and p1.phone_number=='30001')
@@ -200,18 +192,7 @@ class TestCases(TestCase):
         """
         TC 4
         """
-
-        """Initial state"""
-        b1 = Document.objects.filter(title='Introduction to Algorithms').first()
-        b3 = Document.objects.filter(title='The Mythical Man-month').first()
-        p2 = CustomUser.objects.get(pk=2)
-
-        b1.record_set.first().delete()
-        b1.record_set.first().delete()
-        b3.record_set.first().delete()
-
-        p2.delete_user()
-        """Initial state"""
+        self.setup_remove()
 
         self.assertTrue(CustomUser.objects.filter(id=2).count() == 0)
 
@@ -221,23 +202,94 @@ class TestCases(TestCase):
         self.assertTrue('Students' in [x.name for x in p3.groups.all()] and p3.groups.count() == 1)
         self.assertTrue(p3.record_set.count() == 0)
 
-    def test_patron_check_out_book(self):
+    def test_not_existing_patron_check_out_book(self):
         """
         TC 5
         """
-        """Initial state"""
-        b1 = Document.objects.filter(title='Introduction to Algorithms').first()
-        b3 = Document.objects.filter(title='The Mythical Man-month').first()
-        p2 = CustomUser.objects.get(id=2)
-
-        b1.record_set.first().delete()
-        b1.record_set.first().delete()
-        b3.record_set.first().delete()
-
-        p2.delete_user()
-        """Initial state"""
+        self.setup_remove()
 
         self.assertTrue(CustomUser.objects.filter(id=2).count() == 0)
 
-        # b1.give_to_user(p2)
+        #b1.give_to_user(p2)
 
+    def test_patrons_check_out_books(self):
+        """
+        TC 6      INCORRECT TEST CASE
+        """
+        self.setup_remove()
+
+        self.assertTrue(True)
+
+    def test_patrons_check_out_existing_and_not_documents(self):
+        """
+        TC 7
+        """
+
+        p1 = CustomUser.objects.get(id=1)
+        p2 = CustomUser.objects.get(id=2)
+
+        b1 = Book.objects.get(id=1)
+        b2 = Book.objects.get(id=2)
+        b3 = Book.objects.get(id=3)
+
+        av1 = Audio.objects.get(id=4)
+        av2 = Video.objects.get(id=5)
+
+        b1.reserve_by_user(p1)
+        b1.give_to_user(p1, p1.record_set.filter(document=b1).first())
+
+        b2.reserve_by_user(p1)
+        b2.give_to_user(p1, p1.record_set.filter(document=b2).first())
+
+        b3.reserve_by_user(p1)
+        self.assertTrue(p1.record_set.filter(document=b3).count() == 0) # user can not take a reference book
+        #b3.give_to_user(p1, p1.record_set.filter(document=b3).first())
+
+        av1.reserve_by_user(p1)
+        av1.give_to_user(p1, p1.record_set.filter(document=av1).first())
+
+        b1.reserve_by_user(p2)
+        b1.give_to_user(p2, p2.record_set.filter(document=b1).first())
+
+        b2.reserve_by_user(p2)
+        b2.give_to_user(p2, p2.record_set.filter(document=b2).first())
+
+        av2.reserve_by_user(p2)
+        av2.give_to_user(p2, p2.record_set.filter(document=av2).first())
+
+        self.assertTrue(p1.first_name == "Sergey" and p1.last_name == "Afonso" and p1.address == "Via Margutta, 3" and p1.phone_number == '30001')
+        self.assertTrue('Faculty' in [x.name for x in p1.groups.all()] and p1.groups.count() == 1)
+        self.assertTrue(p1.record_set.count() == 3 and p1.record_set.filter(document=b1).count() == 1 and p1.record_set.filter(document=b2).count() == 1 and p1.record_set.filter(document=av1).count() == 1)
+        self.assertTrue(p1.record_set.filter(document=b1).first().due_to == datetime.date.today() + datetime.timedelta(weeks=4))
+        self.assertTrue(p1.record_set.filter(document=b2).first().due_to == datetime.date.today() + datetime.timedelta(weeks=4))
+        self.assertTrue(p1.record_set.filter(document=av1).first().due_to == datetime.date.today() + datetime.timedelta(weeks=2))
+
+        self.assertTrue(p2.first_name=="Nadia" and p2.last_name=="Teixerina" and p2.address=="Via Scara, 13" and p2.phone_number=='30002')
+        self.assertTrue('Students' in [x.name for x in p2.groups.all()] and p2.groups.count() == 1)
+        self.assertTrue(p2.record_set.count() == 3 and p2.record_set.filter(document=b1).count() == 1 and p2.record_set.filter(document=b2).count() == 1 and p2.record_set.filter(document=av2).count() == 1)
+        self.assertTrue(p2.record_set.filter(document=b1).first().due_to == datetime.date.today() + datetime.timedelta(weeks=3))
+        self.assertTrue(p2.record_set.filter(document=b2).first().due_to == datetime.date.today() + datetime.timedelta(weeks=2))
+        self.assertTrue(p2.record_set.filter(document=av2).first().due_to == datetime.date.today() + datetime.timedelta(weeks=2))
+
+    # how dafuq name this idk
+    def test_case_eight(self):
+        p1 = CustomUser.objects.get(id=1)
+        p2 = CustomUser.objects.get(id=2)
+
+        b1 = Book.objects.get(id=1)
+        b2 = Book.objects.get(id=2)
+        av1 = Audio.objects.get(id=4)
+
+        b1.reserve_by_user(p1)
+        b1.give_to_user(p1, p1.record_set.filter(document=b1).first(), date=datetime.date(year=2018, month=2, day=9))
+        b2.reserve_by_user(p1)
+        b2.give_to_user(p1, p1.record_set.filter(document=b2).first(), date=datetime.date(year=2018, month=2, day=2))
+
+        b1.reserve_by_user(p2)
+        b1.give_to_user(p2, p2.record_set.filter(document=b1).first(), date=datetime.date(year=2018, month=2, day=5))
+        av1.reserve_by_user(p2)
+        av1.give_to_user(p1, p2.record_set.filter(document=av1).first(), date=datetime.date(year=2018, month=2, day=17))
+
+        self.assertEqual(p1.record_set.filter(document=b2).first().get_overdue(), 3 + 2)
+        self.assertEqual(p2.record_set.filter(document=b1).first().get_overdue(), 7 + 2)
+        self.assertEqual(p2.record_set.filter(document=av1).first().get_overdue(), 2 + 2)
