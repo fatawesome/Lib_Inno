@@ -273,5 +273,23 @@ class TestCases(TestCase):
 
     # how dafuq name this idk
     def test_case_eight(self):
-        self.assertTrue(True)
-        pass
+        p1 = CustomUser.objects.get(id=1)
+        p2 = CustomUser.objects.get(id=2)
+
+        b1 = Book.objects.get(id=1)
+        b2 = Book.objects.get(id=2)
+        av1 = Audio.objects.get(id=4)
+
+        b1.reserve_by_user(p1)
+        b1.give_to_user(p1, p1.record_set.filter(document=b1).first(), date=datetime.date(year=2018, month=2, day=9))
+        b2.reserve_by_user(p1)
+        b2.give_to_user(p1, p1.record_set.filter(document=b2).first(), date=datetime.date(year=2018, month=2, day=2))
+
+        b1.reserve_by_user(p2)
+        b1.give_to_user(p2, p2.record_set.filter(document=b1).first(), date=datetime.date(year=2018, month=2, day=5))
+        av1.reserve_by_user(p2)
+        av1.give_to_user(p1, p2.record_set.filter(document=av1).first(), date=datetime.date(year=2018, month=2, day=17))
+
+        self.assertEqual(p1.record_set.filter(document=b2).first().get_overdue(), 3 + 2)
+        self.assertEqual(p2.record_set.filter(document=b1).first().get_overdue(), 7 + 2)
+        self.assertEqual(p2.record_set.filter(document=av1).first().get_overdue(), 2 + 2)
