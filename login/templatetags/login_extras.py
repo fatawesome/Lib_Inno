@@ -24,7 +24,6 @@ def is_debtor(user):
 def overdue_document(user, doc):
     return user.record_set.get(document=doc).due_to < datetime.date.today()
 
-
 @register.filter
 def overdue_books_list(customuser_list, user):
     res = []
@@ -48,6 +47,14 @@ def users_with_books(customuser_list):
         if user.record_set.filter(status='o').count() != 0:
             user_list.append(user)
     return user_list
+
+@register.filter
+def patrons(customuser_list):
+    users = []
+    for user in customuser_list:
+        if 'Faculty' in [x.name for x in user.groups.all()] or 'Student' in [x.name for x in user.groups.all()]:
+            users.append(user)
+    return users
 
 @register.filter
 def books_of_user(customuser_list, user):
