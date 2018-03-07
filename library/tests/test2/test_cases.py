@@ -271,8 +271,10 @@ class TestCases(TestCase):
         self.assertTrue(p2.record_set.filter(document=b2).first().due_to == datetime.date.today() + datetime.timedelta(weeks=2))
         self.assertTrue(p2.record_set.filter(document=av2).first().due_to == datetime.date.today() + datetime.timedelta(weeks=2))
 
-    # how dafuq name this idk
-    def test_case_eight(self):
+    def test_check_overdue(self):
+        """
+        TC 8
+        """
         p1 = CustomUser.objects.get(id=1)
         p2 = CustomUser.objects.get(id=2)
 
