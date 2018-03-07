@@ -21,6 +21,11 @@ def is_debtor(user):
     return False
 
 @register.filter
+def overdue_document(user, doc):
+    return user.record_set.get(document=doc).due_to < datetime.date.today()
+
+
+@register.filter
 def overdue_books_list(customuser_list, user):
     res = []
     for rec in user.record_set.all():

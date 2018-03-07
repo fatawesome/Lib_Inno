@@ -20,7 +20,11 @@
                     </thead>
                     <tbody id="DocumentTakenList">
                     {% for rec in user|taken_books_list %}
-                        <tr>
+                        {% if user|overdue_document:rec.document %}
+                            <tr class="danger">
+                        {% else %}
+                            <tr>
+                        {% endif %}
                             <td><a href="{{ rec.document.get_absolute_url }}">{{ rec.document.title }}</a></td>
                             <td>
                             {% for author in rec.document.display_authors %}

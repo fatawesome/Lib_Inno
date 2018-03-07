@@ -23,7 +23,7 @@
     <div>
         {% if user.is_authenticated and perms.library.can_delete %}
             {% if customuser.record_set.all.count != 0 %}
-                <p><a class="btn btn-danger" disabled="disabled">Delete user</a></p>
+                <p><a class="btn btn-danger" disabled="disabled" data-toggle="tooltip" data-placement="right" title="This user has some reserved or taken documents">Delete user</a></p>
 
                 <div class="alert alert-info">
                     <h3>Requests:</h3>
@@ -88,7 +88,11 @@
                             <tbody id="DocumentTakenList">
 
                             {% for rec in customuser|taken_books_list %}
-                                <tr>
+                                {% if customuser|overdue_document:rec.document %}
+                                    <tr class="danger">
+                                {% else %}
+                                    <tr>
+                                {% endif %}
                                     <td><a href="{{ rec.document.get_absolute_url }}">{{ rec.document.title }}</a></td>
                                     <td>
                                         {% for author in rec.document.display_authors %}
@@ -116,10 +120,7 @@
                 </div>
             {% else %}
                 {% if user.id == customuser.id %}
-                    <p><a class="btn btn-danger" disabled="disabled">Delete user</a></p>
-                    <div class="alert alert-success" role="alert">
-                        You can not delete yourself
-                    </div>
+                    <p><a class="btn btn-danger" disabled="disabled" data-toggle="tooltip" data-placement="right" title="You can not delete yourself">Delete user</a></p>
                 {% else %}
                     <p><a class="btn btn-danger" href="{% url 'deleteuser' customuser.id %}">Delete user</a></p>
                 {% endif %}
