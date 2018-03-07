@@ -28,8 +28,11 @@ class Record(models.Model):
         # TODO: define permissions
         permissions = ()
 
+    def get_overdue(self, date=datetime.date.today()):
+        return (date - self.due_to).days
+
     def get_overdue_fine(self):
-        days = (datetime.date.today() - self.due_to).days
+        days = self.get_overdue()
         if days > 0:
             # TODO: make magic num constant
             return days * 100
