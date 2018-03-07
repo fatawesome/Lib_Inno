@@ -38,6 +38,13 @@ def is_reference_book(document):
     return False
 
 @register.filter
+def get_year(document):
+    if Book.objects.all().filter(id=document.id).count() != 0:
+        book = Book.objects.all().get(id=document.id)
+        return book.year
+    return False
+
+@register.filter
 def available_copies_exist(document):
     return document.record_set.filter(status='a').count() != 0
 

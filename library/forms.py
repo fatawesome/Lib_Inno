@@ -42,7 +42,7 @@ class BookForm(ModelForm):
     class Meta:
         model = Book
         fields = ['title', 'authors', 'tags', 'reference',
-                  'publisher', 'edition', 'is_bestseller', 'price']
+                  'publisher', 'edition', 'is_bestseller', 'price', 'year']
 
 
 class BookChangeForm(DocumentChangeForm):
@@ -54,7 +54,8 @@ class BookChangeForm(DocumentChangeForm):
         fields = DocumentChangeForm.Meta.fields + ('reference',
                   'publisher',
                   'edition',
-                  'is_bestseller'
+                  'is_bestseller',
+                  'year',
                 )
 
 
