@@ -11,7 +11,7 @@ class CustomUserCreationForm(forms.ModelForm):
     """
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
-    groups = forms.ModelChoiceField(queryset=Group.objects.all(),
+    group = forms.ModelChoiceField(queryset=Group.objects.all(),
                                    required=True)
 
     class Meta:
@@ -21,7 +21,7 @@ class CustomUserCreationForm(forms.ModelForm):
                   'last_name',
                   'phone_number',
                   'address',
-                  'groups',
+                  'group',
                   )
 
     def clean_password2(self):
@@ -53,7 +53,7 @@ class CustomUserChangeForm(forms.ModelForm):
     A form for updating users. Includes all the fields on the user,
     but replaces the password field with admin's password hash display field.
     """
-    groups = forms.ModelChoiceField(queryset=Group.objects.all(),
+    group = forms.ModelChoiceField(queryset=Group.objects.all(),
                                    required=True)
 
     class Meta:
@@ -61,10 +61,10 @@ class CustomUserChangeForm(forms.ModelForm):
         fields = ('first_name',
                   'last_name',
                   'phone_number',
-                  'groups',
+                  'group',
                   'address',
-                  'is_admin',
-                  'is_active',
+                  #'is_admin',
+                  #'is_active',
                   )
 
     def clean_password(self):
