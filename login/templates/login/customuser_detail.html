@@ -2,6 +2,13 @@
 {% load login_extras %}
 
 {% block content %}
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <h1> {{ customuser.first_name }} {{ customuser.last_name }}
         {% if user.is_authenticated and perms.library.can_change %}
             <a class="btn btn-primary" href="{% url 'edituser' customuser.id %}">Edit&nbsp;&nbsp;<i class="glyphicon glyphicon-edit"></i></a>
@@ -11,58 +18,113 @@
     <p><strong>E-mail:</strong> {{ customuser.email }} </p>
     <p><strong>Phone number:</strong> {{ customuser.phone_number }}</p>
     <p><strong>Address:</strong> {{ customuser.address }}</p>
-    <p><strong>Is admin:</strong> {{ customuser.is_admin }}</p>
-
-    <p><strong>Taken documents:</strong>
-        {% if not customuser.record_set.all %}
-            user does not have any documents at the moment
-        {% endif %}
-        {% for rec in customuser.record_set.all %}
-            <a href="{{ rec.document.get_absolute_url }}"> {{ rec.document }} </a>
-            {% if not forloop.last %}, {% endif %}
-        {% endfor %}
-    </p>
+    <p><strong>Type:</strong> {{ customuser.groups.first }}</p>
 
     <div>
         {% if user.is_authenticated and perms.library.can_delete %}
             {% if customuser.record_set.all.count != 0 %}
-                <p><a class="btn btn-danger" disabled="disabled">Delete</a></p>
-                <div class="alert alert-success" role="alert">
-                    <h4>Documents:</h4>
-                    {% if customuser|taken_books_list %}
-                        {% for rec in customuser|taken_books_list %}
-                            <p>
-                                <a href="{{ rec.document.get_absolute_url }}"> {{ rec.document }}</a>
-                                <a class="btn btn-success" href="{% url 'take' customuser.id rec.document.id %}">Collect</a>
-                                <a class="btn btn-success" href="{% url 'ask' customuser.id rec.document.id %}">Ask for return</a>
-                            </p>
-                        {% endfor %}
+                <p><a class="btn btn-danger" disabled="disabled" data-toggle="tooltip" data-placement="right" title="This user has some reserved or taken documents">Delete user</a></p>
+
+                <div class="alert alert-info">
+                    <h3>Requests:</h3>
+                    {% if not customuser|reserved_books_list %}
+                        <h4>This user has no requests</h4>
                     {% else %}
-                        This user has no documents
+                        <input class="form-control" id="ReservedDocs" type="text" placeholder="Search..">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Authors</th>
+                                <th>Give document</th>
+                            </tr>
+                            </thead>
+                            <tbody id="DocumentReservedList">
+
+                            {% for rec in customuser|reserved_books_list %}
+                                <tr>
+                                    <td><a href="{{ rec.document.get_absolute_url }}">{{ rec.document.title }}</a></td>
+                                    <td>
+                                        {% for author in rec.document.display_authors %}
+                                            {#                            <a href="{{ author.get_absolute_url }}">#}{{ author.first_name }} {{ author.last_name }}{% if not forloop.last %},{% endif %}{#</a>#}{# TODO uncomment it #}
+                                        {% endfor %}
+                                    </td>
+                                    <td><a class="btn btn-info" href="{% url 'give_document' rec.document.id customuser.id %}">Give document</a></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <script>
+                            $(document).ready(function(){
+                                $("#ReservedDocs").on("keyup", function() {
+                                    var value = $(this).val().toLowerCase();
+                                    $("#DocumentReservedList tr").filter(function() {
+                                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                                    });
+                                });
+                            });
+                        </script>
                     {% endif %}
                 </div>
-                <div class="alert alert-success" role="alert">
-                    <h4>Requests:</h4>
-                    {% if customuser|reserved_books_list %}
-                        {% for rec in customuser|reserved_books_list %}
-                            <p>
-                                <a href="{{ rec.document.get_absolute_url }}"> {{ rec.document }}</a>
-                                <a class="btn btn-success" href="{% url 'give_document' rec.document.id customuser.id %}">Give document</a>
-                            </p>
-                        {% endfor %}
+
+                <div class="alert alert-success">
+                    <h3>Documents:</h3>
+
+                    {% if not customuser|taken_books_list %}
+                        <h4>This user has no documents</h4>
                     {% else %}
-                        This user has no requests
+
+                        <input class="form-control" id="TakenDocs" type="text" placeholder="Search..">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Authors</th>
+                                <th>Due to</th>
+                                <th>Collect</th>
+                                <th>Ask for return</th>
+                            </tr>
+                            </thead>
+                            <tbody id="DocumentTakenList">
+
+                            {% for rec in customuser|taken_books_list %}
+                                {% if customuser|overdue_document:rec.document %}
+                                    <tr class="danger">
+                                {% else %}
+                                    <tr>
+                                {% endif %}
+                                    <td><a href="{{ rec.document.get_absolute_url }}">{{ rec.document.title }}</a></td>
+                                    <td>
+                                        {% for author in rec.document.display_authors %}
+                                            {#                            <a href="{{ author.get_absolute_url }}">#}{{ author.first_name }} {{ author.last_name }}{% if not forloop.last %},{% endif %}{#</a>#}{# TODO uncomment it #}
+                                        {% endfor %}
+                                    </td>
+                                    <td>{{ rec.due_to }}</td>
+                                    <td><a class="btn btn-success" href="{% url 'take' rec.document.id customuser.id %}">Collect</a></td>
+                                    <td><a class="btn btn-warning" href="{% url 'ask' rec.document.id customuser.id %}">Ask for return</a></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <script>
+                            $(document).ready(function(){
+                                $("#TakenDocs").on("keyup", function() {
+                                    var value = $(this).val().toLowerCase();
+                                    $("#DocumentTakenList tr").filter(function() {
+                                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                                    });
+                                });
+                            });
+                        </script>
                     {% endif %}
                 </div>
             {% else %}
                 {% if user.id == customuser.id %}
-                    <p><a class="btn btn-danger" disabled="disabled">Delete</a></p>
-                    <div class="alert alert-success" role="alert">
-                        You can not delete yourself
-                    </div>
+                    <p><a class="btn btn-danger" disabled="disabled" data-toggle="tooltip" data-placement="right" title="You can not delete yourself">Delete user</a></p>
                 {% else %}
-                    <p><a class="btn btn-danger" href="{% url 'deleteuser' customuser.id %}">Delete</a></p>
+                    <p><a class="btn btn-danger" href="{% url 'deleteuser' customuser.id %}">Delete user</a></p>
                 {% endif %}
+                <div class="alert alert-warning"><h4>This user has no any documents or requests</h4></div>
             {% endif %}
         {% endif %}
     </div>

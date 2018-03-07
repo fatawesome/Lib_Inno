@@ -13,15 +13,7 @@ def is_reserved_by_user(document, user):
     return document.record_set.filter(user=user).count() == 1 and document.record_set.get(user=user).status == 'r'
 
 @register.filter
-def is_owned_by_someone(document):
-    return document.record_set.filter(status='o').count() != 0
-
-@register.filter
-def is_reserved_by_someone(document):
-    return document.record_set.filter(status='r').count() != 0
-
-@register.filter
-def owned_by(document):
+def taken_by(document):
     users = list()
     for rec in document.record_set.filter(status='o'):
         users.append((rec.user.email, rec.user.first_name, rec.user.last_name, rec.due_to, rec.user))
@@ -31,7 +23,7 @@ def owned_by(document):
 def reserved_by(document):
     users = list()
     for rec in document.record_set.filter(status='r'):
-        users.append((rec.user.email, rec.user.first_name, rec.user.last_name))
+        users.append((rec.user.email, rec.user.first_name, rec.user.last_name, rec.user))
     return users
 
 @register.filter
@@ -47,4 +39,8 @@ def is_reference_book(document):
 
 @register.filter
 def available_copies_exist(document):
-    return document.record_set.filter(status='a').count != 0
+    return document.record_set.filter(status='a').count() != 0
+
+@register.filter
+def number_of_available_copies(document):
+    return document.record_set.filter(status='a').count()

@@ -12,29 +12,18 @@
     <p><strong>Author:</strong> <a href=""> {% for author in document.authors.all %} {{ author }} {% if not forloop.last %}, {% endif %}{% endfor %}</a></p> <!-- author detail link not yet defined -->
     <p><strong>Tags:</strong> {% for tag in document.tags.all %} {{ tag }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
     <p><strong>Price:</strong> {{ document.price }}</p>
+    <p><strong>Number of available copies:</strong> {{ document|number_of_available_copies }}</p>
 
     {% if user.is_authenticated and not perms.library.can_change %}
 
         {% if document|is_reference_book %}
-            <p><a class="btn btn-success" disabled="disabled">Reserve</a></p>
-            <div class="alert alert-success" role="alert">
-                This book is a reference book
-            </div>
+            <p><a class="btn btn-success" data-toggle="tooltip" data-placement="right" title="This book is a reference book" disabled="disabled">Reserve</a></p>
         {% elif document|is_owned_by_user:user %}
-            <p><a class="btn btn-success" disabled="disabled">Reserve</a></p>
-            <div class="alert alert-success" role="alert">
-                You have already checked out this book. Return date is: {{ document|due_to:user }}
-            </div>
+            <p><a class="btn btn-success" data-toggle="tooltip" data-placement="right" title="You have already checked out this book. Return date is: {{ document|due_to:user }}"  disabled="disabled">Checked out</a></p>
         {% elif document|is_reserved_by_user:user%}
-            <p><a class="btn btn-success" disabled="disabled">Reserved</a></p>
-            <div class="alert alert-success" role="alert">
-                You have already reserved this book
-            </div>
+            <p><a class="btn btn-success" disabled="disabled" data-toggle="tooltip" data-placement="right" title="You have already reserved this book">Reserved</a></p>
         {% elif document|available_copies_exist == 0 %}
-            <p><a class="btn btn-success" disabled="disabled">Reserve</a></p>
-            <div class="alert alert-success" role="alert">
-                No more copies. Sorry.
-            </div>
+            <p><a class="btn btn-success" disabled="disabled" data-toggle="tooltip" data-placement="right" title="No more copies. Sorry.">Reserve</a></p>
         {% else %}
             <p><a class="btn btn-success" href="{% url 'reserve' document.id %}">Reserve</a></p>
         {% endif %}
@@ -50,7 +39,7 @@
             <div class="col-lg-3">
                 <div class="input-group">
                     <form method="POST" action="{% url 'add_copies' document.id %}">
-                    {% csrf_token %}
+                        {% csrf_token %}
                         <div class="input-group-btn">
                             <input type="number" class="form-control" id="number_of_copies" name="number_of_copies" placeholder="Numbers of copies to add">
                             <button class="btn btn-primary" type="submit">
@@ -64,76 +53,99 @@
 
         <br>
 
-        {% if document|is_owned_by_someone or document|is_reserved_by_someone %}
-            <p><a class="btn btn-danger" disabled="disabled">Delete document</a></p>
-            <div class="alert alert-success" role="alert">
-                {% if document|is_owned_by_someone != 0 %}
-                    This book is owned by :
-                    <table>
+        {% if document|taken_by or document|reserved_by %}
+            <p><a class="btn btn-danger" disabled="disabled" data-toggle="tooltip" data-placement="right" title="This book has taken or reserved by someone">Delete document</a></p>
+
+            <div class="alert alert-info">
+                {% if document|taken_by %}
+                    <h4>This document is taken by:</h4>
+                    <input class="form-control" id="TakenBy" type="text" placeholder="Search..">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
                         <tr>
                             <th>E-mail</th>
                             <th>First name</th>
                             <th>Last name</th>
                             <th>Due to</th>
+                            <th>Show user</th>
                         </tr>
-                        {% for user in document|owned_by%}
+                        </thead>
+
+                        <tbody id="TakenByList">
+                        {% for user in document|taken_by%}
                             <tr>
-                                {% for info in user %}
-                                    <td>
-                                        {% if not forloop.last %}
-                                            {{ info }}
-                                        {% else %}
-                                            <p><a class="btn btn-primary" href="{{ info.get_absolute_url }}">Show user</a>
-                                        {% endif %}
-                                    </td>
-                                {% endfor %}
-                            </tr>
-                        {% endfor %}
-                    </table>
-                {% endif %}
-                {% if document|is_reserved_by_someone %}
-                    <div class="alert alert-success" role="alert">
-                        This book is reserved by :
-                        <table>
-                            <tr>
-                                <th>E-mail</th>
-                                <th>First name</th>
-                                <th>Last name</th>
-                            </tr>
-                            {% for user in document|reserved_by%}
-                                <tr>
-                                    {% for info in user %}
-                                        <td>
-                                            {% if not forloop.last %}
-                                                {{ info }}
-                                            {% else %}
-                                                <p><a class="btn btn-primary" href="{{ info.get_absolute_url }}">Show user</a>
-                                            {% endif %}
-                                        </td>
-                                    {% endfor %}
-                                </tr>
+                            {% for info in user %}
+                                <td>
+                                    {% if not forloop.last %}
+                                        {{ info }}
+                                    {% else %}
+                                        <p><a class="btn btn-primary" href="{{ info.get_absolute_url }}">Show user</a>
+                                    {% endif %}
+                                </td>
                             {% endfor %}
-                        </table>
-                    </div>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <script>
+                        $(document).ready(function(){
+                            $("#TakenBy").on("keyup", function() {
+                                var value = $(this).val().toLowerCase();
+                                $("#TakenByList tr").filter(function() {
+                                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                                });
+                            });
+                        });
+                    </script>
+                {% else %}
+                    This document was not taken by someone
+                {% endif %}
+            </div>
+
+            <div class="alert alert-info">
+                {% if document|reserved_by %}
+                    <h4>This document is reserved by:</h4>
+                    <input class="form-control" id="ReservedBy" type="text" placeholder="Search..">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>E-mail</th>
+                            <th>First name</th>
+                            <th>Last name</th>
+                            <th>Show user</th>
+                        </tr>
+                        </thead>
+
+                        <tbody id="ReservedByList">
+                        {% for user in document|reserved_by%}
+                            <tr>
+                            {% for info in user %}
+                                <td>
+                                    {% if not forloop.last %}
+                                        {{ info }}
+                                    {% else %}
+                                        <p><a class="btn btn-primary" href="{{ info.get_absolute_url }}">Show user</a>
+                                    {% endif %}
+                                </td>
+                            {% endfor %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <script>
+                        $(document).ready(function(){
+                            $("#ReservedBy").on("keyup", function() {
+                                var value = $(this).val().toLowerCase();
+                                $("#ReservedByList tr").filter(function() {
+                                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                                });
+                            });
+                        });
+                    </script>
+                {% else %}
+                    This document was not reserved by someone
                 {% endif %}
             </div>
         {% else %}
             <p><a class="btn btn-danger" href="{% url 'delete' document.id %}">Delete document</a></p>
         {% endif %}
-
     {% endif %}
-
-
-    {% if perms.library.can_change %}
-        <div style="margin-left:20px;margin-top:20px">
-        <h4>Copies</h4>
-        {% for copy in document.record_set.all %}
-            <hr>
-            <p class="{% if copy.status == 'a' %}text-success{% elif copy.status == 'm' %}text-danger{% else %}text-warning{% endif %}">{{ copy.get_status_display }}</p>
-            {% if copy.status != 'a' %}<p><strong>Due to be returned:</strong> {{copy.due_back}}</p>{% endif %}
-            <p class="text-muted"><strong>Id:</strong> {{copy.id}}</p>
-        {% endfor %}
-    {% endif %}
-
-</div>
 {% endblock %}
