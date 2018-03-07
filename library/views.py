@@ -188,6 +188,21 @@ def add_copies(request, pk):
                 Record.objects.create(document=doc)
         return HttpResponseRedirect(reverse('document-detail', args=[pk]))
 
+@permission_required('library.can_delete')
+def remove_copies(request, pk):
+    doc = Document.objects.get(id=pk)
+    if request.method == 'POST':
+        form = RemoveCopies(request.POST)
+        if form.is_valid():
+            number_of_copies = form.cleaned_data['number_of_copies']
+            to_delete = min(number_of_copies, Record.objects.filter(status='a', document=doc).count())
+            print('----------\n\n')
+            print(to_delete)
+            for _ in range(to_delete):
+                rec = Record.objects.filter(status='a', document=doc).first()
+                rec.delete()
+        return HttpResponseRedirect(reverse('document-detail', args=[pk]))
+
 
 @permission_required('library.can_change')
 def take_document(request, pk, user_id):

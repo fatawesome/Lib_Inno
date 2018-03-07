@@ -51,6 +51,25 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-lg-2">
+                <h4><strong>Remove copies:</strong></h4>
+            </div>
+            <div class="col-lg-3">
+                <div class="input-group">
+                    <form method="POST" action="{% url 'remove_copies' document.id %}">
+                        {% csrf_token %}
+                        <div class="input-group-btn">
+                            <input type="number" class="form-control" id="number_of_copies" name="number_of_copies" placeholder="Numbers of copies to remove">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="glyphicon glyphicon-minus"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <br>
 
         {% if document|taken_by or document|reserved_by %}
