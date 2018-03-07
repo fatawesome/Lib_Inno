@@ -13,6 +13,8 @@
     <p><strong>Tags:</strong> {% for tag in document.tags.all %} {{ tag }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
     <p><strong>Price:</strong> {{ document.price }}</p>
     <p><strong>Number of available copies:</strong> {{ document|number_of_available_copies }}</p>
+    <p><strong>Number of checked out copies:</strong> {{ document|number_of_checked_out_copies }}</p>
+    <p><strong>Number of reserved copies:</strong> {{ document|number_of_reserved_copies }}</p>
 
     {% if user.is_authenticated and not perms.library.can_change %}
 
@@ -44,6 +46,25 @@
                             <input type="number" class="form-control" id="number_of_copies" name="number_of_copies" placeholder="Numbers of copies to add">
                             <button class="btn btn-primary" type="submit">
                                 <i class="glyphicon glyphicon-plus"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-2">
+                <h4><strong>Remove copies:</strong></h4>
+            </div>
+            <div class="col-lg-3">
+                <div class="input-group">
+                    <form method="POST" action="{% url 'remove_copies' document.id %}">
+                        {% csrf_token %}
+                        <div class="input-group-btn">
+                            <input type="number" class="form-control" id="number_of_copies" name="number_of_copies" placeholder="Numbers of copies to remove">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="glyphicon glyphicon-minus"></i>
                             </button>
                         </div>
                     </form>

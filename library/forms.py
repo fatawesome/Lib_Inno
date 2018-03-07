@@ -22,6 +22,10 @@ class AddCopies(forms.Form):
     number_of_copies = forms.IntegerField()
 
 
+class RemoveCopies(forms.Form):
+    number_of_copies = forms.IntegerField()
+
+
 class DocumentChangeForm(forms.ModelForm):
     class Meta:
         model = Document

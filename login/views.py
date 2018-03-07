@@ -42,8 +42,8 @@ def edit_user(request, pk):
             user.last_name = form.cleaned_data['last_name']
             user.phone_number = form.cleaned_data['phone_number']
             user.address = form.cleaned_data['address']
-            user.is_admin = form.cleaned_data['is_admin']
-            user.groups.set([form.cleaned_data['groups']])
+            #user.is_admin = form.cleaned_data['is_admin']
+            user.groups.set([form.cleaned_data['group']])
             user.save()
             return HttpResponseRedirect('../')
     else:
@@ -88,7 +88,7 @@ def add_user(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=True)
-            user.groups.set([form.cleaned_data['groups']])
+            user.groups.set([form.cleaned_data['group']])
             return HttpResponseRedirect('../')
     else:
         form = CustomUserCreationForm()

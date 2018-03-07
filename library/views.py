@@ -189,6 +189,22 @@ def add_copies(request, pk):
         return HttpResponseRedirect(reverse('document-detail', args=[pk]))
 
 
+@permission_required('library.can_delete')
+def remove_copies(request, pk):
+    doc = Document.objects.get(id=pk)
+    if request.method == 'POST':
+        form = RemoveCopies(request.POST)
+        if form.is_valid():
+            number_of_copies = form.cleaned_data['number_of_copies']
+            to_delete = min(number_of_copies, Record.objects.filter(status='a', document=doc).count())
+            print('----------\n\n')
+            print(to_delete)
+            for _ in range(to_delete):
+                rec = Record.objects.filter(status='a', document=doc).first()
+                rec.delete()
+        return HttpResponseRedirect(reverse('document-detail', args=[pk]))
+
+
 @permission_required('library.can_change')
 def take_document(request, pk, user_id):
     """
@@ -200,6 +216,16 @@ def take_document(request, pk, user_id):
     doc.take_from_user(user)
     return HttpResponseRedirect(user.get_absolute_url())
 
+@permission_required('library.can_change')
+def delete_copy(request, pk, user_id):
+    """
+    Delete a copy of the document
+    """
+    user = CustomUser.objects.get(id=user_id)
+    doc = Document.objects.get(id=pk)
+    rec = user.record_set.get(document=doc)
+    rec.delete()
+    return HttpResponseRedirect(user.get_absolute_url())
 
 def get_object_of_class(pk):
     if Book.objects.all().filter(id=pk).count() != 0:

@@ -44,3 +44,11 @@ def available_copies_exist(document):
 @register.filter
 def number_of_available_copies(document):
     return document.record_set.filter(status='a').count()
+
+@register.filter
+def number_of_checked_out_copies(document):
+    return document.record_set.filter(status='o').count()
+
+@register.filter
+def number_of_reserved_copies(document):
+    return document.record_set.filter(status='r').count()

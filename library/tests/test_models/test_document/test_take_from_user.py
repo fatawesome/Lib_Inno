@@ -16,9 +16,9 @@ class TakeFromUserMethodTest(TestCase):
         Author.objects.create(first_name='test', last_name='test')
         user = CustomUser.objects.create(email="user@user.com", first_name='test', last_name="testtest",
                                          phone_number="test", address="test")
-        group = Group.objects.create(name='Students')
+        groups = Group.objects.create(name='Students')
 
-        user.groups.add(group)
+        user.groups.add(groups)
 
     def setUp(self):
         book = Book.objects.create(title='test')
