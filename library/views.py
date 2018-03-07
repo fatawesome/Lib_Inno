@@ -188,6 +188,7 @@ def add_copies(request, pk):
                 Record.objects.create(document=doc)
         return HttpResponseRedirect(reverse('document-detail', args=[pk]))
 
+
 @permission_required('library.can_delete')
 def remove_copies(request, pk):
     doc = Document.objects.get(id=pk)
