@@ -16,6 +16,10 @@
     <p><strong>Number of checked out copies:</strong> {{ document|number_of_checked_out_copies }}</p>
     <p><strong>Number of reserved copies:</strong> {{ document|number_of_reserved_copies }}</p>
 
+    {% if document|get_year %}
+        <p><strong>Year:</strong> {{ document|get_year }}</p>
+    {% endif %}
+
     {% if user.is_authenticated and not perms.library.can_change %}
 
         {% if document|is_reference_book %}

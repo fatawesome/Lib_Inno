@@ -295,6 +295,7 @@ def edit_document(request, pk):
                 doc.publisher = form.cleaned_data['publisher']
                 doc.edition = form.cleaned_data['edition']
                 doc.is_bestseller = form.cleaned_data['is_bestseller']
+                doc.year = form.cleaned_data['year']
             elif isinstance(doc, Article):
                 doc.editor = form.cleaned_data['editor']
                 doc.journal = form.cleaned_data['journal']
