@@ -197,8 +197,7 @@ class TestCases(TestCase):
         self.assertTrue(CustomUser.objects.filter(id=2).count() == 0)
 
         p3 = CustomUser.objects.get(pk=3)
-        self.assertTrue(
-            p3.first_name == "Elvira" and p3.last_name == "Espindola" and p3.address == "Via del Corso, 22" and p3.phone_number == '30003')
+        self.assertTrue(p3.first_name == "Elvira" and p3.last_name == "Espindola" and p3.address == "Via del Corso, 22" and p3.phone_number == '30003')
         self.assertTrue('Students' in [x.name for x in p3.groups.all()] and p3.groups.count() == 1)
         self.assertTrue(p3.record_set.count() == 0)
 
@@ -218,7 +217,31 @@ class TestCases(TestCase):
         """
         self.setup_remove()
 
-        self.assertTrue(True)
+        p1 = CustomUser.objects.get(id=1)
+        p3 = CustomUser.objects.get(id=3)
+
+        b1 = Book.objects.get(id=1)
+        b2 = Book.objects.get(id=2)
+
+        b1.reserve_by_user(p1)
+        b1.give_to_user(p1, p1.record_set.filter(document=b1).first())
+
+
+        self.assertTrue(p3.record_set.filter(document=b1).count() == 0)
+        #b1.reserve_by_user(p3)
+        #b1.give_to_user(p3, p3.record_set.filter(document=b1).first())
+
+        b2.reserve_by_user(p1)
+        b2.give_to_user(p1, p1.record_set.filter(document=b2).first())
+
+        self.assertTrue(p1.first_name == "Sergey" and p1.last_name == "Afonso" and p1.address == "Via Margutta, 3" and p1.phone_number == '30001')
+        self.assertTrue('Faculty' in [x.name for x in p1.groups.all()] and p1.groups.count() == 1)
+        self.assertTrue(p1.record_set.count() == 2 and p1.record_set.filter(document=b1).count() == 1 and p1.record_set.filter(document=b2).count() == 1)
+        self.assertTrue(p1.record_set.filter(document=b1).first().due_to == datetime.date.today() + datetime.timedelta(weeks=4))
+
+        self.assertTrue(p3.first_name == "Elvira" and p3.last_name == "Espindola" and p3.address == "Via del Corso, 22" and p3.phone_number == '30003')
+        self.assertTrue('Students' in [x.name for x in p3.groups.all()] and p3.groups.count() == 1)
+        self.assertTrue(p3.record_set.count() == 0)
 
     def test_patrons_check_out_existing_and_not_documents(self):
         """
@@ -271,8 +294,10 @@ class TestCases(TestCase):
         self.assertTrue(p2.record_set.filter(document=b2).first().due_to == datetime.date.today() + datetime.timedelta(weeks=2))
         self.assertTrue(p2.record_set.filter(document=av2).first().due_to == datetime.date.today() + datetime.timedelta(weeks=2))
 
-    # how dafuq name this idk
-    def test_case_eight(self):
+    def test_check_overdue(self):
+        """
+        TC 8
+        """
         p1 = CustomUser.objects.get(id=1)
         p2 = CustomUser.objects.get(id=2)
 
