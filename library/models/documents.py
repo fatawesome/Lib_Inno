@@ -3,7 +3,6 @@ from django.urls import reverse
 
 from .author import Author
 from .tag import Tag
-from login.models import CustomUser
 
 import datetime
 
@@ -17,9 +16,6 @@ class Document(models.Model):
     authors = models.ManyToManyField(Author, help_text='Add authors for this document')
     tags = models.ManyToManyField(Tag, help_text='Add tags for this document')
     reference = models.BooleanField(default=False)
-
-    requests = models.ManyToManyField(CustomUser, on_delete=models.SET_NULL, null=True, blank=True)
-    outstanding_requests = models.ManyToManyField(CustomUser, on_delete=models.SET_NULL, null=True, blank=True)
 
     class Meta:
         permissions = (('can_create', 'Create new document'),
@@ -124,10 +120,6 @@ class Document(models.Model):
         :return: true if document is already taken by user
         """
         return self.record_set.filter(user=user).count() == 1
-
-    def move_to_outstanding(self, user):
-        user = self.requests.remove(user=user)
-        self.outstanding_requests.add(user)
 
 
 # TODO: Add tags to creation method.
