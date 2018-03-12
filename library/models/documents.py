@@ -48,7 +48,7 @@ class Document(models.Model):
     def display_price(self):
         return self.price
 
-    def give_to_user(self, user, record, date = datetime.date.today()):
+    def give_to_user(self, user, record, date=datetime.date.today()):
         """
         Gives a document to user
         """
@@ -95,6 +95,7 @@ class Document(models.Model):
         """
         if isinstance(self, Book):
             if 'Faculty' in [x.name for x in user.groups.all()]:
+                print('here lol')
                 delta = 4
             elif self.is_bestseller:
                 delta = 2
@@ -110,7 +111,6 @@ class Document(models.Model):
         Gets number of available copies of current document
         :return:
         """
-
         return self.record_set.filter(status="a").count()
 
     def is_owned_by_user(self, user):

@@ -5,6 +5,8 @@ from login.models import CustomUser
 import uuid
 import datetime
 
+PENALTY = 100
+
 
 class Record(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4,
@@ -34,7 +36,6 @@ class Record(models.Model):
     def get_overdue_fine(self):
         days = self.get_overdue()
         if days > 0:
-            # TODO: make magic num constant
-            return days * 100
+            return days * PENALTY
         else:
             return 0

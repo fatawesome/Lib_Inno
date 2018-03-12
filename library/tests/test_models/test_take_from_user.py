@@ -7,7 +7,6 @@ from library.models.author import Author
 from django.contrib.auth.models import User, Group
 
 from login.models import CustomUser
-from login.models import CustomUserManager
 
 
 class TakeFromUserMethodTest(TestCase):

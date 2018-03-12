@@ -288,7 +288,7 @@ class TestCases(TestCase):
         b1.reserve_by_user(p2)
         b1.give_to_user(p2, p2.record_set.filter(document=b1).first(), date=datetime.date(year=2018, month=2, day=5))
         av1.reserve_by_user(p2)
-        av1.give_to_user(p1, p2.record_set.filter(document=av1).first(), date=datetime.date(year=2018, month=2, day=17))
+        av1.give_to_user(p2, p2.record_set.filter(document=av1).first(), date=datetime.date(year=2018, month=2, day=17))
 
         self.assertEqual(p1.record_set.filter(document=b2).first().get_overdue(), 3 + 2)
         self.assertEqual(p2.record_set.filter(document=b1).first().get_overdue(), 7 + 2)
