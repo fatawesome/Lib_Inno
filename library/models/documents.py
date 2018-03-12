@@ -125,6 +125,10 @@ class Document(models.Model):
         """
         return self.record_set.filter(user=user).count() == 1
 
+    def move_to_outstanding(self, user):
+        user = self.requests.remove(user=user)
+        self.outstanding_requests.add(user)
+
 
 # TODO: Add tags to creation method.
 class BookManager(models.Manager):
