@@ -327,7 +327,3 @@ def ask_for_return(request, pk, user_id):
         fail_silently=False
     )
     return HttpResponseRedirect(user.get_absolute_url())
-
-
-
-
