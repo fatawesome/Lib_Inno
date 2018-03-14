@@ -3,6 +3,7 @@ from django.urls import reverse
 
 from .author import Author
 from .tag import Tag
+from .request_queue import RequestQueue
 
 import datetime
 
@@ -16,6 +17,8 @@ class Document(models.Model):
     authors = models.ManyToManyField(Author, help_text='Add authors for this document')
     tags = models.ManyToManyField(Tag, help_text='Add tags for this document')
     reference = models.BooleanField(default=False)
+
+    request_queue = models.ForeignKey(RequestQueue, on_delete=models.SET_NULL, null=True)
 
     class Meta:
         permissions = (('can_create', 'Create new document'),

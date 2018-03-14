@@ -4,9 +4,8 @@ from login.models import CustomUser
 
 
 class RequestQueue(models.Model):
-    document = models.ForeignKey(Document, on_delete=models.SET_NULL, null=True)
     date = models.DateField()
-    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True)
+    users = models.ManyToManyField(CustomUser, help_text='Add users for this queue')
 
     GROUP_PRIORITY = (
         (1, 'Faculty'),
