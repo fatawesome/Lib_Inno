@@ -254,7 +254,7 @@ def reserve(request, doc_id):
 def get_in_queue(request, doc_id):
     doc = get_object_of_class(doc_id)
     element = RequestQueueElement.objects.create(document=doc, user=request.user, date=datetime.date.today())
-    element.set_priority()
+    element.priority = element.default_priority()
     element.save()
     pk = doc_id
     return HttpResponseRedirect(reverse('document-detail', args=[pk]))
@@ -283,6 +283,16 @@ def increase_user_priority(request, doc_id, user_id):
     user = CustomUser.objects.get(id=user_id)
     element = RequestQueueElement.objects.get(document=doc, user=user)
     element.priority = max([x.priority for x in RequestQueueElement.objects.filter(document=doc).all()]) + 1
+    element.save()
+    return HttpResponseRedirect(reverse('document-detail', args=[doc_id]))
+
+
+@permission_required('library.can_change')
+def reset_user_priority(request, doc_id, user_id):
+    doc = get_object_of_class(doc_id)
+    user = CustomUser.objects.get(id=user_id)
+    element = RequestQueueElement.objects.get(document=doc, user=user)
+    element.priority = element.default_priority()
     element.save()
     return HttpResponseRedirect(reverse('document-detail', args=[doc_id]))
 

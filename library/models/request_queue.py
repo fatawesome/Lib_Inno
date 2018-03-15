@@ -10,11 +10,11 @@ class RequestQueueElement(models.Model):
 #    priority = models.IntegerField(default=(0 if 'Students' in [x.name for x in user.groups.all()] else 1))
     priority = models.IntegerField(default=0)
 
-    def set_priority(self):
+    def default_priority(self):
         if 'Students' in [x.name for x in self.user.groups.all()]:
-            self.priority = 0
+            return 0
         elif 'Faculty' in [x.name for x in self.user.groups.all()]:
-            self.priority = 1
+            return 1
 
     # GROUP_PRIORITY = (
     #     (1, 'Faculty'),

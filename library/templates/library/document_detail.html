@@ -85,7 +85,7 @@
 
 
 
-        <div class="alert alert-info">
+        <div class="alert alert-success">
             {% if document|queue %}
                 <h4>This document is requested by:</h4>
                 <input class="form-control" id="TakenBy" type="text" placeholder="Search..">
@@ -97,19 +97,29 @@
                         <th>Last name</th>
                         <th>Type</th>
                         <th>Priority</th>
-                        <th>Move to the front</th>
+                        <th>Change the order</th>
                     </tr>
                     </thead>
 
                     <tbody id="TakenByList">
                     {% for queue_element in document|queue%}
-                        <tr>
+                        {% if queue_element.priority != queue_element.default_priority %}
+                            <tr class="info">
+                        {% else %}
+                            <tr>
+                        {% endif %}
                             <td>{{ queue_element.user.email }}</td>
                             <td>{{ queue_element.user.first_name }}</td>
                             <td>{{ queue_element.user.last_name }}</td>
                             <td>{{ queue_element.user.groups.all.first }}</td>
                             <td>{{ queue_element.priority }}</td>
-                            <td><a class="btn btn-info" href="{% url 'increase_user_priority' queue_element.document.id queue_element.user.id %}">Move to the front</a></td>
+                            <td>
+                                {% if queue_element.priority == queue_element.default_priority %}
+                                    <a class="btn btn-info" href="{% url 'increase_user_priority' queue_element.document.id queue_element.user.id %}">Move to the front</a>
+                                {% else %}
+                                    <a class="btn btn-danger" href="{% url 'reset_user_priority' queue_element.document.id queue_element.user.id %}">Reset order</a>
+                                {% endif %}
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>
