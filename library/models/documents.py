@@ -63,6 +63,10 @@ class Document(models.Model):
         """
         rec_set = self.record_set.filter(status='a')
         if rec_set.count() != 0 and self.id not in [x.document.id for x in user.record_set.all()] and not self.reference:# Why do we check it second time?
+
+            if user.requestqueueelement_set.filter(document=self).count() != 0: # If the user in the request queue
+                user.requestqueueelement_set.get(document=self).delete()        # remove it from there
+
             record = rec_set.first()
             record.user = user
             record.status = 'r'

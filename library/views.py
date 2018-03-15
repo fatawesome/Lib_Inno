@@ -186,8 +186,14 @@ def add_copies(request, pk):
         form = AddCopies(request.POST)
         if form.is_valid():
             number_of_copies = form.cleaned_data['number_of_copies']
+
+            print('-------------\n\n\n')
+            print([x.priority for x in doc.requestqueueelement_set.all()])
+
             for _ in range(number_of_copies):
                 Record.objects.create(document=doc)
+                update_request_queue()
+
         return HttpResponseRedirect(reverse('document-detail', args=[pk]))
 
 
@@ -207,6 +213,16 @@ def remove_copies(request, pk):
         return HttpResponseRedirect(reverse('document-detail', args=[pk]))
 
 
+def update_request_queue():
+    """
+        Give available copies to someone in the request queue
+    """
+    while Record.objects.filter(status='a').count() != 0:
+        doc = Record.objects.filter(status='a').first().document
+        user = doc.requestqueueelement_set.first().user
+        doc.reserve_by_user(user)
+
+
 @permission_required('library.can_change')
 def take_document(request, pk, user_id):
     """
@@ -216,6 +232,9 @@ def take_document(request, pk, user_id):
     user = CustomUser.objects.get(id=user_id)
     doc = Document.objects.get(id=pk)
     doc.take_from_user(user)
+
+    update_request_queue() # give this record to someone in the queue
+
     return HttpResponseRedirect(user.get_absolute_url())
 
 @permission_required('library.can_change')
