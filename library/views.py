@@ -219,6 +219,8 @@ def update_request_queue():
     """
     while Record.objects.filter(status='a').count() != 0:
         doc = Record.objects.filter(status='a').first().document
+        if doc.requestqueueelement_set.count() == 0:
+            break
         user = doc.requestqueueelement_set.first().user
         doc.reserve_by_user(user)
 
@@ -266,8 +268,7 @@ def reserve(request, doc_id):
     doc = get_object_of_class(doc_id)
 
     doc.reserve_by_user(request.user)
-    pk = doc_id
-    return HttpResponseRedirect(reverse('document-detail', args=[pk]))
+    return HttpResponseRedirect(reverse('document-detail', args=[doc_id]))
 
 
 def get_in_queue(request, doc_id):
@@ -275,16 +276,14 @@ def get_in_queue(request, doc_id):
     element = RequestQueueElement.objects.create(document=doc, user=request.user, date=datetime.date.today())
     element.priority = element.default_priority()
     element.save()
-    pk = doc_id
-    return HttpResponseRedirect(reverse('document-detail', args=[pk]))
+    return HttpResponseRedirect(reverse('document-detail', args=[doc_id]))
 
 
 def quit_queue(request, doc_id):
     doc = get_object_of_class(doc_id)
     element = RequestQueueElement.objects.get(document=doc, user=request.user)
     element.delete()
-    pk = doc_id
-    return HttpResponseRedirect(reverse('document-detail', args=[pk]))
+    return HttpResponseRedirect(reverse('document-detail', args=[doc_id]))
 
 
 @permission_required('library.can_change')
