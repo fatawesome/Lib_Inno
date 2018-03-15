@@ -32,7 +32,7 @@
             {% if document|already_in_queue:user %}
                 <p><a class="btn btn-danger" href="{% url 'quit_queue' document.id %}">Quit the line</a></p>
             {% else %}
-                <p><a class="btn btn-success" href="{% url 'get_in_queue' document.id %}">Get in line</a></p>
+                <p><a class="btn btn-success" href="{% url 'get_in_queue' document.id %}" data-toggle="tooltip" data-placement="right" title="No more available copies. Sorry">Get in line</a></p>
             {% endif %}
         {% else %}
             <p><a class="btn btn-success" href="{% url 'reserve' document.id %}">Reserve</a></p>
@@ -84,59 +84,63 @@
 
 
 
-
-        <div class="alert alert-success">
-            {% if document|queue %}
-                <h4>This document is requested by:</h4>
-                <input class="form-control" id="TakenBy" type="text" placeholder="Search..">
-                <table class="table table-bordered table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th>E-mail</th>
-                        <th>First name</th>
-                        <th>Last name</th>
-                        <th>Type</th>
-                        <th>Priority</th>
-                        <th>Change the order</th>
-                    </tr>
-                    </thead>
-
-                    <tbody id="TakenByList">
-                    {% for queue_element in document|queue%}
-                        {% if queue_element.priority != queue_element.default_priority %}
-                            <tr class="info">
-                        {% else %}
-                            <tr>
-                        {% endif %}
-                            <td>{{ queue_element.user.email }}</td>
-                            <td>{{ queue_element.user.first_name }}</td>
-                            <td>{{ queue_element.user.last_name }}</td>
-                            <td>{{ queue_element.user.groups.all.first }}</td>
-                            <td>{{ queue_element.priority }}</td>
-                            <td>
-                                {% if queue_element.priority == queue_element.default_priority %}
-                                    <a class="btn btn-info" href="{% url 'increase_user_priority' queue_element.document.id queue_element.user.id %}">Move to the front</a>
-                                {% else %}
-                                    <a class="btn btn-danger" href="{% url 'reset_user_priority' queue_element.document.id queue_element.user.id %}">Reset order</a>
-                                {% endif %}
-                            </td>
+        <button type="button" class="btn btn-success" data-toggle="collapse" data-target="#ShowRequestQueue">Show request queue</button>
+        <br>
+        <br>
+        <div id="ShowRequestQueue" class="collapse">
+            <div class="alert alert-success">
+                {% if document|queue %}
+                    <h4>This document is requested by:</h4>
+                    <input class="form-control" id="TakenBy" type="text" placeholder="Search..">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>E-mail</th>
+                            <th>First name</th>
+                            <th>Last name</th>
+                            <th>Type</th>
+                            <th>Priority</th>
+                            <th>Change the order</th>
                         </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-                <script>
-                    $(document).ready(function(){
-                        $("#TakenBy").on("keyup", function() {
-                            var value = $(this).val().toLowerCase();
-                            $("#TakenByList tr").filter(function() {
-                                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                        </thead>
+
+                        <tbody id="TakenByList">
+                        {% for queue_element in document|queue%}
+                            {% if queue_element.priority != queue_element.default_priority %}
+                                <tr class="info">
+                                    {% else %}
+                                <tr>
+                            {% endif %}
+                        <td>{{ queue_element.user.email }}</td>
+                        <td>{{ queue_element.user.first_name }}</td>
+                        <td>{{ queue_element.user.last_name }}</td>
+                        <td>{{ queue_element.user.groups.all.first }}</td>
+                        <td>{{ queue_element.priority }}</td>
+                        <td>
+                            {% if queue_element.priority == queue_element.default_priority %}
+                                <a class="btn btn-info" href="{% url 'increase_user_priority' queue_element.document.id queue_element.user.id %}">Move to the front</a>
+                            {% else %}
+                                <a class="btn btn-danger" href="{% url 'reset_user_priority' queue_element.document.id queue_element.user.id %}">Reset order</a>
+                            {% endif %}
+                        </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <script>
+                        $(document).ready(function(){
+                            $("#TakenBy").on("keyup", function() {
+                                var value = $(this).val().toLowerCase();
+                                $("#TakenByList tr").filter(function() {
+                                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                                });
                             });
                         });
-                    });
-                </script>
-            {% else %}
-                This document was not requested by someone
-            {% endif %}
+                    </script>
+                {% else %}
+                    This document was not requested by someone
+                {% endif %}
+            </div>
         </div>
 
 
