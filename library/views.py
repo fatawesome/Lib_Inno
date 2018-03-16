@@ -5,7 +5,9 @@ from django.urls import reverse
 from django.views.generic.edit import CreateView
 from django.contrib.auth.decorators import permission_required
 from django.core.mail import send_mail, BadHeaderError
+from .models.request_queue import RequestQueueElement
 from library import views
+import datetime
 
 from library.models import *
 from .forms import BookForm
@@ -184,8 +186,14 @@ def add_copies(request, pk):
         form = AddCopies(request.POST)
         if form.is_valid():
             number_of_copies = form.cleaned_data['number_of_copies']
+
+            print('-------------\n\n\n')
+            print([x.priority for x in doc.requestqueueelement_set.all()])
+
             for _ in range(number_of_copies):
                 Record.objects.create(document=doc)
+                update_request_queue()
+
         return HttpResponseRedirect(reverse('document-detail', args=[pk]))
 
 
@@ -205,6 +213,18 @@ def remove_copies(request, pk):
         return HttpResponseRedirect(reverse('document-detail', args=[pk]))
 
 
+def update_request_queue():
+    """
+        Give available copies to someone in the request queue
+    """
+    while Record.objects.filter(status='a').count() != 0:
+        doc = Record.objects.filter(status='a').first().document
+        if doc.requestqueueelement_set.count() == 0:
+            break
+        user = doc.requestqueueelement_set.first().user
+        doc.reserve_by_user(user)
+
+
 @permission_required('library.can_change')
 def take_document(request, pk, user_id):
     """
@@ -214,6 +234,9 @@ def take_document(request, pk, user_id):
     user = CustomUser.objects.get(id=user_id)
     doc = Document.objects.get(id=pk)
     doc.take_from_user(user)
+
+    update_request_queue() # give this record to someone in the queue
+
     return HttpResponseRedirect(user.get_absolute_url())
 
 @permission_required('library.can_change')
@@ -226,6 +249,7 @@ def delete_copy(request, pk, user_id):
     rec = user.record_set.get(document=doc)
     rec.delete()
     return HttpResponseRedirect(user.get_absolute_url())
+
 
 def get_object_of_class(pk):
     if Book.objects.all().filter(id=pk).count() != 0:
@@ -244,8 +268,22 @@ def reserve(request, doc_id):
     doc = get_object_of_class(doc_id)
 
     doc.reserve_by_user(request.user)
-    pk = doc_id
-    return HttpResponseRedirect(reverse('document-detail', args=[pk]))
+    return HttpResponseRedirect(reverse('document-detail', args=[doc_id]))
+
+
+def get_in_queue(request, doc_id):
+    doc = get_object_of_class(doc_id)
+    element = RequestQueueElement.objects.create(document=doc, user=request.user, date=datetime.date.today())
+    element.priority = element.default_priority()
+    element.save()
+    return HttpResponseRedirect(reverse('document-detail', args=[doc_id]))
+
+
+def quit_queue(request, doc_id):
+    doc = get_object_of_class(doc_id)
+    element = RequestQueueElement.objects.get(document=doc, user=request.user)
+    element.delete()
+    return HttpResponseRedirect(reverse('document-detail', args=[doc_id]))
 
 
 @permission_required('library.can_change')
@@ -253,10 +291,28 @@ def give_document(request, doc_id, user_id):
     doc = get_object_of_class(doc_id)
     user = CustomUser.objects.get(id=user_id)
     rec = user.record_set.get(document=doc)
-
-
     doc.give_to_user(request.user, rec)
     return HttpResponseRedirect(reverse('customuser_detail', args=[user_id]))
+
+
+@permission_required('library.can_change')
+def increase_user_priority(request, doc_id, user_id):
+    doc = get_object_of_class(doc_id)
+    user = CustomUser.objects.get(id=user_id)
+    element = RequestQueueElement.objects.get(document=doc, user=user)
+    element.priority = max([x.priority for x in RequestQueueElement.objects.filter(document=doc).all()]) + 1
+    element.save()
+    return HttpResponseRedirect(reverse('document-detail', args=[doc_id]))
+
+
+@permission_required('library.can_change')
+def reset_user_priority(request, doc_id, user_id):
+    doc = get_object_of_class(doc_id)
+    user = CustomUser.objects.get(id=user_id)
+    element = RequestQueueElement.objects.get(document=doc, user=user)
+    element.priority = element.default_priority()
+    element.save()
+    return HttpResponseRedirect(reverse('document-detail', args=[doc_id]))
 
 
 @permission_required('library.can_delete')

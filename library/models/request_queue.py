@@ -3,15 +3,24 @@ from library.models import *
 from login.models import CustomUser
 
 
-class RequestQueue(models.Model):
+class RequestQueueElement(models.Model):
     date = models.DateField()
-    users = models.ManyToManyField(CustomUser, help_text='Add users for this queue')
+    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True)
+    document = models.ForeignKey(Document, on_delete=models.SET_NULL, null=True)
+#    priority = models.IntegerField(default=(0 if 'Students' in [x.name for x in user.groups.all()] else 1))
+    priority = models.IntegerField(default=0)
 
-    GROUP_PRIORITY = (
-        (1, 'Faculty'),
-        (2, 'Student'),
-    )
-    group_priority = models.IntegerField(choices=GROUP_PRIORITY)
+    def default_priority(self):
+        if 'Students' in [x.name for x in self.user.groups.all()]:
+            return 0
+        elif 'Faculty' in [x.name for x in self.user.groups.all()]:
+            return 1
+
+    # GROUP_PRIORITY = (
+    #     (1, 'Faculty'),
+    #     (2, 'Student'),
+    # )
+    # group_priority = models.IntegerField(choices=GROUP_PRIORITY)
 
     class Meta:
-        ordering = ['group_priority', 'date']
+        ordering = ['-priority', 'date']

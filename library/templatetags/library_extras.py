@@ -59,3 +59,11 @@ def number_of_checked_out_copies(document):
 @register.filter
 def number_of_reserved_copies(document):
     return document.record_set.filter(status='r').count()
+
+@register.filter
+def already_in_queue(document, user):
+    return document.requestqueueelement_set.filter(user=user).count() != 0
+
+@register.filter
+def queue(document):
+    return document.requestqueueelement_set.all()

@@ -3,7 +3,6 @@ from django.urls import reverse
 
 from .author import Author
 from .tag import Tag
-from .request_queue import RequestQueue
 
 import datetime
 
@@ -17,7 +16,6 @@ class Document(models.Model):
     authors = models.ManyToManyField(Author, help_text='Add authors for this document')
     tags = models.ManyToManyField(Tag, help_text='Add tags for this document')
     reference = models.BooleanField(default=False)
-    request_queue = models.OneToOneField(RequestQueue, on_delete=models.SET_NULL, null=True)
 
     class Meta:
         permissions = (('can_create', 'Create new document'),
@@ -65,6 +63,10 @@ class Document(models.Model):
         """
         rec_set = self.record_set.filter(status='a')
         if rec_set.count() != 0 and self.id not in [x.document.id for x in user.record_set.all()] and not self.reference:# Why do we check it second time?
+
+            if user.requestqueueelement_set.filter(document=self).count() != 0: # If the user in the request queue
+                user.requestqueueelement_set.get(document=self).delete()        # remove it from there
+
             record = rec_set.first()
             record.user = user
             record.status = 'r'
