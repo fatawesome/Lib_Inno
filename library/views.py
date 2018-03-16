@@ -318,6 +318,8 @@ def reset_user_priority(request, doc_id, user_id):
 @permission_required('library.can_delete')
 def delete_document(request, pk):
     doc = Document.objects.get(id=pk)
+    for queue_elem in doc.requestqueueelement_set.all():
+        queue_elem.delete()
     doc.delete_document()
     return HttpResponseRedirect(reverse('documents'))
 
