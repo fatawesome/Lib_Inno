@@ -87,4 +87,45 @@
     {% endif %}
 
 
+
+     {% if user.requestqueueelement_set.all %}
+        <div class="col-md-*">
+            <div class="alert alert-success">
+            <h3>My lines:</h3>
+                <input class="form-control" id="TakenDocs" type="text" placeholder="Search..">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Authors</th>
+                    </tr>
+                    </thead>
+                    <tbody id="DocumentTakenList">
+                    {% for queue_element in user.requestqueueelement_set.all %}
+                            <tr>
+                            <td><a href="{{ queue_element.document.get_absolute_url }}">{{ queue_element.document.title }}</a></td>
+                            <td>
+                            {% for author in queue_element.document.display_authors %}
+    {#                            <a href="{{ author.get_absolute_url }}">#}{{ author.first_name }} {{ author.last_name }}{% if not forloop.last %},{% endif %}{#</a>#}{# TODO uncomment it #}
+                            {% endfor %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <script>
+                    $(document).ready(function(){
+                        $("#TakenDocs").on("keyup", function() {
+                            var value = $(this).val().toLowerCase();
+                            $("#DocumentTakenList tr").filter(function() {
+                                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                            });
+                        });
+                    });
+                </script>
+            </div>
+        </div>
+    {% endif %}
+
+
 {% endblock %}
