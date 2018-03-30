@@ -86,7 +86,7 @@ def add_user(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            form.save(commit=True)
+            user = form.save(commit=True)
             return HttpResponseRedirect('../')
     else:
         form = CustomUserCreationForm()

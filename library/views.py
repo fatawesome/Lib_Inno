@@ -286,7 +286,7 @@ def give_document(request, doc_id, user_id):
     doc = get_object_of_class(doc_id)
     user = CustomUser.objects.get(id=user_id)
     rec = user.record_set.get(document=doc)
-    doc.give_to_user(request.user, rec)
+    doc.give_to_user(user, rec)
     return HttpResponseRedirect(reverse('customuser_detail', args=[user_id]))
 
 
