@@ -99,7 +99,6 @@ class Document(models.Model):
         """
         if isinstance(self, Book):
             if 'Faculty' in [x.name for x in user.groups.all()]:
-                print('here lol')
                 delta = 4
             elif self.is_bestseller:
                 delta = 2

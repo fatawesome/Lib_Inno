@@ -36,15 +36,13 @@ def edit_user(request, pk):
     """
     user = CustomUser.objects.get(pk=pk)
     if request.method == 'POST':
-        form = CustomUserChangeForm(request.POST)
+        form = CustomUserChangeForm(request.POST) # Why we cannot do it in the form? save method is overridden
         if form.is_valid():
             user.email = form.cleaned_data['email']
             user.first_name = form.cleaned_data['first_name']
             user.last_name = form.cleaned_data['last_name']
             user.phone_number = form.cleaned_data['phone_number']
             user.address = form.cleaned_data['address']
-            #user.is_admin = form.cleaned_data['is_admin']
-            user.groups.set([form.cleaned_data['group']])
             user.save()
             return HttpResponseRedirect('../')
     else:
@@ -88,8 +86,7 @@ def add_user(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=True)
-            user.groups.set([form.cleaned_data['group']])
+            form.save(commit=True)
             return HttpResponseRedirect('../')
     else:
         form = CustomUserCreationForm()

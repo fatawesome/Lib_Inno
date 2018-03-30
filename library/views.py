@@ -187,9 +187,6 @@ def add_copies(request, pk):
         if form.is_valid():
             number_of_copies = form.cleaned_data['number_of_copies']
 
-            print('-------------\n\n\n')
-            print([x.priority for x in doc.requestqueueelement_set.all()])
-
             for _ in range(number_of_copies):
                 Record.objects.create(document=doc)
                 update_request_queue()
@@ -205,8 +202,6 @@ def remove_copies(request, pk):
         if form.is_valid():
             number_of_copies = form.cleaned_data['number_of_copies']
             to_delete = min(number_of_copies, Record.objects.filter(status='a', document=doc).count())
-            print('----------\n\n')
-            print(to_delete)
             for _ in range(to_delete):
                 rec = Record.objects.filter(status='a', document=doc).first()
                 rec.delete()
