@@ -3,129 +3,136 @@
 
 {% block content %}
 
-    <h1>My documents:</h1>
+<h1>My documents:</h1>
 
-    {% if user.record_set.all %}
-        <div class="col-md-*">
-            <div class="alert alert-success">
-            <h3>Checked out books:</h3>
-                <input class="form-control" id="TakenDocs" type="text" placeholder="Search..">
-                <table class="table table-bordered table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Authors</th>
-                        <th>Due to</th>
-                    </tr>
-                    </thead>
-                    <tbody id="DocumentTakenList">
-                    {% for rec in user|taken_books_list %}
-                        {% if user|overdue_document:rec.document %}
-                            <tr class="danger">
-                        {% else %}
-                            <tr>
-                        {% endif %}
-                            <td><a href="{{ rec.document.get_absolute_url }}">{{ rec.document.title }}</a></td>
-                            <td>
-                            {% for author in rec.document.display_authors %}
-    {#                            <a href="{{ author.get_absolute_url }}">#}{{ author.first_name }} {{ author.last_name }}{% if not forloop.last %},{% endif %}{#</a>#}{# TODO uncomment it #}
-                            {% endfor %}
-                            </td>
-                            <td>{{ rec.due_to }}</td>
-                        </tr>
+
+<div class="col-md-*">
+    <div class="alert alert-success">
+        <h3>Checked out books:</h3>
+        {% if user|taken_books_list %}
+        <input class="form-control" id="TakenDocs" type="text" placeholder="Search..">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Authors</th>
+                <th>Due to</th>
+            </tr>
+            </thead>
+            <tbody id="DocumentTakenList">
+            {% for rec in user|taken_books_list %}
+            {% if user|overdue_document:rec.document %}
+            <tr class="danger">
+                {% else %}
+            <tr>
+                {% endif %}
+                <td><a href="{{ rec.document.get_absolute_url }}">{{ rec.document.title }}</a></td>
+                <td>
+                    {% for author in rec.document.display_authors %}
+                    {#                            <a href="{{ author.get_absolute_url }}">#}{{ author.first_name }} {{ author.last_name }}{% if not forloop.last %},{% endif %}{#</a>#}{# TODO uncomment it #}
                     {% endfor %}
-                    </tbody>
-                </table>
-                <script>
-                    $(document).ready(function(){
-                        $("#TakenDocs").on("keyup", function() {
-                            var value = $(this).val().toLowerCase();
-                            $("#DocumentTakenList tr").filter(function() {
-                                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                            });
-                        });
+                </td>
+                <td>{{ rec.due_to }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <script>
+            $(document).ready(function(){
+                $("#TakenDocs").on("keyup", function() {
+                    var value = $(this).val().toLowerCase();
+                    $("#DocumentTakenList tr").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                     });
-                </script>
-            </div>
-            <div class="alert alert-info">
-                <h3>Reserved books:</h3>
-                <input class="form-control" id="ReservedDocs" type="text" placeholder="Search..">
-                <table class="table table-bordered table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Authors</th>
-                    </tr>
-                    </thead>
-                    <tbody id="DocumentReservedList">
-                    {% for rec in user|reserved_books_list %}
-                        <tr>
-                            <td><a href="{{ rec.document.get_absolute_url }}">{{ rec.document.title }}</a></td>
-                            <td>
-                            {% for author in rec.document.display_authors %}
-    {#                            <a href="{{ author.get_absolute_url }}">#}{{ author.first_name }} {{ author.last_name }}{% if not forloop.last %},{% endif %}{#</a>#}{# TODO uncomment it #}
-                            {% endfor %}
-                            </td>
-                        </tr>
+                });
+            });
+        </script>
+        {% else %}
+        You have no taken documents
+        {%endif%}
+    </div>
+
+
+    <div class="alert alert-info">
+        <h3>Reserved books:</h3>
+        {% if user|reserved_books_list %}
+        <input class="form-control" id="ReservedDocs" type="text" placeholder="Search..">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Authors</th>
+            </tr>
+            </thead>
+            <tbody id="DocumentReservedList">
+            {% for rec in user|reserved_books_list %}
+            <tr>
+                <td><a href="{{ rec.document.get_absolute_url }}">{{ rec.document.title }}</a></td>
+                <td>
+                    {% for author in rec.document.display_authors %}
+                    {#                            <a href="{{ author.get_absolute_url }}">#}{{ author.first_name }} {{ author.last_name }}{% if not forloop.last %},{% endif %}{#</a>#}{# TODO uncomment it #}
                     {% endfor %}
-                    </tbody>
-                </table>
-                <script>
-                    $(document).ready(function(){
-                        $("#ReservedDocs").on("keyup", function() {
-                            var value = $(this).val().toLowerCase();
-                            $("#DocumentReservedList tr").filter(function() {
-                                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                            });
-                        });
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <script>
+            $(document).ready(function(){
+                $("#ReservedDocs").on("keyup", function() {
+                    var value = $(this).val().toLowerCase();
+                    $("#DocumentReservedList tr").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                     });
-                </script>
-            </div>
-        </div>
-    {% else %}
-        <p>You have not taken any document</p>
-    {% endif %}
+                });
+            });
+        </script>
+        {% else %}
+        You have no reserved documents
+        {% endif %}
+    </div>
 
+    <div class="alert alert-success">
 
-
-     {% if user.requestqueueelement_set.all %}
-        <div class="col-md-*">
-            <div class="alert alert-success">
-            <h3>My lines:</h3>
-                <input class="form-control" id="TakenDocs" type="text" placeholder="Search..">
-                <table class="table table-bordered table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Authors</th>
-                    </tr>
-                    </thead>
-                    <tbody id="DocumentTakenList">
-                    {% for queue_element in user.requestqueueelement_set.all %}
-                            <tr>
-                            <td><a href="{{ queue_element.document.get_absolute_url }}">{{ queue_element.document.title }}</a></td>
-                            <td>
-                            {% for author in queue_element.document.display_authors %}
-    {#                            <a href="{{ author.get_absolute_url }}">#}{{ author.first_name }} {{ author.last_name }}{% if not forloop.last %},{% endif %}{#</a>#}{# TODO uncomment it #}
-                            {% endfor %}
-                            </td>
-                        </tr>
+        <h3>My lines:</h3>
+        {% if user.requestqueueelement_set.all %}
+        <input class="form-control" id="QueueDocs" type="text" placeholder="Search..">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Authors</th>
+            </tr>
+            </thead>
+            <tbody id="QueueDocsList">
+            {% for queue_element in user.requestqueueelement_set.all %}
+            <tr>
+                <td><a href="{{ queue_element.document.get_absolute_url }}">{{ queue_element.document.title }}</a></td>
+                <td>
+                    {% for author in queue_element.document.display_authors %}
+                    {#                            <a href="{{ author.get_absolute_url }}">#}{{ author.first_name }} {{ author.last_name }}{% if not forloop.last %},{% endif %}{#</a>#}{# TODO uncomment it #}
                     {% endfor %}
-                    </tbody>
-                </table>
-                <script>
-                    $(document).ready(function(){
-                        $("#TakenDocs").on("keyup", function() {
-                            var value = $(this).val().toLowerCase();
-                            $("#DocumentTakenList tr").filter(function() {
-                                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                            });
-                        });
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <script>
+            $(document).ready(function(){
+                $("#QueueDocs").on("keyup", function() {
+                    var value = $(this).val().toLowerCase();
+                    $("#QueueDocsList tr").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                     });
-                </script>
-            </div>
-        </div>
-    {% endif %}
+                });
+            });
+        </script>
+        {% else %}
+        You are not in any of the lines
+        {% endif %}
+    </div>
+</div>
+
 
 
 {% endblock %}
