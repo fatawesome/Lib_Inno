@@ -5,12 +5,11 @@
 
     <h1>Add book</h1>
 
-     <p align="right">
+    <div align="right">
         <button type="button" class="btn btn-info btn" data-toggle="modal" data-target="#AddAuthor">Add author</button>
         <button type="button" class="btn btn-info btn" data-toggle="modal" data-target="#AddTag">Add tag</button>
-    </p>
+    </div>
 
-    <div class="container">
         <div class="modal fade" id="AddAuthor" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -44,7 +43,6 @@
                 </div>
             </div>
         </div>
-    </div>
 
     <form method="POST">
         {% csrf_token %}
