@@ -9,11 +9,10 @@
 </head>
 <body>
 <div class="wrapper">
-    <!-- Sidebar Holder -->
     <nav id="sidebar">
         <div class="sidebar-header">
             <h3>LibInno</h3>
-            <strong>LI</strong>
+            <strong>LIn</strong>
         </div>
 
         <ul class="list-unstyled components">
@@ -77,17 +76,14 @@
                         {% endif %}
                     {% else %}
                         <li class="{% if request.path == '/login/' %}active{% endif %}"><a
-                                href="{% url 'login' %}?next={{ request.path }}"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Login</a></li>
+                                href="{% url 'login' %}?next={{ request.path }}"><i
+                                class="glyphicon glyphicon-log-in"></i>Login</a></li>
                     {% endif %}
     </nav>
 
-    <!-- Page Content Holder -->
 
-    <div id="content" style="position: relative; width: 100%; right: 0px; top: 0px;">
-
-        <!-- sidebar show/hide header button -->
-
-        <nav class="navbar navbar-default row">
+    <div id="content" style="position: relative; width: 100%; right: 0px; left: 0px; top: -17px">
+        <nav class="navbar navbar row">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
@@ -104,18 +100,9 @@
                 </div>
             </div>
         </nav>
-
-        <!-- sidebar button end -->
-
-
-        <!-- django page content row -->
-
-        <div class="row">
+        <div class="row1">
             {% block content %}{% endblock %}
         </div>
-
-        <!-- django content row end -->
-
     </div>
 
 
@@ -167,9 +154,7 @@
             display: inline-block;
         }
 
-        /* ---------------------------------------------------
-            SIDEBAR STYLE
-        ----------------------------------------------------- */
+
         .wrapper {
             display: flex;
             align-items: stretch;
@@ -184,8 +169,8 @@
         }
 
         #sidebar.active {
-            min-width: 80px;
-            max-width: 80px;
+            min-width: 100px;
+            max-width: 100px;
             text-align: center;
         }
 
@@ -239,7 +224,7 @@
 
         #sidebar ul.components {
             padding: 20px 0;
-            border-bottom: 1px solid #47748b;
+            border-bottom: 1px solid #ffffff;
         }
 
         #sidebar ul li a {
@@ -307,18 +292,12 @@
             color: #fff !important;
         }
 
-        /* ---------------------------------------------------
-            CONTENT STYLE
-        ----------------------------------------------------- */
         #content {
             padding: 20px;
             min-height: 100vh;
             transition: all 0.3s;
         }
 
-        /* ---------------------------------------------------
-            MEDIAQUERIES
-        ----------------------------------------------------- */
         @media (max-width: 768px) {
             #sidebar {
                 min-width: 80px;
@@ -380,9 +359,7 @@
     </style>
 
 
-    <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-    <!-- Bootstrap Js CDN -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <script type="text/javascript">
