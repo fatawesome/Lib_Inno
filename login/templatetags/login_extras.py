@@ -52,7 +52,7 @@ def users_with_books(customuser_list):
 def patrons(customuser_list):
     users = []
     for user in customuser_list:
-        if 'Faculty' in [x.name for x in user.groups.all()] or 'Students' in [x.name for x in user.groups.all()]:
+        if not 'Librarians' in [x.name for x in user.groups.all()] and not user.is_admin:
             users.append(user)
     return users
 

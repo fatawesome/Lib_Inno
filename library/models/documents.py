@@ -97,9 +97,10 @@ class Document(models.Model):
         """
         Counts for how many weeks document can be taken
         """
-        if isinstance(self, Book):
+        if user.groups.all().first().name == 'Visiting Professors':
+            delta = 1
+        elif isinstance(self, Book):
             if 'Faculty' in [x.name for x in user.groups.all()]:
-                print('here lol')
                 delta = 4
             elif self.is_bestseller:
                 delta = 2

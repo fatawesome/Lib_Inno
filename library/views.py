@@ -187,9 +187,6 @@ def add_copies(request, pk):
         if form.is_valid():
             number_of_copies = form.cleaned_data['number_of_copies']
 
-            print('-------------\n\n\n')
-            print([x.priority for x in doc.requestqueueelement_set.all()])
-
             for _ in range(number_of_copies):
                 Record.objects.create(document=doc)
                 update_request_queue()
@@ -205,8 +202,6 @@ def remove_copies(request, pk):
         if form.is_valid():
             number_of_copies = form.cleaned_data['number_of_copies']
             to_delete = min(number_of_copies, Record.objects.filter(status='a', document=doc).count())
-            print('----------\n\n')
-            print(to_delete)
             for _ in range(to_delete):
                 rec = Record.objects.filter(status='a', document=doc).first()
                 rec.delete()
@@ -291,7 +286,7 @@ def give_document(request, doc_id, user_id):
     doc = get_object_of_class(doc_id)
     user = CustomUser.objects.get(id=user_id)
     rec = user.record_set.get(document=doc)
-    doc.give_to_user(request.user, rec)
+    doc.give_to_user(user, rec)
     return HttpResponseRedirect(reverse('customuser_detail', args=[user_id]))
 
 

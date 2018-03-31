@@ -34,7 +34,12 @@
                         <td><a href = "{{ user.get_absolute_url }}">{{ user.email }}</a></td>
                         <td><a href = "{{ user.get_absolute_url }}">{{user.first_name}}</a></td>
                         <td><a href = "{{ user.get_absolute_url }}">{{user.last_name}}</a></td>
-                        <td> {{ user.groups.all.first }}</td>
+                        <td>
+                            {{ user.subtype }}
+                            {% if user.groups.all.first.name != user.subtype %}
+                            ({{ user.groups.all.first }})
+                            {% endif %}
+                        </td>
                         <td>
                             {% for book in customuser_list|books_of_user:user %}
                                 {% for info in book %}
@@ -97,7 +102,12 @@
                     <td><a href = "{{ user.get_absolute_url }}">{{ user.email }}</a></td>
                     <td><a href = "{{ user.get_absolute_url }}">{{user.first_name}}</a></td>
                     <td><a href = "{{ user.get_absolute_url }}">{{user.last_name}}</a></td>
-                    <td>{{user.groups.all.first }}</td>
+                    <td>
+                        {{ user.subtype }}
+                        {% if user.groups.all.first.name != user.subtype %}
+                        ({{ user.groups.all.first }})
+                        {% endif %}
+                    </td>
                     {% if user|is_debtor %}
                         <td style="display:none">debtors overdue</td>
                     {% endif %}
