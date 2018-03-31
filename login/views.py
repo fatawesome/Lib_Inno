@@ -36,10 +36,8 @@ def edit_user(request, pk):
     """
     user = CustomUser.objects.get(pk=pk)
     if request.method == 'POST':
-        form = CustomUserChangeForm(request.POST)
-        print('\n\n\n---->  ', end='')
-        print(form.errors)
-        if form.is_valid(exclude='email'):
+        form = CustomUserChangeForm(request.POST, instance=user)
+        if form.is_valid():
             user.email = form.cleaned_data['email']
             user.first_name = form.cleaned_data['first_name']
             user.last_name = form.cleaned_data['last_name']
