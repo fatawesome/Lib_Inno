@@ -18,6 +18,7 @@ urlpatterns = [
     path('document/<int:doc_id>/reserve/', views.reserve, name='reserve'),
     path('document/<int:doc_id>/get_in_queue/', views.get_in_queue, name='get_in_queue'),
     path('document/<int:doc_id>/quit_queue/', views.quit_queue, name='quit_queue'),
+    path('document/<int:doc_id>/renew/', views.renew_document, name='renew_document'),
     path('document/<int:pk>/take/<int:user_id>', views.take_document, name='take'),
     path('document/<int:pk>/delete_copy/<int:user_id>', views.delete_copy, name='delete_copy'),
     path('document/<int:pk>/delete/', views.delete_document, name='delete'),

@@ -14,6 +14,7 @@ class Record(models.Model):
     document = models.ForeignKey(Document, on_delete=models.SET_NULL, null=True)
     due_to = models.DateField(null=True, blank=True)
     user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True)
+    renewals_left = models.IntegerField(default=1)
 
     # TODO: make enum
     LOAN_STATUS = (
@@ -29,6 +30,17 @@ class Record(models.Model):
         ordering = ["due_to"]
         # TODO: define permissions
         permissions = ()
+
+    def renew_by_user(self, user, date=datetime.date.today()):
+        """
+        Recalculate due_to for user, update counter of renewals
+        :param user: user, that wants to renew document
+        """
+        if (self.renewals_left > 0):
+            self.renewals_left -= 1
+            self.due_to = date + self.document.get_due_delta(user)
+            self.save()
+
 
     def get_overdue(self, date=datetime.date.today()):
         return (date - self.due_to).days

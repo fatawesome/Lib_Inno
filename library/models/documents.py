@@ -90,6 +90,7 @@ class Document(models.Model):
         record.due_to = None
         record.user = None
         record.status = 'a'
+        record.renewals_left = 1
         record.save()
         user.save()
 
@@ -97,7 +98,7 @@ class Document(models.Model):
         """
         Counts for how many weeks document can be taken
         """
-        if user.groups.all().first().name == 'Visiting Professors':
+        if 'Visiting Professors' in [x.name for x in user.groups.all()]:
             delta = 1
         elif isinstance(self, Book):
             if 'Faculty' in [x.name for x in user.groups.all()]:

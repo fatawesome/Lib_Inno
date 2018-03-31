@@ -67,3 +67,7 @@ def already_in_queue(document, user):
 @register.filter
 def queue(document):
     return document.requestqueueelement_set.all()
+
+@register.filter
+def renewals_left(document, user):
+    return document.record_set.get(user=user).renewals_left

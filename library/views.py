@@ -189,7 +189,8 @@ def add_copies(request, pk):
 
             for _ in range(number_of_copies):
                 Record.objects.create(document=doc)
-                update_request_queue()
+
+            update_request_queue(doc)
 
         return HttpResponseRedirect(reverse('document-detail', args=[pk]))
 
@@ -207,19 +208,6 @@ def remove_copies(request, pk):
                 rec.delete()
         return HttpResponseRedirect(reverse('document-detail', args=[pk]))
 
-
-def update_request_queue():
-    """
-        Give available copies to someone in the request queue
-    """
-    while Record.objects.filter(status='a').count() != 0:
-        doc = Record.objects.filter(status='a').first().document
-        if doc.requestqueueelement_set.count() == 0:
-            break
-        user = doc.requestqueueelement_set.first().user
-        doc.reserve_by_user(user)
-
-
 @permission_required('library.can_change')
 def take_document(request, pk, user_id):
     """
@@ -230,9 +218,10 @@ def take_document(request, pk, user_id):
     doc = Document.objects.get(id=pk)
     doc.take_from_user(user)
 
-    update_request_queue() # give this record to someone in the queue
+    update_request_queue(doc) # give this record to first user in the queue
 
     return HttpResponseRedirect(user.get_absolute_url())
+
 
 @permission_required('library.can_change')
 def delete_copy(request, pk, user_id):
@@ -264,6 +253,27 @@ def reserve(request, doc_id):
 
     doc.reserve_by_user(request.user)
     return HttpResponseRedirect(reverse('document-detail', args=[doc_id]))
+
+
+def renew_document(request, doc_id):
+    """
+    Feature to renew (take again) document by user
+    :param doc_id: document to renew by request.user
+    """
+    rec = get_object_of_class(doc_id).record_set.get(user=request.user)
+    rec.renew_by_user(request.user)
+    return HttpResponseRedirect(reverse('document-detail', args=[doc_id]))
+
+
+def update_request_queue(document):
+    """
+        Give available copies to someone in the request queue
+    """
+    while Record.objects.filter(status='a', document=document).count() != 0:
+        if document.requestqueueelement_set.count() == 0:
+            break
+        user = document.requestqueueelement_set.first().user
+        document.reserve_by_user(user)
 
 
 def get_in_queue(request, doc_id):

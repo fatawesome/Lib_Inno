@@ -21,11 +21,15 @@
     {% endif %}
 
     {% if user.is_authenticated and not perms.library.can_change %}
-
         {% if document|is_reference_book %}
             <p><a class="btn btn-success" data-toggle="tooltip" data-placement="right" title="This book is a reference book" disabled="disabled">Reserve</a></p>
         {% elif document|is_owned_by_user:user %}
             <p><a class="btn btn-success" data-toggle="tooltip" data-placement="right" title="You have already checked out this book. Return date is: {{ document|due_to:user }}"  disabled="disabled">Checked out</a></p>
+            {% if document|renewals_left:user != 0 %}
+                <p><a class="btn btn-info" data-toggle="tooltip" data-placement="right" title="Renew this document" href="{% url 'renew_document' document.id %}">Renew (left: {{document|renewals_left:user}})</a></p>
+            {% else %}
+                <p><a class="btn btn-info" data-toggle="tooltip" data-placement="right" title="Sorry. You can't renew it anymore" disabled="disabled">Renew (left: {{document|renewals_left:user}})</a></p>
+            {% endif %}
         {% elif document|is_reserved_by_user:user%}
             <p><a class="btn btn-success" disabled="disabled" data-toggle="tooltip" data-placement="right" title="You have already reserved this book">Reserved</a></p>
         {% elif document|available_copies_exist == 0 %}
