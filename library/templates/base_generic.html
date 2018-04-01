@@ -376,6 +376,42 @@
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#AuthorList tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+            $("#TakenDocs").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#DocumentTakenList tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+            $("#ReservedDocs").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#DocumentReservedList tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+            $("#UsersSearch").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#UserList tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+            $("#UserBooksSearch").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#UserBooksList tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+            $("#ReservedBy").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#ReservedByList tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
         });
     </script>
 </body>
