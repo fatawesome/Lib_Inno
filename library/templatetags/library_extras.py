@@ -20,9 +20,11 @@ def taken_records(document):
     return document.record_set.filter(status='o')
 
 
+
 @register.filter
 def reserved_records(document):
     return document.record_set.filter(status='r')
+
 
 
 @register.filter
