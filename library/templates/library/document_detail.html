@@ -127,16 +127,6 @@
                         {% endfor %}
                         </tbody>
                     </table>
-                    <script>
-                        $(document).ready(function(){
-                            $("#TakenBy").on("keyup", function() {
-                                var value = $(this).val().toLowerCase();
-                                $("#TakenByList tr").filter(function() {
-                                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                                });
-                            });
-                        });
-                    </script>
                 {% else %}
                     This document was not requested by someone
                 {% endif %}

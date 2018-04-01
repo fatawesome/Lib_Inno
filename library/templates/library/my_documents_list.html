@@ -36,16 +36,6 @@
                     {% endfor %}
                     </tbody>
                 </table>
-                <script>
-                    $(document).ready(function(){
-                        $("#TakenDocs").on("keyup", function() {
-                            var value = $(this).val().toLowerCase();
-                            $("#DocumentTakenList tr").filter(function() {
-                                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                            });
-                        });
-                    });
-                </script>
             </div>
             <div class="alert alert-info">
                 <h3>Reserved books:</h3>
@@ -70,16 +60,6 @@
                     {% endfor %}
                     </tbody>
                 </table>
-                <script>
-                    $(document).ready(function(){
-                        $("#ReservedDocs").on("keyup", function() {
-                            var value = $(this).val().toLowerCase();
-                            $("#DocumentReservedList tr").filter(function() {
-                                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                            });
-                        });
-                    });
-                </script>
             </div>
         </div>
     {% else %}
@@ -113,16 +93,6 @@
                     {% endfor %}
                     </tbody>
                 </table>
-                <script>
-                    $(document).ready(function(){
-                        $("#TakenDocs").on("keyup", function() {
-                            var value = $(this).val().toLowerCase();
-                            $("#DocumentTakenList tr").filter(function() {
-                                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                            });
-                        });
-                    });
-                </script>
             </div>
         </div>
     {% endif %}

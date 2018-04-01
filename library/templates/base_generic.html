@@ -6,7 +6,7 @@
 
     <title>Library Innopolis</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
@@ -94,7 +94,7 @@
                     </button>
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav navbar-right margin">
+                    <ul class="nav navbar-nav navbar-right margin" style="margin-top: 10px">
                         {% if user.is_authenticated %}
                             <i class="glyphicon glyphicon-user"></i>
                             <strong id="you_are_user"> User: {{ user.get_username }} </strong>
@@ -366,6 +366,12 @@
         $(document).ready(function () {
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar').toggleClass('active');
+            });
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#DocumentList tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
             });
         });
     </script>
