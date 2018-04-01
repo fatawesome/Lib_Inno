@@ -16,19 +16,15 @@ def is_reserved_by_user(document, user):
 
 
 @register.filter
-def taken_by(document):
-    users = list()
-    for rec in document.record_set.filter(status='o'):
-        users.append((rec.user.email, rec.user.first_name, rec.user.last_name, rec.due_to, rec.user))
-    return users
+def taken_records(document):
+    return document.record_set.filter(status='o')
+
 
 
 @register.filter
-def reserved_by(document):
-    users = list()
-    for rec in document.record_set.filter(status='r'):
-        users.append((rec.user.email, rec.user.first_name, rec.user.last_name, rec.user))
-    return users
+def reserved_records(document):
+    return document.record_set.filter(status='r')
+
 
 
 @register.filter

@@ -53,6 +53,10 @@ def edit_user(request, pk):
             user.address = form.cleaned_data['address']
             user.subtype = form.cleaned_data['subtype']
 
+            for queue_elem in user.requestqueueelement_set.all():
+                queue_elem.priority = queue_elem.default_priority()
+                queue_elem.save()
+
             user.groups.clear()
             if form.cleaned_data['subtype'] == 'Librarians':
                 user.groups.add(Group.objects.get(name='Librarians'))
