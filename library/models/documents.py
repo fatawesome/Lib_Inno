@@ -5,6 +5,7 @@ from .author import Author
 from .tag import Tag
 
 import datetime
+from django.core.mail import send_mail
 
 
 class Document(models.Model):
@@ -16,6 +17,7 @@ class Document(models.Model):
     authors = models.ManyToManyField(Author, help_text='Add authors for this document')
     tags = models.ManyToManyField(Tag, help_text='Add tags for this document')
     reference = models.BooleanField(default=False)
+    outstanding = models.BooleanField(default=False)
 
     class Meta:
         permissions = (('can_create', 'Create new document'),
@@ -48,6 +50,25 @@ class Document(models.Model):
     def display_price(self):
         return self.price
 
+    def outstanding_request(self):
+        self.outstanding = True
+        for queue_elem in self.requestqueueelement_set.all():
+            user = queue_elem.user
+            send_mail(
+                'Line have been removed',
+                'Sorry, the line for the document "' + self.title + '" was removed',
+                'fatawesomeee@yandex.ru',
+                [user.email],
+                fail_silently=False
+            )
+
+        self.requestqueueelement_set.all().delete()
+        self.save()
+
+    def disable_outstanding_request(self):
+        self.outstanding = False
+        self.save()
+
     def give_to_user(self, user, record, date=datetime.date.today()):
         """
         Gives a document to user
@@ -61,13 +82,15 @@ class Document(models.Model):
         """
         Reserve a document by user
         """
+        if self.outstanding:
+            return
         rec_set = self.record_set.filter(status='a')
-        if rec_set.count() != 0 and self.id not in [x.document.id for x in user.record_set.all()] and not self.reference:# Why do we check it second time?
-
-            if user.requestqueueelement_set.filter(document=self).count() != 0: # If the user in the request queue
-                user.requestqueueelement_set.get(document=self).delete()        # remove it from there
-
+        if rec_set.count() != 0 and self.id not in [x.document.id for x in user.record_set.all()] and not self.reference:  # Why do we check it second time?
             record = rec_set.first()
+            if user.requestqueueelement_set.filter(document=self).count() != 0:  # If the user in the request queue
+                record.due_to = datetime.datetime.today() + datetime.timedelta(days=1)
+                user.requestqueueelement_set.get(document=self).delete()         # remove it from there
+
             record.user = user
             record.status = 'r'
             record.save()
@@ -90,6 +113,7 @@ class Document(models.Model):
         record.due_to = None
         record.user = None
         record.status = 'a'
+        record.renewals_left = 1
         record.save()
         user.save()
 
@@ -97,7 +121,7 @@ class Document(models.Model):
         """
         Counts for how many weeks document can be taken
         """
-        if user.groups.all().first().name == 'Visiting Professors':
+        if 'Visiting Professors' in [x.name for x in user.groups.all()]:
             delta = 1
         elif isinstance(self, Book):
             if 'Faculty' in [x.name for x in user.groups.all()]:

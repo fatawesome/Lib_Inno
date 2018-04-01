@@ -38,6 +38,7 @@ class CustomUserCreationForm(forms.ModelForm):
         """
         Saves the provided password in hashed format
         """
+
         user = super(CustomUserCreationForm, self).save(commit=False)
         user.set_password(self.cleaned_data['password1'])
 
@@ -74,27 +75,6 @@ class CustomUserChangeForm(forms.ModelForm):
                   'subtype',
                   'address',
                   )
-
-    def save(self, commit=True):
-        """
-        Saves the provided password in hashed format
-        """
-        user = super(CustomUserChangeForm, self).save(commit=False)
-
-        user.groups.clear()
-
-        if self.cleaned_data['subtype'] == 'Librarians':
-            user.groups.add(Group.objects.get(name='Librarians'))
-        elif self.cleaned_data['subtype'] == 'Students':
-            user.groups.add(Group.objects.get(name='Students'))
-        elif self.cleaned_data['subtype'] == 'Visiting Professors':
-            user.groups.add(Group.objects.get(name='Visiting Professors'))
-        else: # if self.cleaned_data['subtype'] equal 'Instructors' or 'TAs' or 'Professors'
-            user.groups.add(Group.objects.get(name='Faculty'))
-
-        if commit:
-            user.save()
-        return user
 
     def clean_password(self):
         """

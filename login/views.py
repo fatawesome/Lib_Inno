@@ -36,13 +36,25 @@ def edit_user(request, pk):
     """
     user = CustomUser.objects.get(pk=pk)
     if request.method == 'POST':
-        form = CustomUserChangeForm(request.POST) # Why we cannot do it in the form? save method is overridden
+        form = CustomUserChangeForm(request.POST, instance=user)
         if form.is_valid():
             user.email = form.cleaned_data['email']
             user.first_name = form.cleaned_data['first_name']
             user.last_name = form.cleaned_data['last_name']
             user.phone_number = form.cleaned_data['phone_number']
             user.address = form.cleaned_data['address']
+            user.subtype = form.cleaned_data['subtype']
+
+            user.groups.clear()
+            if form.cleaned_data['subtype'] == 'Librarians':
+                user.groups.add(Group.objects.get(name='Librarians'))
+            elif form.cleaned_data['subtype'] == 'Students':
+                user.groups.add(Group.objects.get(name='Students'))
+            elif form.cleaned_data['subtype'] == 'Visiting Professors':
+                user.groups.add(Group.objects.get(name='Visiting Professors'))
+            else:  # if self.cleaned_data['subtype'] equal 'Instructors' or 'TAs' or 'Professors'
+                user.groups.add(Group.objects.get(name='Faculty'))
+
             user.save()
             return HttpResponseRedirect('../')
     else:

@@ -189,7 +189,8 @@ def add_copies(request, pk):
 
             for _ in range(number_of_copies):
                 Record.objects.create(document=doc)
-                update_request_queue()
+
+            update_request_queue(doc)
 
         return HttpResponseRedirect(reverse('document-detail', args=[pk]))
 
@@ -207,19 +208,6 @@ def remove_copies(request, pk):
                 rec.delete()
         return HttpResponseRedirect(reverse('document-detail', args=[pk]))
 
-
-def update_request_queue():
-    """
-        Give available copies to someone in the request queue
-    """
-    while Record.objects.filter(status='a').count() != 0:
-        doc = Record.objects.filter(status='a').first().document
-        if doc.requestqueueelement_set.count() == 0:
-            break
-        user = doc.requestqueueelement_set.first().user
-        doc.reserve_by_user(user)
-
-
 @permission_required('library.can_change')
 def take_document(request, pk, user_id):
     """
@@ -230,9 +218,10 @@ def take_document(request, pk, user_id):
     doc = Document.objects.get(id=pk)
     doc.take_from_user(user)
 
-    update_request_queue() # give this record to someone in the queue
+    update_request_queue(doc) # give this record to first user in the queue
 
     return HttpResponseRedirect(user.get_absolute_url())
+
 
 @permission_required('library.can_change')
 def delete_copy(request, pk, user_id):
@@ -261,9 +250,38 @@ def get_object_of_class(pk):
 
 def reserve(request, doc_id):
     doc = get_object_of_class(doc_id)
-
     doc.reserve_by_user(request.user)
     return HttpResponseRedirect(reverse('document-detail', args=[doc_id]))
+
+
+def renew_document(request, doc_id):
+    """
+    Feature to renew (take again) document by user
+    :param doc_id: document to renew by request.user
+    """
+    rec = get_object_of_class(doc_id).record_set.get(user=request.user)
+    rec.renew_by_user(request.user)
+    return HttpResponseRedirect(reverse('document-detail', args=[doc_id]))
+
+
+def update_request_queue(document):
+    """
+        Give available copies to someone in the request queue
+    """
+    while Record.objects.filter(status='a', document=document).count() != 0:
+        if document.requestqueueelement_set.count() == 0:
+            break
+        user = document.requestqueueelement_set.first().user
+
+        send_mail(
+            'Document is available',
+            'Document "' + document.title + '" is reserved by You.\n You have 1 day to take it from the library.',
+            'fatawesomeee@yandex.ru',
+            [user.email],
+            fail_silently=False
+        )
+
+        document.reserve_by_user(user)
 
 
 def get_in_queue(request, doc_id):
@@ -312,7 +330,7 @@ def reset_user_priority(request, doc_id, user_id):
 
 @permission_required('library.can_delete')
 def delete_document(request, pk):
-    doc = Document.objects.get(id=pk)
+    doc = get_object_of_class(pk)
     for queue_elem in doc.requestqueueelement_set.all():
         queue_elem.delete()
     doc.delete_document()
@@ -366,6 +384,20 @@ def edit_document(request, pk):
             form = VideoChangeForm(instance=doc)
 
     return render(request, 'library/edit_document.html', {'form': form})
+
+
+@permission_required('library.can_change')
+def document_outstanding_request(reqest, doc_id):
+    doc = Document.objects.get(id=doc_id)
+    doc.outstanding_request()
+    return HttpResponseRedirect(reverse('document-detail', args=[doc_id]))
+
+
+@permission_required('library.can_change')
+def document_disable_outstanding_request(request, doc_id):
+    doc = get_object_of_class(doc_id)
+    doc.disable_outstanding_request()
+    return HttpResponseRedirect(reverse('document-detail', args=[doc_id]))
 
 
 @permission_required('library.can_delete')
