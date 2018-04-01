@@ -220,7 +220,7 @@ def take_document(request, pk, user_id):
 
     update_request_queue(doc) # give this record to first user in the queue
 
-    return HttpResponseRedirect(user.get_absolute_url())
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 @permission_required('library.can_change')
@@ -232,7 +232,7 @@ def delete_copy(request, pk, user_id):
     doc = Document.objects.get(id=pk)
     rec = user.record_set.get(document=doc)
     rec.delete()
-    return HttpResponseRedirect(user.get_absolute_url())
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 def get_object_of_class(pk):
@@ -306,7 +306,8 @@ def give_document(request, doc_id, user_id):
     user = CustomUser.objects.get(id=user_id)
     rec = user.record_set.get(document=doc)
     doc.give_to_user(user, rec)
-    return HttpResponseRedirect(reverse('customuser_detail', args=[user_id]))
+
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 @permission_required('library.can_change')
@@ -412,4 +413,4 @@ def ask_for_return(request, pk, user_id):
         [user.email],
         fail_silently=False
     )
-    return HttpResponseRedirect(user.get_absolute_url())
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
