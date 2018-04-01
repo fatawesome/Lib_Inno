@@ -24,6 +24,12 @@ class CustomUserDetailView(generic.DetailView):
 
 
 def delete_user(request, pk):
+    """
+    Delete user from the system.
+    :param request: HTTP request.
+    :param pk: user id.
+    :return: HTTP redirect to user page.
+    """
     user = CustomUser.objects.get(pk=pk)
     user.delete_user()
     return HttpResponseRedirect(reverse('users'))
@@ -32,7 +38,9 @@ def delete_user(request, pk):
 def edit_user(request, pk):
     """
     View function for editing a user.
-    :param request:
+    :param request: HTTP request.
+    :param pk: user id.
+    :return: rendered edit_user page.
     """
     user = CustomUser.objects.get(pk=pk)
     if request.method == 'POST':

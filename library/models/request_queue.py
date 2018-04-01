@@ -4,12 +4,20 @@ from login.models import CustomUser
 
 
 class RequestQueueElement(models.Model):
+    """
+    Every object of this class is an element of the queue for the particular document.
+    Object contains date, priority, link on user and document.
+    """
     date = models.DateField()
     user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True)
     document = models.ForeignKey(Document, on_delete=models.SET_NULL, null=True)
     priority = models.IntegerField(default=0)
 
     def default_priority(self):
+        """
+        Method calculates default priority depending on user type.
+        :return:
+        """
         if self.user.subtype == 'Students':
             return 4
         elif self.user.subtype == 'Instructors':

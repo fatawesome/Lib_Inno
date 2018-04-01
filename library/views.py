@@ -59,6 +59,12 @@ class DocumentDetailView(generic.DetailView):
 
 
 def my_documents(request, pk):
+    """
+    View for listing document of user with given id.
+    :param request: HTTP request.
+    :param pk: user id.
+    :return: rendered page with list of user's documents.
+    """
     return render(request, 'library/my_documents_list.html', {'user': CustomUser.objects.get(id=pk)})
 
 
@@ -97,6 +103,11 @@ def add_book(request):
 
 @permission_required('library.can_create')
 def add_article(request):
+    """
+    Add article view.
+    :param request: HTTP request.
+    :return: HTTP redirect.
+    """
     if request.method == 'POST':
         author_form = AuthorForm(request.POST)
         article_form = ArticleForm(request.POST)
@@ -120,11 +131,17 @@ def add_article(request):
         article_form = ArticleForm()
         tag_form = TagForm()
 
-    return render(request, 'add_article.html', {'article_form': article_form, 'author_form': author_form, 'tag_form': tag_form})
+    return render(request, 'add_article.html',
+                  {'article_form': article_form, 'author_form': author_form, 'tag_form': tag_form})
 
 
 @permission_required('library.can_create')
 def add_audio(request):
+    """
+    Add audio view.
+    :param request: HTTP request.
+    :return: HTTP redirect.
+    """
     if request.method == 'POST':
         author_form = AuthorForm(request.POST)
         audio_form = AudioForm(request.POST)
@@ -148,11 +165,17 @@ def add_audio(request):
         audio_form = AudioForm()
         tag_form = TagForm()
 
-    return render(request, 'add_audio.html', {'audio_form': audio_form, 'author_form': author_form, 'tag_form': tag_form})
+    return render(request, 'add_audio.html',
+                  {'audio_form': audio_form, 'author_form': author_form, 'tag_form': tag_form})
 
 
 @permission_required('library.can_create')
 def add_video(request):
+    """
+    Add video view.
+    :param request: HTTP request.
+    :return: HTTP redirect
+    """
     if request.method == 'POST':
         author_form = AuthorForm(request.POST)
         video_form = VideoForm(request.POST)
@@ -176,11 +199,18 @@ def add_video(request):
         video_form = VideoForm()
         tag_form = TagForm()
 
-    return render(request, 'add_video.html', {'video_form': video_form, 'author_form': author_form, 'tag_form': tag_form})
+    return render(request, 'add_video.html',
+                  {'video_form': video_form, 'author_form': author_form, 'tag_form': tag_form})
 
 
 @permission_required('library.can_create')
 def add_copies(request, pk):
+    """
+    Adds copies of document with given id.
+    :param request: HTTP request.
+    :param pk: document id.
+    :return: HTTP redirect to document page.
+    """
     doc = Document.objects.get(id=pk)
     if request.method == 'POST':
         form = AddCopies(request.POST)
@@ -197,6 +227,12 @@ def add_copies(request, pk):
 
 @permission_required('library.can_delete')
 def remove_copies(request, pk):
+    """
+    Removes copies of document with given id.
+    :param request: HTTP request.
+    :param pk: document id.
+    :return: HTTP redirect to document page.
+    """
     doc = Document.objects.get(id=pk)
     if request.method == 'POST':
         form = RemoveCopies(request.POST)
@@ -208,17 +244,21 @@ def remove_copies(request, pk):
                 rec.delete()
         return HttpResponseRedirect(reverse('document-detail', args=[pk]))
 
+
 @permission_required('library.can_change')
 def take_document(request, pk, user_id):
     """
     Return a document to the system.
-    :return:
+    :param request: HTTP request.
+    :param pk: document id.
+    :param user_id: user id.
+    :return: HTTP redirect to user page.
     """
     user = CustomUser.objects.get(id=user_id)
     doc = Document.objects.get(id=pk)
     doc.take_from_user(user)
 
-    update_request_queue(doc) # give this record to first user in the queue
+    update_request_queue(doc)  # give this record to first user in the queue
 
     return HttpResponseRedirect(user.get_absolute_url())
 
@@ -227,6 +267,10 @@ def take_document(request, pk, user_id):
 def delete_copy(request, pk, user_id):
     """
     Delete a copy of the document
+    :param request: HTTP request.
+    :param pk: id of document.
+    :param user_id: id of user.
+    :return: HTTP redirect to user page.
     """
     user = CustomUser.objects.get(id=user_id)
     doc = Document.objects.get(id=pk)
@@ -236,6 +280,11 @@ def delete_copy(request, pk, user_id):
 
 
 def get_object_of_class(pk):
+    """
+    Recognize type of model inherited from Document by primary key.
+    :param pk: id.
+    :return: instance of model, inherited from Document.
+    """
     if Book.objects.all().filter(id=pk).count() != 0:
         doc = Book.objects.get(id=pk)
     elif Article.objects.all().filter(id=pk).count() != 0:
@@ -249,6 +298,12 @@ def get_object_of_class(pk):
 
 
 def reserve(request, doc_id):
+    """
+    Set document reserved by user.
+    :param request: HTTP request.
+    :param doc_id: id of document
+    :return:
+    """
     doc = get_object_of_class(doc_id)
     doc.reserve_by_user(request.user)
     return HttpResponseRedirect(reverse('document-detail', args=[doc_id]))
@@ -266,7 +321,8 @@ def renew_document(request, doc_id):
 
 def update_request_queue(document):
     """
-        Give available copies to someone in the request queue
+    Give available copies to someone in the request queue.
+    :param document: Object of model Document.
     """
     while Record.objects.filter(status='a', document=document).count() != 0:
         if document.requestqueueelement_set.count() == 0:
@@ -285,6 +341,12 @@ def update_request_queue(document):
 
 
 def get_in_queue(request, doc_id):
+    """
+    Get user into queue.
+    :param request: HTTP request.
+    :param doc_id: document id.
+    :return: HTTP redirect to document detail page.
+    """
     doc = get_object_of_class(doc_id)
     element = RequestQueueElement.objects.create(document=doc, user=request.user, date=datetime.date.today())
     element.priority = element.default_priority()
@@ -293,6 +355,12 @@ def get_in_queue(request, doc_id):
 
 
 def quit_queue(request, doc_id):
+    """
+    Remove user from queue.
+    :param request: HTTP request.
+    :param doc_id: document id.
+    :return: HTTP redirect to document detail page.
+    """
     doc = get_object_of_class(doc_id)
     element = RequestQueueElement.objects.get(document=doc, user=request.user)
     element.delete()
@@ -301,6 +369,13 @@ def quit_queue(request, doc_id):
 
 @permission_required('library.can_change')
 def give_document(request, doc_id, user_id):
+    """
+    Give document to user.
+    :param request: HTTP request.
+    :param doc_id: document id.
+    :param user_id: user id.
+    :return: HTTP redirect to user detail page.
+    """
     doc = get_object_of_class(doc_id)
     user = CustomUser.objects.get(id=user_id)
     rec = user.record_set.get(document=doc)
@@ -310,6 +385,13 @@ def give_document(request, doc_id, user_id):
 
 @permission_required('library.can_change')
 def increase_user_priority(request, doc_id, user_id):
+    """
+    Increases user priority in queue.
+    :param request: HTTP request.
+    :param doc_id: document id.
+    :param user_id: user id.
+    :return: HTTP redirect to document detail page.
+    """
     doc = get_object_of_class(doc_id)
     user = CustomUser.objects.get(id=user_id)
     element = RequestQueueElement.objects.get(document=doc, user=user)
@@ -320,6 +402,13 @@ def increase_user_priority(request, doc_id, user_id):
 
 @permission_required('library.can_change')
 def reset_user_priority(request, doc_id, user_id):
+    """
+    Resets user priority in queue to default.
+    :param request: HTTP request.
+    :param doc_id: document id.
+    :param user_id: user id.
+    :return: HTTP redirect to document detail page.
+    """
     doc = get_object_of_class(doc_id)
     user = CustomUser.objects.get(id=user_id)
     element = RequestQueueElement.objects.get(document=doc, user=user)
@@ -330,6 +419,12 @@ def reset_user_priority(request, doc_id, user_id):
 
 @permission_required('library.can_delete')
 def delete_document(request, pk):
+    """
+    Deletes document with the given id.
+    :param request: HTTP request.
+    :param pk: document id.
+    :return: HTTP redirect to document list page
+    """
     doc = get_object_of_class(pk)
     for queue_elem in doc.requestqueueelement_set.all():
         queue_elem.delete()
@@ -341,7 +436,9 @@ def delete_document(request, pk):
 def edit_document(request, pk):
     """
     View function for editing a document.
+    :param pk: document id.
     :param request:
+    :return: rendered edit_document page.
     """
 
     doc = get_object_of_class(pk)
@@ -387,7 +484,13 @@ def edit_document(request, pk):
 
 
 @permission_required('library.can_change')
-def document_outstanding_request(reqest, doc_id):
+def document_outstanding_request(request, doc_id):
+    """
+    Activate outstanding request for document with given id.
+    :param request: HTTP request.
+    :param doc_id: document id.
+    :return: HTTP redirect to document detail page.
+    """
     doc = Document.objects.get(id=doc_id)
     doc.outstanding_request()
     return HttpResponseRedirect(reverse('document-detail', args=[doc_id]))
@@ -395,6 +498,12 @@ def document_outstanding_request(reqest, doc_id):
 
 @permission_required('library.can_change')
 def document_disable_outstanding_request(request, doc_id):
+    """
+    Deactivates outstanding request for document with given id.
+    :param request: HTTP request.
+    :param doc_id: document id.
+    :return: HTTP redirect to document detail page.
+    """
     doc = get_object_of_class(doc_id)
     doc.disable_outstanding_request()
     return HttpResponseRedirect(reverse('document-detail', args=[doc_id]))
@@ -402,6 +511,13 @@ def document_disable_outstanding_request(request, doc_id):
 
 @permission_required('library.can_delete')
 def ask_for_return(request, pk, user_id):
+    """
+    Send a notification to user that he needs to return a book.
+    :param request: HTTP request.
+    :param pk: document id.
+    :param user_id: user id.
+    :return: HTTP redirect on user page.
+    """
     user = CustomUser.objects.get(id=user_id)
     doc = Document.objects.get(id=pk)
     send_mail(
