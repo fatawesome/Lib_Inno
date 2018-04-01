@@ -6,6 +6,11 @@
     <h1>{{ document.title }}
         {% if user.is_authenticated and perms.library.can_change %}
             <a class="btn btn-primary" href="{% url 'editdocument' document.id %}">Edit&nbsp;&nbsp;<i class="glyphicon glyphicon-edit"></i></a>
+            {% if not document.outstanding %}
+                <a class="btn btn-warning" href="{% url 'document_outstanding_request' document.id %}">Outstanding request</a>
+            {% else %}
+                <a class="btn btn-warning" href="{% url 'document_disable_outstanding_request' document.id %}" data-toggle="tooltip" data-placement="right" title="Outstanding request is active">Disable outstanding request</a>
+            {% endif %}
         {% endif %}
     </h1>
 
@@ -25,8 +30,14 @@
             <p><a class="btn btn-success" data-toggle="tooltip" data-placement="right" title="This book is a reference book" disabled="disabled">Reserve</a></p>
         {% elif document|is_owned_by_user:user %}
             <p><a class="btn btn-success" data-toggle="tooltip" data-placement="right" title="You have already checked out this book. Return date is: {{ document|due_to:user }}"  disabled="disabled">Checked out</a></p>
-            {% if document|renewals_left:user != 0 %}
-                <p><a class="btn btn-info" data-toggle="tooltip" data-placement="right" title="Renew this document" href="{% url 'renew_document' document.id %}">Renew (left: {{document|renewals_left:user}})</a></p>
+            {% if document|renewals_left:user != 0 and not document.outstanding %}
+                <p><a class="btn btn-info" data-toggle="tooltip" data-placement="right" title="Renew this document" href="{% url 'renew_document' document.id %}">Renew
+                    {% if user.subtype != 'Visiting Professors' %}
+                        (left: {{document|renewals_left:user}})
+                    {% endif %}
+                </a></p>
+            {% elif document.outstanding %}
+                <p><a class="btn btn-info" data-toggle="tooltip" data-placement="right" title="Sorry. Outstanding request for this document activated" disabled="disabled">Renew</a></p>
             {% else %}
                 <p><a class="btn btn-info" data-toggle="tooltip" data-placement="right" title="Sorry. You can't renew it anymore" disabled="disabled">Renew (left: {{document|renewals_left:user}})</a></p>
             {% endif %}
@@ -38,6 +49,8 @@
             {% else %}
                 <p><a class="btn btn-success" href="{% url 'get_in_queue' document.id %}" data-toggle="tooltip" data-placement="right" title="No more available copies. Sorry">Get in line</a></p>
             {% endif %}
+        {% elif document.outstanding %}
+            <p><a class="btn btn-success" disabled="disabled" data-toggle="tooltip" data-placement="right" title="Outstanding request for this document activated">Reserve</a></p>
         {% else %}
             <p><a class="btn btn-success" href="{% url 'reserve' document.id %}">Reserve</a></p>
         {% endif %}

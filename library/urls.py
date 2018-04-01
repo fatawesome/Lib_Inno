@@ -23,6 +23,8 @@ urlpatterns = [
     path('document/<int:pk>/delete_copy/<int:user_id>', views.delete_copy, name='delete_copy'),
     path('document/<int:pk>/delete/', views.delete_document, name='delete'),
     path('document/<int:pk>/editdocument/', views.edit_document, name='editdocument'),
+    path('document/<int:doc_id>/document_outstanding_request/', views.document_outstanding_request, name='document_outstanding_request'),
+    path('document/<int:doc_id>/document_disable_outstanding_request/', views.document_disable_outstanding_request, name='document_disable_outstanding_request'),
     path('add_article/', views.add_article, name='add_article'),
     path('document/<int:pk>/ask/<int:user_id>', views.ask_for_return, name='ask'),
 ]

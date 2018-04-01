@@ -36,8 +36,9 @@ class Record(models.Model):
         Recalculate due_to for user, update counter of renewals
         :param user: user, that wants to renew document
         """
-        if (self.renewals_left > 0):
-            self.renewals_left -= 1
+        if self.renewals_left > 0 and not self.document.outstanding:
+            if user.subtype != 'Visiting Professors':
+                self.renewals_left -= 1
             self.due_to = date + self.document.get_due_delta(user)
             self.save()
 

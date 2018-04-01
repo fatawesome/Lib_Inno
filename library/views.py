@@ -250,7 +250,6 @@ def get_object_of_class(pk):
 
 def reserve(request, doc_id):
     doc = get_object_of_class(doc_id)
-
     doc.reserve_by_user(request.user)
     return HttpResponseRedirect(reverse('document-detail', args=[doc_id]))
 
@@ -322,7 +321,7 @@ def reset_user_priority(request, doc_id, user_id):
 
 @permission_required('library.can_delete')
 def delete_document(request, pk):
-    doc = Document.objects.get(id=pk)
+    doc = get_object_of_class(pk)
     for queue_elem in doc.requestqueueelement_set.all():
         queue_elem.delete()
     doc.delete_document()
@@ -377,6 +376,19 @@ def edit_document(request, pk):
 
     return render(request, 'library/edit_document.html', {'form': form})
 
+
+@permission_required('library.can_change')
+def document_outstanding_request(reqest, doc_id):
+    doc = Document.objects.get(id=doc_id)
+    doc.outstanding_request()
+    return HttpResponseRedirect(reverse('document-detail', args=[doc_id]))
+
+
+@permission_required('library.can_change')
+def document_disable_outstanding_request(request, doc_id):
+    doc = get_object_of_class(doc_id)
+    doc.disable_outstanding_request()
+    return HttpResponseRedirect(reverse('document-detail', args=[doc_id]))
 
 @permission_required('library.can_delete')
 def ask_for_return(request, pk, user_id):

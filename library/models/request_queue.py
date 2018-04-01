@@ -21,11 +21,5 @@ class RequestQueueElement(models.Model):
         elif self.user.subtype == 'Professors':
             return 0
 
-    # GROUP_PRIORITY = (
-    #     (1, 'Faculty'),
-    #     (2, 'Student'),
-    # )
-    # group_priority = models.IntegerField(choices=GROUP_PRIORITY)
-
     class Meta:
         ordering = ['-priority', 'date']
