@@ -46,7 +46,9 @@
                         <li class="{% if request.path == '/logout/' %}active{% endif %}"><a
                                 href="{% url 'logout' %}?next={{ request.path }}"><i
                                 class="glyphicon glyphicon-off"></i>&nbsp;&nbsp;Logout</a></li>
-                        <hr>
+                        {% if perms.library.can_delete %}
+                            <hr>
+                        {% endif %}
                         {% if perms.library.can_delete %}
                             <li class="active">
                                 <a href="#librarianSubmenu" data-toggle="collapse" aria-expanded="false">
@@ -68,7 +70,7 @@
                                         video</a></li>
                                 </ul>
                             </li>
-                        <hr>
+                            <hr>
                             <li class="{% if request.path == '/users/' %}active{% endif %}"><a href="{% url 'users' %}"><i
                                     class="	glyphicon glyphicon-globe"></i>&nbsp;Users</a></li>
                             <li class="{% if request.path == '/add_user/' %}active{% endif %}"><a
