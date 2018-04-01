@@ -272,6 +272,15 @@ def update_request_queue(document):
         if document.requestqueueelement_set.count() == 0:
             break
         user = document.requestqueueelement_set.first().user
+
+        send_mail(
+            'Document is available',
+            'Document "' + document.title + '" is reserved by You.\n You have 1 day to take it from the library.',
+            'fatawesomeee@yandex.ru',
+            [user.email],
+            fail_silently=False
+        )
+
         document.reserve_by_user(user)
 
 
@@ -389,6 +398,7 @@ def document_disable_outstanding_request(request, doc_id):
     doc = get_object_of_class(doc_id)
     doc.disable_outstanding_request()
     return HttpResponseRedirect(reverse('document-detail', args=[doc_id]))
+
 
 @permission_required('library.can_delete')
 def ask_for_return(request, pk, user_id):

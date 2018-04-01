@@ -42,7 +42,6 @@ class Record(models.Model):
             self.due_to = date + self.document.get_due_delta(user)
             self.save()
 
-
     def get_overdue(self, date=datetime.date.today()):
         return (date - self.due_to).days
 
