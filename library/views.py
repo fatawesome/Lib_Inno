@@ -286,9 +286,10 @@ def update_request_queue(document):
 
 def get_in_queue(request, doc_id):
     doc = get_object_of_class(doc_id)
-    element = RequestQueueElement.objects.create(document=doc, user=request.user, date=datetime.date.today())
-    element.priority = element.default_priority()
-    element.save()
+    if not doc.outstanding:
+        element = RequestQueueElement.objects.create(document=doc, user=request.user, date=datetime.date.today())
+        element.priority = element.default_priority()
+        element.save()
     return HttpResponseRedirect(reverse('document-detail', args=[doc_id]))
 
 
