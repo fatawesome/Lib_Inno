@@ -6,6 +6,11 @@
     <h1>{{ document.title }}
         {% if user.is_authenticated and perms.library.can_change %}
             <a class="btn btn-primary" href="{% url 'editdocument' document.id %}">Edit&nbsp;&nbsp;<i class="glyphicon glyphicon-edit"></i></a>
+            {% if not document.outstanding %}
+                <a class="btn btn-warning" href="{% url 'document_outstanding_request' document.id %}">Outstanding request</a>
+            {% else %}
+                <a class="btn btn-warning" href="{% url 'document_disable_outstanding_request' document.id %}" data-toggle="tooltip" data-placement="right" title="Outstanding request is active">Disable outstanding request</a>
+            {% endif %}
         {% endif %}
     </h1>
 
@@ -21,19 +26,33 @@
     {% endif %}
 
     {% if user.is_authenticated and not perms.library.can_change %}
-
         {% if document|is_reference_book %}
             <p><a class="btn btn-success" data-toggle="tooltip" data-placement="right" title="This book is a reference book" disabled="disabled">Reserve</a></p>
         {% elif document|is_owned_by_user:user %}
             <p><a class="btn btn-success" data-toggle="tooltip" data-placement="right" title="You have already checked out this book. Return date is: {{ document|due_to:user }}"  disabled="disabled">Checked out</a></p>
+            {% if document|renewals_left:user != 0 and not document.outstanding %}
+                <p><a class="btn btn-info" data-toggle="tooltip" data-placement="right" title="Renew this document" href="{% url 'renew_document' document.id %}">Renew
+                    {% if user.subtype != 'Visiting Professors' %}
+                        (left: {{document|renewals_left:user}})
+                    {% endif %}
+                </a></p>
+            {% elif document.outstanding %}
+                <p><a class="btn btn-info" data-toggle="tooltip" data-placement="right" title="Sorry. Outstanding request for this document is activated" disabled="disabled">Renew</a></p>
+            {% else %}
+                <p><a class="btn btn-info" data-toggle="tooltip" data-placement="right" title="Sorry. You can't renew it anymore" disabled="disabled">Renew (left: {{document|renewals_left:user}})</a></p>
+            {% endif %}
         {% elif document|is_reserved_by_user:user%}
             <p><a class="btn btn-success" disabled="disabled" data-toggle="tooltip" data-placement="right" title="You have already reserved this book">Reserved</a></p>
         {% elif document|available_copies_exist == 0 %}
             {% if document|already_in_queue:user %}
                 <p><a class="btn btn-danger" href="{% url 'quit_queue' document.id %}">Quit the line</a></p>
+            {% elif document.outstanding %}
+                <p><a class="btn btn-success" disabled="disabled" data-toggle="tooltip" data-placement="right" title="Outstanding request for this document is activated">Get in line</a></p>
             {% else %}
                 <p><a class="btn btn-success" href="{% url 'get_in_queue' document.id %}" data-toggle="tooltip" data-placement="right" title="No more available copies. Sorry">Get in line</a></p>
             {% endif %}
+        {% elif document.outstanding %}
+            <p><a class="btn btn-success" disabled="disabled" data-toggle="tooltip" data-placement="right" title="Outstanding request for this document is activated">Reserve</a></p>
         {% else %}
             <p><a class="btn btn-success" href="{% url 'reserve' document.id %}">Reserve</a></p>
         {% endif %}
@@ -108,21 +127,26 @@
                         {% for queue_element in document|queue%}
                             {% if queue_element.priority != queue_element.default_priority %}
                                 <tr class="info">
-                                    {% else %}
+                            {% else %}
                                 <tr>
                             {% endif %}
-                        <td>{{ queue_element.user.email }}</td>
-                        <td>{{ queue_element.user.first_name }}</td>
-                        <td>{{ queue_element.user.last_name }}</td>
-                        <td>{{ queue_element.user.groups.all.first }}</td>
-                        <td>{{ queue_element.priority }}</td>
-                        <td>
-                            {% if queue_element.priority == queue_element.default_priority %}
-                                <a class="btn btn-info" href="{% url 'increase_user_priority' queue_element.document.id queue_element.user.id %}">Move to the front</a>
-                            {% else %}
-                                <a class="btn btn-danger" href="{% url 'reset_user_priority' queue_element.document.id queue_element.user.id %}">Reset order</a>
-                            {% endif %}
-                        </td>
+                            <td><a href="{{queue_element.user.get_absolute_url}}">{{ queue_element.user.email }}</a></td>
+                            <td><a href="{{queue_element.user.get_absolute_url}}">{{ queue_element.user.first_name }}</a></td>
+                            <td><a href="{{queue_element.user.get_absolute_url}}">{{ queue_element.user.last_name }}</a></td>
+                            <td>
+                                {{ queue_element.user.subtype }}
+                                {% if queue_element.user.groups.all.first.name != queue_element.user.subtype %}
+                                ({{ queue_element.user.groups.all.first }})
+                                {% endif %}
+                            </td>
+                            <td>{{ queue_element.priority }}</td>
+                            <td>
+                                {% if queue_element.priority == queue_element.default_priority %}
+                                    <a class="btn btn-info" href="{% url 'increase_user_priority' queue_element.document.id queue_element.user.id %}">Move to the front</a>
+                                {% else %}
+                                    <a class="btn btn-danger" href="{% url 'reset_user_priority' queue_element.document.id queue_element.user.id %}">Reset order</a>
+                                {% endif %}
+                            </td>
                         </tr>
                         {% endfor %}
                         </tbody>
@@ -138,11 +162,11 @@
 
         <br>
 
-        {% if document|taken_by or document|reserved_by %}
+        {% if document|taken_records or document|reserved_records %}
             <p><a class="btn btn-danger" disabled="disabled" data-toggle="tooltip" data-placement="right" title="This book has taken or reserved by someone">Delete document</a></p>
 
             <div class="alert alert-info">
-                {% if document|taken_by %}
+                {% if document|taken_records %}
                     <h4>This document is taken by:</h4>
                     <input class="form-control" id="TakenBy" type="text" placeholder="Search..">
                     <table class="table table-bordered table-striped table-hover">
@@ -152,22 +176,22 @@
                             <th>First name</th>
                             <th>Last name</th>
                             <th>Due to</th>
-                            <th>Show user</th>
+                            <th>Collect</th>
+                            <th>Ask for return</th>
+                            <th>Delete this copy</th>
                         </tr>
                         </thead>
 
                         <tbody id="TakenByList">
-                        {% for user in document|taken_by%}
+                        {% for rec in document|taken_records %}
                             <tr>
-                            {% for info in user %}
-                                <td>
-                                    {% if not forloop.last %}
-                                        {{ info }}
-                                    {% else %}
-                                        <p><a class="btn btn-primary" href="{{ info.get_absolute_url }}">Show user</a>
-                                    {% endif %}
-                                </td>
-                            {% endfor %}
+                                <td><a href="{{ rec.user.get_absolute_url }}">{{ rec.user.email }}</a></td>
+                                <td><a href="{{ rec.user.get_absolute_url }}">{{ rec.user.first_name }}</a></td>
+                                <td><a href="{{ rec.user.get_absolute_url }}">{{ rec.user.last_name }}</a></td>
+                                <td>{{ rec.due_to }}</td>
+                                <td><a class="btn btn-success" href="{% url 'take' document.id rec.user.id %}">Collect</a></td>
+                                <td><a class="btn btn-warning" href="{% url 'ask' document.id rec.user.id %}">Ask for return</a></td>
+                                <td><a class="btn btn-danger" href="{% url 'delete_copy' document.id rec.user.id %}">Delete this copy</a></td>
                         {% endfor %}
                         </tbody>
                     </table>
@@ -186,8 +210,8 @@
                 {% endif %}
             </div>
 
-            <div class="alert alert-info">
-                {% if document|reserved_by %}
+            <div class="alert alert-warning">
+                {% if document|reserved_records %}
                     <h4>This document is reserved by:</h4>
                     <input class="form-control" id="ReservedBy" type="text" placeholder="Search..">
                     <table class="table table-bordered table-striped table-hover">
@@ -196,22 +220,18 @@
                             <th>E-mail</th>
                             <th>First name</th>
                             <th>Last name</th>
-                            <th>Show user</th>
+                            <th>Give document</th>
                         </tr>
                         </thead>
 
                         <tbody id="ReservedByList">
-                        {% for user in document|reserved_by%}
+                        {% for rec in document|reserved_records%}
                             <tr>
-                            {% for info in user %}
-                                <td>
-                                    {% if not forloop.last %}
-                                        {{ info }}
-                                    {% else %}
-                                        <p><a class="btn btn-primary" href="{{ info.get_absolute_url }}">Show user</a>
-                                    {% endif %}
-                                </td>
-                            {% endfor %}
+                                <td><a href="{{ rec.user.get_absolute_url }}">{{ rec.user.email }}</a></td>
+                                <td><a href="{{ rec.user.get_absolute_url }}">{{ rec.user.first_name }}</a></td>
+                                <td><a href="{{ rec.user.get_absolute_url }}">{{ rec.user.last_name }}</a></td>
+                                <td><a class="btn btn-info" href="{% url 'give_document' document.id rec.user.id %}">Give document</a></td>
+                            </tr>
                         {% endfor %}
                         </tbody>
                     </table>

@@ -11,8 +11,7 @@ class CustomUserCreationForm(forms.ModelForm):
     """
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
-    group = forms.ModelChoiceField(queryset=Group.objects.all(),
-                                   required=True)
+    subtype = forms.ChoiceField(label='User type', choices=sorted([('Students', 'Students'), ('Visiting Professors', 'Visiting Professors'), ('Professors', 'Professors'), ('TAs', 'TAs'), ('Instructors', 'Instructors'), ('Librarians', 'Librarians')]), required=True)
 
     class Meta:
         model = CustomUser
@@ -21,7 +20,7 @@ class CustomUserCreationForm(forms.ModelForm):
                   'last_name',
                   'phone_number',
                   'address',
-                  'group',
+                  'subtype',
                   )
 
     def clean_password2(self):
@@ -36,12 +35,24 @@ class CustomUserCreationForm(forms.ModelForm):
         return password2
 
     def save(self, commit=True):
-
         """
         Saves the provided password in hashed format
         """
+
         user = super(CustomUserCreationForm, self).save(commit=False)
         user.set_password(self.cleaned_data['password1'])
+
+        if commit:
+            user.save()
+
+        if self.cleaned_data['subtype'] == 'Librarians':
+            user.groups.add(Group.objects.get(name='Librarians'))
+        elif self.cleaned_data['subtype'] == 'Students':
+            user.groups.add(Group.objects.get(name='Students'))
+        elif self.cleaned_data['subtype'] == 'Visiting Professors':
+            user.groups.add(Group.objects.get(name='Visiting Professors'))
+        else: # if self.cleaned_data['subtype'] equal 'Instructors' or 'TAs' or 'Professors'
+            user.groups.add(Group.objects.get(name='Faculty'))
 
         if commit:
             user.save()
@@ -53,8 +64,7 @@ class CustomUserChangeForm(forms.ModelForm):
     A form for updating users. Includes all the fields on the user,
     but replaces the password field with admin's password hash display field.
     """
-    group = forms.ModelChoiceField(queryset=Group.objects.all(),
-                                   required=True)
+    subtype = forms.ChoiceField(label='User type', choices=sorted([('Students', 'Students'), ('Visiting Professors', 'Visiting Professors'), ('Professors', 'Professors'), ('TAs', 'TAs'), ('Instructors', 'Instructors'), ('Librarians', 'Librarians')]), required=True)
 
     class Meta:
         model = CustomUser
@@ -62,10 +72,8 @@ class CustomUserChangeForm(forms.ModelForm):
                   'first_name',
                   'last_name',
                   'phone_number',
-                  'group',
+                  'subtype',
                   'address',
-                  #'is_admin',
-                  #'is_active',
                   )
 
     def clean_password(self):

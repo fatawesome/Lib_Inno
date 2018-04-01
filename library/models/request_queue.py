@@ -4,23 +4,30 @@ from login.models import CustomUser
 
 
 class RequestQueueElement(models.Model):
+    """
+    Every object of this class is an element of the queue for the particular document.
+    Object contains date, priority, link on user and document.
+    """
     date = models.DateField()
     user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True)
     document = models.ForeignKey(Document, on_delete=models.SET_NULL, null=True)
-#    priority = models.IntegerField(default=(0 if 'Students' in [x.name for x in user.groups.all()] else 1))
     priority = models.IntegerField(default=0)
 
     def default_priority(self):
-        if 'Students' in [x.name for x in self.user.groups.all()]:
-            return 0
-        elif 'Faculty' in [x.name for x in self.user.groups.all()]:
+        """
+        Method calculates default priority depending on user type.
+        :return:
+        """
+        if self.user.subtype == 'Students':
+            return 4
+        elif self.user.subtype == 'Instructors':
+            return 3
+        elif self.user.subtype == 'TAs':
+            return 2
+        elif self.user.subtype == 'Visiting Professors':
             return 1
-
-    # GROUP_PRIORITY = (
-    #     (1, 'Faculty'),
-    #     (2, 'Student'),
-    # )
-    # group_priority = models.IntegerField(choices=GROUP_PRIORITY)
+        elif self.user.subtype == 'Professors':
+            return 0
 
     class Meta:
         ordering = ['-priority', 'date']

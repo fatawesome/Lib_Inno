@@ -18,10 +18,13 @@ urlpatterns = [
     path('document/<int:doc_id>/reserve/', views.reserve, name='reserve'),
     path('document/<int:doc_id>/get_in_queue/', views.get_in_queue, name='get_in_queue'),
     path('document/<int:doc_id>/quit_queue/', views.quit_queue, name='quit_queue'),
+    path('document/<int:doc_id>/renew/', views.renew_document, name='renew_document'),
     path('document/<int:pk>/take/<int:user_id>', views.take_document, name='take'),
     path('document/<int:pk>/delete_copy/<int:user_id>', views.delete_copy, name='delete_copy'),
     path('document/<int:pk>/delete/', views.delete_document, name='delete'),
     path('document/<int:pk>/editdocument/', views.edit_document, name='editdocument'),
+    path('document/<int:doc_id>/document_outstanding_request/', views.document_outstanding_request, name='document_outstanding_request'),
+    path('document/<int:doc_id>/document_disable_outstanding_request/', views.document_disable_outstanding_request, name='document_disable_outstanding_request'),
     path('add_article/', views.add_article, name='add_article'),
     path('document/<int:pk>/ask/<int:user_id>', views.ask_for_return, name='ask'),
 ]
