@@ -7,6 +7,8 @@ from library.models.author import Author
 from django.contrib.auth.models import Group
 from login.models import CustomUser
 
+from datetime import timedelta
+
 
 class TestCases(TestCase):
     @classmethod
@@ -124,3 +126,22 @@ class TestCases(TestCase):
             address="Innopolis, 1", phone_number='3000234'
         )
 
+    def test_no_overdue(self):
+        """
+        TC 01
+        """
+        p1 = CustomUser.objects.get(last_name='Afonso')
+        b1 = Book.objects.first()
+        b2 = Book.objects.get(id=2)
+
+        b1.reserve_by_user(p1)
+        b1.give_to_user(p1, p1.record_set.filter(document=b1).first(), date=datetime.date(year=2018, month=3, day=5))
+        b2.reserve_by_user(p1)
+        b2.give_to_user(p1, p1.record_set.get(document=b2), date=datetime.date(year=2018, month=3, day=5))
+
+        record_two = p1.record_set.get(document=b2)
+        self.assertEqual(record_two.get_overdue_fine(), 0)
+
+        b2.take_from_user(p1)
+        record_one = p1.record_set.get(document=b1)
+        self.assertEqual(record_one.get_overdue(), 0)
