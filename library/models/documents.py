@@ -55,7 +55,7 @@ class Document(models.Model):
         for queue_elem in self.requestqueueelement_set.all():
             user = queue_elem.user
             send_mail(
-                'Line have been removed',
+                'Line was removed',
                 'Sorry, the line for the document "' + self.title + '" was removed',
                 'fatawesomeee@yandex.ru',
                 [user.email],
