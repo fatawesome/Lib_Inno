@@ -64,18 +64,9 @@
             {% endif %}
         </div>
 
-        To show all debtors search for "debtor" or "overdue"
+            To show all debtors search for "debtor" or "overdue"
 
-         <script>
-            $(document).ready(function(){
-                $("#UserBooksSearch").on("keyup", function() {
-                    var value = $(this).val().toLowerCase();
-                    $("#UserBooksList tr").filter(function() {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
-                });
-            });
-        </script>
+
         </div>
     </div>
 
@@ -119,16 +110,6 @@
 
         To show all debtors search for "debtor" or "overdue"
 
-         <script>
-            $(document).ready(function(){
-                $("#UsersSearch").on("keyup", function() {
-                    var value = $(this).val().toLowerCase();
-                    $("#UserList tr").filter(function() {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
-                });
-            });
-        </script>
     </div>
 
 {% endblock %}
