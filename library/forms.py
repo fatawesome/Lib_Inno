@@ -33,7 +33,7 @@ class DocumentChangeForm(forms.ModelForm):
                   'authors',
                   'price',
                   'tags'
-        )
+                  )
 
 
 class BookForm(ModelForm):
@@ -49,14 +49,15 @@ class BookChangeForm(DocumentChangeForm):
     """
     A form for updating books
     """
+
     class Meta:
         model = Book
         fields = DocumentChangeForm.Meta.fields + ('reference',
-                  'publisher',
-                  'edition',
-                  'is_bestseller',
-                  'year',
-                )
+                                                   'publisher',
+                                                   'edition',
+                                                   'is_bestseller',
+                                                   'year',
+                                                   )
 
 
 class ArticleForm(ModelForm):
