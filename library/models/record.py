@@ -50,6 +50,13 @@ class Record(models.Model):
         # TODO: define permissions
         permissions = ()
 
+    def make_available(self):
+        self.due_to = None
+        self.user = None
+        self.status = 'a'
+        self.renewals_left = 1
+        self.save()
+
     def renew_by_user(self, user, date=datetime.date.today()):
         """
         Recalculate due_to for user, update counter of renewals

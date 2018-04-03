@@ -87,9 +87,9 @@ class Document(models.Model):
         rec_set = self.record_set.filter(status='a')
         if rec_set.count() != 0 and self.id not in [x.document.id for x in user.record_set.all()] and not self.reference:  # Why do we check it second time?
             record = rec_set.first()
-            if user.requestqueueelement_set.filter(document=self).count() != 0:  # If the user in the request queue
+            record.due_to = None
+            if self.requestqueueelement_set.all().count() != 0:  # If for this document request queue is exists
                 record.due_to = datetime.datetime.today() + datetime.timedelta(days=1)
-                user.requestqueueelement_set.get(document=self).delete()         # remove it from there
 
             record.user = user
             record.status = 'r'
@@ -109,12 +109,9 @@ class Document(models.Model):
         :param user:
         :return:
         """
+
         record = user.record_set.filter(document=self).first()
-        record.due_to = None
-        record.user = None
-        record.status = 'a'
-        record.renewals_left = 1
-        record.save()
+        record.make_available()
         user.save()
 
     def get_number_of_available_copies(self):
