@@ -3,12 +3,13 @@
 
 {% block content %}
 
-    <h1>My documents:</h1>
+    <h1>My documents</h1>
 
-    {% if user.record_set.all %}
-        <div class="col-md-*">
-            <div class="alert alert-success">
-            <h3>Checked out books:</h3>
+    <div class="col-md-*">
+        <div class="alert alert-success">
+            <h3>Checked out books</h3>
+            {% if user|taken_books_list %}
+
                 <input class="form-control" id="TakenDocs" type="text" placeholder="Search..">
                 <table class="table table-bordered table-striped table-hover">
                     <thead>
@@ -16,12 +17,14 @@
                         <th>Title</th>
                         <th>Authors</th>
                         <th>Due to</th>
+                        <th>Fee</th>
                     </tr>
                     </thead>
                     <tbody id="DocumentTakenList">
                     {% for rec in user|taken_books_list %}
                         {% if user|overdue_document:rec.document %}
                             <tr class="danger">
+                                <td style="display:none">overdue</td>
                         {% else %}
                             <tr>
                         {% endif %}
@@ -32,13 +35,19 @@
                             {% endfor %}
                             </td>
                             <td>{{ rec.due_to }}</td>
+                            <td>{{rec.get_overdue_fine}} RUB</td>
                         </tr>
                     {% endfor %}
                     </tbody>
                 </table>
-            </div>
-            <div class="alert alert-info">
-                <h3>Reserved books:</h3>
+                To show all overdue documents search for "overdue"
+            {% else %}
+                <p>You have not taken any document</p>
+            {% endif %}
+        </div>
+        <div class="alert alert-info">
+            <h3>Reserved books</h3>
+            {% if user|reserved_books_list %}
                 <input class="form-control" id="ReservedDocs" type="text" placeholder="Search..">
                 <table class="table table-bordered table-striped table-hover">
                     <thead>
@@ -60,18 +69,18 @@
                     {% endfor %}
                     </tbody>
                 </table>
-            </div>
+            {% else %}
+                <h5>You have no any reserved documents</h5>
+            {% endif %}
         </div>
-    {% else %}
-        <p>You have not taken any document</p>
-    {% endif %}
+    </div>
 
 
 
      {% if user.requestqueueelement_set.all %}
         <div class="col-md-*">
             <div class="alert alert-success">
-            <h3>My lines:</h3>
+            <h3>My lines</h3>
                 <input class="form-control" id="TakenDocs" type="text" placeholder="Search..">
                 <table class="table table-bordered table-striped table-hover">
                     <thead>

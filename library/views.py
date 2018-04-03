@@ -20,7 +20,7 @@ def index(request):
     """
     View function for home page of site.
     """
-    
+
     num_docs = Document.objects.all().count()
     num_instances = Record.objects.all().count()  # number of copies of this document
     num_instances_available = Record.objects.filter(

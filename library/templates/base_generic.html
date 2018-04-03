@@ -373,7 +373,13 @@
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar').toggleClass('active');
             });
-            $("#myInput").on("keyup", function () {
+            $("#CheckedOutDocumentsListInp").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#CheckedOutDocumentsList tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+            $("#DocumentListInp").on("keyup", function () {
                 var value = $(this).val().toLowerCase();
                 $("#DocumentList tr").filter(function () {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
