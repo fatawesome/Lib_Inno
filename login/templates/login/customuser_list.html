@@ -44,7 +44,7 @@
                             {% for book in customuser_list|books_of_user:user %}
                                 {% for info in book %}
                                     {% if forloop.last %}
-                                        (Due to: {{ info }})
+                                        (due to: {{ info }})
                                     {% else %}
                                         <a href="{{ info.get_absolute_url }}">{{ info.title }}</a>
                                     {% endif %}

@@ -20,11 +20,14 @@ def taken_records(document):
     return document.record_set.filter(status='o')
 
 
+@register.filter
+def overdue_document(user, doc):
+    return user.record_set.get(document=doc).due_to < datetime.date.today()
+
 
 @register.filter
 def reserved_records(document):
     return document.record_set.filter(status='r')
-
 
 
 @register.filter

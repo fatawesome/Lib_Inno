@@ -6,7 +6,7 @@
 
     {% if document_list %}
         <div class="col-md-*">
-            <input class="form-control" id="myInput" type="text" placeholder="Search..">
+            <input class="form-control" id="DocumentListInp" type="text" placeholder="Search..">
             <table class="table table-bordered table-striped table-hover">
                 <thead>
                 <tr>
@@ -30,6 +30,49 @@
         </div>
     {% else %}
       <p>There are no documents in the library.</p>
+    {% endif %}
+
+    {% if user.is_authenticated and perms.library.can_change %}
+        <div class="alert alert-info">
+            <h3> Checked out documents </h3>
+            <div class="col-md-*">
+                <input class="form-control" id="CheckedOutDocumentsListInp" type="text" placeholder="Search..">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Authors</th>
+                        <th>User</th>
+                        <th>Fee</th>
+                    </tr>
+                    </thead>
+                    <tbody id="CheckedOutDocumentsList">
+                    {% for document in document_list %}
+                        {% for rec in document.record_set.all %}
+                            {% if rec.user %}
+                                {% if rec.get_overdue_fine > 0 %}
+                                    <tr class="danger">
+                                    <td style="display:none">overdue debtor</td>
+                                {% else %}
+                                    <tr>
+                                {% endif %}
+                                <td><a href = "{{ rec.document.get_absolute_url }}">{{ rec.document.title }}</a></td>
+                                <td>
+                                    {% for author in rec.document.display_authors %}
+                                        {{ author.first_name }} {{ author.last_name }}{% if not forloop.last %},{% endif %}
+                                    {% endfor %}
+                                </td>
+                                <td><a href="{{rec.user.get_absolute_url}}">{{rec.user}}</a></td>
+                                <td>{{rec.get_overdue_fine}} RUB</td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            To show all debtors search for "debtor" or "overdue"
+        </div>
     {% endif %}
 
 
