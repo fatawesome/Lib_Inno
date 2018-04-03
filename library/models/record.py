@@ -48,6 +48,9 @@ class Record(models.Model):
     def get_overdue_fine(self):
         days = self.get_overdue()
         if days > 0:
-            return days * PENALTY
+            if days * PENALTY <= self.document.price:
+                return days * PENALTY
+            else:
+                return self.document.price
         else:
             return 0
