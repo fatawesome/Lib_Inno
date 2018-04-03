@@ -75,7 +75,7 @@ class Document(models.Model):
         """
         if record.status == 'r':
             record.status = 'o'
-            record.due_to = date + self.get_due_delta(user)
+            record.due_to = date + record.get_due_delta()
             record.save()
 
     def reserve_by_user(self, user):
@@ -116,24 +116,6 @@ class Document(models.Model):
         record.renewals_left = 1
         record.save()
         user.save()
-
-    def get_due_delta(self, user):
-        """
-        Counts for how many weeks document can be taken
-        """
-        if 'Visiting Professors' in [x.name for x in user.groups.all()]:
-            delta = 1
-        elif isinstance(self, Book):
-            if 'Faculty' in [x.name for x in user.groups.all()]:
-                delta = 4
-            elif self.is_bestseller:
-                delta = 2
-            else:
-                delta = 3
-        else:
-            delta = 2
-
-        return datetime.timedelta(weeks=delta)
 
     def get_number_of_available_copies(self):
         """
