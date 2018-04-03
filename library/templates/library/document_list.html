@@ -43,13 +43,14 @@
                         <th>Title</th>
                         <th>Authors</th>
                         <th>User</th>
+                        <th>Due to</th>
                         <th>Fee</th>
                     </tr>
                     </thead>
                     <tbody id="CheckedOutDocumentsList">
                     {% for document in document_list %}
                         {% for rec in document.record_set.all %}
-                            {% if rec.user %}
+                            {% if rec.status == 'o' %}
                                 {% if rec.get_overdue_fine > 0 %}
                                     <tr class="danger">
                                     <td style="display:none">overdue debtor</td>
@@ -63,6 +64,7 @@
                                     {% endfor %}
                                 </td>
                                 <td><a href="{{rec.user.get_absolute_url}}">{{rec.user}}</a></td>
+                                <td>{{rec.due_to}}</td>
                                 <td>{{rec.get_overdue_fine}} RUB</td>
                                 </tr>
                             {% endif %}
