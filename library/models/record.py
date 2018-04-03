@@ -1,11 +1,30 @@
-from django.db import models
-from .documents import Document
+from .documents import *
 from login.models import CustomUser
 
 import uuid
 import datetime
 
 PENALTY = 100
+
+
+def get_object_of_class(pk):
+    """
+    Recognize type of model inherited from Document by primary key.
+    :param pk: id.
+    :return: instance of model, inherited from Document.
+    """
+    doc = None
+
+    if Book.objects.all().filter(id=pk).count() != 0:
+        doc = Book.objects.get(id=pk)
+    elif Article.objects.all().filter(id=pk).count() != 0:
+        doc = Article.objects.get(id=pk)
+    elif Audio.objects.all().filter(id=pk).count() != 0:
+        doc = Audio.objects.get(id=pk)
+    elif Video.objects.all().filter(id=pk).count() != 0:
+        doc = Video.objects.get(id=pk)
+
+    return doc
 
 
 class Record(models.Model):
@@ -39,7 +58,7 @@ class Record(models.Model):
         if self.renewals_left > 0 and not self.document.outstanding:
             if user.subtype != 'Visiting Professors':
                 self.renewals_left -= 1
-            self.due_to = date + self.document.get_due_delta(user)
+            self.due_to = date + self.get_due_delta()
             self.save()
 
     def get_overdue(self, date=datetime.date.today()):
@@ -54,3 +73,22 @@ class Record(models.Model):
                 return self.document.price
         else:
             return 0
+
+    def get_due_delta(self):
+        """
+        Counts for how many weeks document can be taken
+        """
+        real_type = get_object_of_class(self.document.id)
+        if 'Visiting Professors' in [x.name for x in self.user.groups.all()]:
+            delta = 1
+        elif isinstance(real_type, Book):
+            if 'Faculty' in [x.name for x in self.user.groups.all()]:
+                delta = 4
+            elif real_type.is_bestseller:
+                delta = 2
+            else:
+                delta = 3
+        else:
+            delta = 2
+
+        return datetime.timedelta(weeks=delta)
