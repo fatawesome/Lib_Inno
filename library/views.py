@@ -20,6 +20,7 @@ def index(request):
     """
     View function for home page of site.
     """
+    
     num_docs = Document.objects.all().count()
     num_instances = Record.objects.all().count()  # number of copies of this document
     num_instances_available = Record.objects.filter(
@@ -329,15 +330,42 @@ def update_request_queue(document):
             break
         user = document.requestqueueelement_set.first().user
 
-        send_mail(
-            'Document is available',
-            'Document "' + document.title + '" is reserved by You.\n You have 1 day to take it from the library.',
-            'fatawesomeee@yandex.ru',
-            [user.email],
-            fail_silently=False
-        )
-
+        document.requestqueueelement_set.get(user=user).delete()
         document.reserve_by_user(user)
+
+        send_mail_document_reserved_by_user(user, document, Record.objects.filter(user=user, document=document).first().due_to != None)
+
+
+def send_mail_document_reserved_by_user(user, document, deadline=False):
+    send_mail(
+        'Document is available',
+        'Document "' + document.title + '" is available and reserved by You.\n\nYou can take it from the library' + (' till ' + str(user.record_set.filter(document=document).first().due_to) if deadline else '') + '\n\n\n\n-------\nBest regards, \nLibInno \nLibrary managment system',
+        'fatawesomeee@yandex.ru',
+        [user.email],
+        fail_silently=False
+    )
+
+
+def update_reserved_documents():
+    for doc in Document.objects.all():
+        if doc.requestqueueelement_set.all().count() != 0:
+            for rec in doc.record_set.filter(status='r'):
+                if rec.due_to == None:
+                    rec.due_to = datetime.date.today() + datetime.timedelta(days=1)
+                    rec.save()
+                    send_mail_document_reserved_by_user(rec.user, rec.document, True)
+                elif datetime.date.today() > rec.due_to:
+                    send_mail(
+                        'You did not take the document',
+                        'You didn\'t take the document "' + doc.title + '" from the library. Reserve withdrawn. You can try to reserve it again. ' + '\n\n\n\n-------\nBest regards, \nLibInno \nLibrary managment system',
+                        'fatawesomeee@yandex.ru',
+                        [rec.user.email],
+                        fail_silently=False
+                    )
+                    rec.make_available()
+                update_request_queue(rec.document)
+
+
 
 
 def get_in_queue(request, doc_id):
