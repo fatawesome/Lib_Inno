@@ -346,24 +346,6 @@ def send_mail_document_reserved_by_user(user, document, deadline=False):
     )
 
 
-def update_reserved_documents():
-    for doc in Document.objects.all():
-        if doc.requestqueueelement_set.all().count() != 0:
-            for rec in doc.record_set.filter(status='r'):
-                if rec.due_to == None:
-                    rec.due_to = datetime.date.today() + datetime.timedelta(days=1)
-                    rec.save()
-                    send_mail_document_reserved_by_user(rec.user, rec.document, True)
-                elif datetime.date.today() > rec.due_to:
-                    send_mail(
-                        'You did not take the document',
-                        'You didn\'t take the document "' + doc.title + '" from the library. Reserve withdrawn. You can try to reserve it again. ' + '\n\n\n\n-------\nBest regards, \nLibInno \nLibrary managment system',
-                        'fatawesomeee@yandex.ru',
-                        [rec.user.email],
-                        fail_silently=False
-                    )
-                    rec.make_available()
-                update_request_queue(rec.document)
 
 
 
@@ -558,3 +540,7 @@ def ask_for_return(request, pk, user_id):
         fail_silently=False
     )
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+
+from . import tasks  # autodiscovery doesn't work well for some reason
