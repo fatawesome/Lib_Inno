@@ -138,7 +138,6 @@ class TestCases(TestCase):
             address="Innopolis, 1", phone_number='3000234'
         )
 
-
     def test_one(self):
         """
         TC 01
@@ -148,16 +147,16 @@ class TestCases(TestCase):
         b2 = Book.objects.get(id=2)
 
         b1.reserve_by_user(p1)
-        b1.give_to_user(p1, p1.record_set.filter(document=b1).first(), date=datetime.date(year=2018, month=3, day=6))
+        b1.give_to_user(p1, p1.record_set.filter(document=b1).first(), datetime.date(year=2018, month=3, day=5))
         b2.reserve_by_user(p1)
-        b2.give_to_user(p1, p1.record_set.get(document=b2), date=datetime.date(year=2018, month=3, day=6))
+        b2.give_to_user(p1, p1.record_set.get(document=b2), datetime.date(year=2018, month=3, day=5))
 
         record_two = p1.record_set.get(document=b2)
-        self.assertEqual(record_two.get_overdue_fine(), 0)
+        self.assertEqual(record_two.get_overdue_fine(datetime.date(year=2018, month=4, day=2)), 0)
 
         b2.take_from_user(p1)
         record_one = p1.record_set.get(document=b1)
-        self.assertEqual(record_one.get_overdue(), 0)
+        self.assertEqual(record_one.get_overdue(datetime.date(year=2018, month=4, day=2)), 0)
 
     def test_two(self):
         """
@@ -171,34 +170,34 @@ class TestCases(TestCase):
         b2 = Book.objects.get(id=2)
 
         b1.reserve_by_user(p1)
-        b1.give_to_user(p1, p1.record_set.filter(document=b1).first(), date=datetime.date(year=2018, month=3, day=6))
+        b1.give_to_user(p1, p1.record_set.filter(document=b1).first(), date=datetime.date(year=2018, month=3, day=5))
         b2.reserve_by_user(p1)
-        b2.give_to_user(p1, p1.record_set.get(document=b2), date=datetime.date(year=2018, month=3, day=6))
+        b2.give_to_user(p1, p1.record_set.get(document=b2), date=datetime.date(year=2018, month=3, day=5))
 
         b1.reserve_by_user(s)
-        b1.give_to_user(s, s.record_set.filter(document=b1).first(), date=datetime.date(year=2018, month=3, day=6))
+        b1.give_to_user(s, s.record_set.filter(document=b1).first(), date=datetime.date(year=2018, month=3, day=5))
         b2.reserve_by_user(s)
-        b2.give_to_user(s, s.record_set.get(document=b2), date=datetime.date(year=2018, month=3, day=6))
+        b2.give_to_user(s, s.record_set.get(document=b2), date=datetime.date(year=2018, month=3, day=5))
 
         b1.reserve_by_user(v)
-        b1.give_to_user(v, v.record_set.filter(document=b1).first(), date=datetime.date(year=2018, month=3, day=6))
+        b1.give_to_user(v, v.record_set.filter(document=b1).first(), date=datetime.date(year=2018, month=3, day=5))
         b2.reserve_by_user(v)
-        b2.give_to_user(v, v.record_set.get(document=b2), date=datetime.date(year=2018, month=3, day=6))
+        b2.give_to_user(v, v.record_set.get(document=b2), date=datetime.date(year=2018, month=3, day=5))
 
-        self.assertEqual(p1.record_set.get(document=b1).get_overdue(), 0)
-        self.assertEqual(p1.record_set.get(document=b1).get_overdue_fine(), 0)
-        self.assertEqual(p1.record_set.get(document=b2).get_overdue(), 0)
-        self.assertEqual(p1.record_set.get(document=b2).get_overdue_fine(), 0)
+        self.assertEqual(p1.record_set.get(document=b1).get_overdue(datetime.date(year=2018, month=4, day=2)), 0)
+        self.assertEqual(p1.record_set.get(document=b1).get_overdue_fine(datetime.date(year=2018, month=4, day=2)), 0)
+        self.assertEqual(p1.record_set.get(document=b2).get_overdue(datetime.date(year=2018, month=4, day=2)), 0)
+        self.assertEqual(p1.record_set.get(document=b2).get_overdue_fine(datetime.date(year=2018, month=4, day=2)), 0)
 
-        self.assertEqual(s.record_set.get(document=b1).get_overdue(), 7)
-        self.assertEqual(s.record_set.get(document=b1).get_overdue_fine(), 700)
-        self.assertEqual(s.record_set.get(document=b2).get_overdue(), 14)
-        self.assertEqual(s.record_set.get(document=b2).get_overdue_fine(), 1400)
+        self.assertEqual(s.record_set.get(document=b1).get_overdue(datetime.date(year=2018, month=4, day=2)), 7)
+        self.assertEqual(s.record_set.get(document=b1).get_overdue_fine(datetime.date(year=2018, month=4, day=2)), 700)
+        self.assertEqual(s.record_set.get(document=b2).get_overdue(datetime.date(year=2018, month=4, day=2)), 14)
+        self.assertEqual(s.record_set.get(document=b2).get_overdue_fine(datetime.date(year=2018, month=4, day=2)), 1400)
 
-        self.assertEqual(v.record_set.get(document=b1).get_overdue(), 21)
-        self.assertEqual(v.record_set.get(document=b1).get_overdue_fine(), 2100)
-        self.assertEqual(v.record_set.get(document=b2).get_overdue(), 21)
-        self.assertEqual(v.record_set.get(document=b2).get_overdue_fine(), 1700)
+        self.assertEqual(v.record_set.get(document=b1).get_overdue(datetime.date(year=2018, month=4, day=2)), 21)
+        self.assertEqual(v.record_set.get(document=b1).get_overdue_fine(datetime.date(year=2018, month=4, day=2)), 2100)
+        self.assertEqual(v.record_set.get(document=b2).get_overdue(datetime.date(year=2018, month=4, day=2)), 21)
+        self.assertEqual(v.record_set.get(document=b2).get_overdue_fine(datetime.date(year=2018, month=4, day=2)), 1700)
 
     def test_three(self):
         """
@@ -358,7 +357,6 @@ class TestCases(TestCase):
 
         # Test 8
         av1.take_from_user(p2)
-        print(p2.record_set.filter(document=av1))
         self.assertEqual('<QuerySet []>', str(p2.record_set.filter(document=av1)))
 
     def test_nine(self):
@@ -379,11 +377,12 @@ class TestCases(TestCase):
         self.login_and_check_out(part_of_mail=3, user=p3, document=av1)
 
         # Test 9
-        print(p1.record_set.filter(document=av1).first().due_to,
-              p1.record_set.filter(document=av1).first().document.title)
-        print(av1.requestqueueelement_set.all())
-
-        print("________________________________________________")
+        p1.record_set.get(document=av1).renew_by_user(p1, date=datetime.date(year=2018, month=3, day=2))
+        self.assertEqual(p1.record_set.filter(document=av1).first().document.title, "Null References: The Billion Dollar Mistake")
+        self.assertEqual(
+            '<QuerySet [<RequestQueueElement: p4@mail.ru>, <RequestQueueElement: p5@mail.ru>, <RequestQueueElement: p3@mail.ru>]>',
+            str(av1.requestqueueelement_set.all()))
+        self.assertEqual(p1.record_set.filter(document=av1).first().due_to, datetime.date(year=2018, month=3, day=16))
 
     def test_ten(self):
         """
@@ -398,6 +397,8 @@ class TestCases(TestCase):
         self.login_and_check_out(part_of_mail=5, user=v, document=d1, day=29)
         v.record_set.get(document=d1).renew_by_user(v, date=datetime.date(year=2018, month=3, day=29))
 
-        print(p1.record_set.filter(document=d1).first().due_to,
-              p1.record_set.filter(document=d1).first().document.title)
-        print(v.record_set.filter(document=d1).first().due_to, v.record_set.filter(document=d1).first().document.title)
+        self.assertEqual(p1.record_set.filter(document=d1).first().due_to,
+                         datetime.date(year=2018, month=4, day=26))
+        self.assertEqual(p1.record_set.filter(document=d1).first().document.title, "Introduction to Algorithms")
+        self.assertEqual(v.record_set.filter(document=d1).first().due_to, datetime.date(year=2018, month=4, day=5))
+        self.assertEqual(v.record_set.filter(document=d1).first().document.title, "Introduction to Algorithms")

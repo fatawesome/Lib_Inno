@@ -73,8 +73,8 @@ class Record(models.Model):
     def get_overdue(self, date=datetime.date.today()):
         return (date - self.due_to).days
 
-    def get_overdue_fine(self):
-        days = self.get_overdue()
+    def get_overdue_fine(self, today=datetime.date.today()):
+        days = self.get_overdue(today)
         if days > 0:
             if days * PENALTY <= self.document.price:
                 return days * PENALTY
