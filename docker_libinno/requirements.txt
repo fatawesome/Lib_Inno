@@ -1,3 +1,4 @@
 django == 2.*
 djangorestframework == 3.7.7
 django_crispy_forms == 1.7.0
+django-background-tasks

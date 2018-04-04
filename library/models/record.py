@@ -57,11 +57,13 @@ class Record(models.Model):
         self.renewals_left = 1
         self.save()
 
-    def renew_by_user(self, user, date=datetime.date.today()):
+    def renew_by_user(self, user, date=None):
         """
         Recalculate due_to for user, update counter of renewals
         :param user: user, that wants to renew document
         """
+        if date is None:
+            date = datetime.date.today()
         if self.renewals_left > 0 and not self.document.outstanding:
             if user.subtype != 'Visiting Professors':
                 self.renewals_left -= 1
@@ -71,8 +73,8 @@ class Record(models.Model):
     def get_overdue(self, date=datetime.date.today()):
         return (date - self.due_to).days
 
-    def get_overdue_fine(self):
-        days = self.get_overdue()
+    def get_overdue_fine(self, today=datetime.date.today()):
+        days = self.get_overdue(today)
         if days > 0:
             if days * PENALTY <= self.document.price:
                 return days * PENALTY

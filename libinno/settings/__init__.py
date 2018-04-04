@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -31,6 +32,7 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]', '[0.0.0.0:8000]']
 # Application definition
 
 INSTALLED_APPS = [
+    'background_task',
     'library',
     'login',
     'rest_framework',
@@ -41,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
+
 ]
 
 MIDDLEWARE = [
@@ -142,3 +145,4 @@ EMAIL_HOST_USER = 'fatawesomeee@yandex.ru'
 EMAIL_HOST_PASSWORD = 'Fatawesome_123'
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
+
