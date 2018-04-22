@@ -4,6 +4,7 @@ from django.contrib.auth.models import (
 )
 from django.urls import reverse
 from django.contrib.auth.models import PermissionsMixin
+from django.core.exceptions import ValidationError
 
 
 class CustomUserManager(BaseUserManager):
@@ -45,6 +46,9 @@ class CustomUserManager(BaseUserManager):
         :param password:
         :return:
         """
+        if len(CustomUser.objects.filter(is_admin=True)) + 1 > 1:
+            raise ValidationError("Can only create 1 instance of Admin")
+
         user = self.create_user(email,
                                 first_name=first_name,
                                 last_name=last_name,
