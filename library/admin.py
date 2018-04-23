@@ -1,9 +1,13 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from django.contrib.admin.models import LogEntry, DELETION
 
 from library.models import *
 from login.models import CustomUser
 from login.forms import CustomUserCreationForm, CustomUserChangeForm
+
+from django.utils.html import escape
+from django.urls import reverse
 
 
 @admin.register(Author)
@@ -96,3 +100,37 @@ class CustomUserAdmin(UserAdmin):
     search_fields = ('email', 'first_name', 'last_name')
     ordering = ('email',)
     filter_horizontal = ()
+
+
+@admin.register(LogEntry)
+class LogEntryAdmin(admin.ModelAdmin):
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def has_add_permission(self, request):
+        return False
+
+    def save_model(self, request, obj, form, change):
+        # Return nothing to make sure user can't update any data
+        pass
+
+    readonly_fields = ('object_id', 'action_time', 'user',
+                       'content_type', 'object_repr', 'change_message', 'action_flag')
+    list_filter = ['action_time', 'user', 'content_type']
+    ordering = ('-action_time', )
+
+    def object_link(self, obj):
+        if obj.action_flag == DELETION:
+            link = escape(obj.object_repr)
+        else:
+            ct = obj.content_type
+            link = u'<a href="%s">%s</a>' % (
+                reverse('admin:%s_%s_change'
+                        % (ct.app_label, ct.model), args=[obj.object_id]),
+                escape(obj.object_repr),
+            )
+        return link
+
+    object_link.allow_tags = True
+    object_link.admin_order_field = 'object_repr'
+    object_link.short_description = u'object'
