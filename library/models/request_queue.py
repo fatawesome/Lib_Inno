@@ -31,5 +31,6 @@ class RequestQueueElement(models.Model):
 
     class Meta:
         ordering = ['-priority', 'date']
+
     def __str__(self):
         return self.user.get_full_name()

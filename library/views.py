@@ -7,6 +7,8 @@ from django.contrib.auth.decorators import permission_required
 from django.core.mail import send_mail, BadHeaderError
 from .models.request_queue import RequestQueueElement
 from library import views
+
+import logging
 import datetime
 
 from library.models import *
@@ -14,6 +16,10 @@ from .forms import BookForm
 from .forms import ArticleForm
 from .forms import *
 from login.forms import *
+
+from django.dispatch import receiver
+from django.contrib.admin.models import LogEntry
+from django.db.models.signals import pre_save, post_save, pre_delete, post_delete
 
 
 def index(request):
@@ -564,7 +570,6 @@ def ask_for_return(request, pk, user_id):
         fail_silently=False
     )
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-
 
 
 from . import tasks  # autodiscovery doesn't work well for some reason
