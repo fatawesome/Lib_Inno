@@ -65,6 +65,29 @@ class DocumentDetailView(generic.DetailView):
     model = Document
 
 
+def search_by_word(field, text):
+    for doc in Document.objects.all():
+        compare_with = ''
+        if field == 'title':
+            compare_with = doc.title
+        elif field == 'authors':
+            compare_with = doc.authors.all()
+
+
+def search_by_field(field, text, result):
+    results_by_word = []
+    operands = []
+    current = set()
+    for word in text.split():
+        if word == 'OR' or word == 'AND':
+            operands.append(word)
+            results_by_word.append(current)
+            continue
+        current.union(search_by_word(field, word))
+
+
+
+
 def search_documents(request):
     if request.method == 'POST':
         search_form = SearchFrom(request.POST)
@@ -80,13 +103,23 @@ def search_documents(request):
             authors = set()
             tags = set()
 
+            for doc in Document.objects.all():
+                if search_form.cleaned_data['taken'] is False or doc.record_set.filter(status='o').count() != 0:
+                    taken.add(doc)
+
+                if search_form.cleaned_data['available'] is False or doc.record_set.filter(status='a').count() != 0:
+                    available.add(doc)
+
+                search_by_field('title', search_form.cleaned_data['title'], title)
+                search_by_field('authors', search_form.cleaned_data['authors'], authors)
+                search_by_field('tags', search_form.cleaned_data['tags'], tags)
 
             search_results = Document.objects.all()
             return render(request, 'documents', {'search_results': search_results})
     else:
         search_form = SearchFrom()
 
-    return render(request, 'library/advanced_search.html', {'search_results': [], 'form': search_form})
+    return render(request, 'library/advanced_search.html', {'search_results': Document.objects.all(), 'form': search_form})
 
 
 def my_documents(request, pk):
