@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib import auth
 from django.views import generic
+from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.forms import UserCreationForm
 from .models import *
 from .forms import *
@@ -22,7 +23,7 @@ class CustomUserDetailView(generic.DetailView):
     """
     model = CustomUser
 
-
+@permission_required('login.delete_customuser')
 def delete_user(request, pk):
     """
     Delete user from the system.
@@ -34,7 +35,7 @@ def delete_user(request, pk):
     user.delete_user()
     return HttpResponseRedirect(reverse('users'))
 
-
+@permission_required('login.change_customuser')
 def edit_user(request, pk):
     """
     View function for editing a user.
@@ -72,7 +73,7 @@ def edit_user(request, pk):
     else:
         form = CustomUserChangeForm(instance=user)
 
-    return render(request, 'login/edit_user.html', {'form': form})
+    return render(request, 'login/edit_user.html', {'form': form, 'permissions': user.user_permissions.all()})
 
 
 def login(request):
@@ -101,6 +102,7 @@ def login(request):
         return render(request, 'login.html', context)
 
 
+@permission_required('login.add_customuser')
 def add_user(request):
     """
     View function for adding a book.
@@ -110,7 +112,7 @@ def add_user(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=True)
+            form.save(commit=True)
             return HttpResponseRedirect('../')
     else:
         form = CustomUserCreationForm()

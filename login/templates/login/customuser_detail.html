@@ -10,7 +10,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <h1> {{ customuser.first_name }} {{ customuser.last_name }}
-        {% if user.is_authenticated and perms.library.can_change %}
+        {% if user.is_authenticated and perms.login.change_customuser %}
             <a class="btn btn-primary" href="{% url 'edituser' customuser.id %}">Edit&nbsp;&nbsp;<i class="glyphicon glyphicon-edit"></i></a>
         {% endif %}
     </h1>
@@ -21,7 +21,7 @@
     <p><strong>Type:</strong> {{ customuser.groups.first }}</p>
 
     <div>
-        {% if user.is_authenticated and perms.library.can_delete %}
+        {% if user.is_authenticated and perms.login.change_customuser %}
             {% if customuser.record_set.all.count != 0 %}
                 <p><a class="btn btn-danger" disabled="disabled" data-toggle="tooltip" data-placement="right" title="This user has some reserved or taken documents">Delete user</a></p>
 
@@ -104,7 +104,11 @@
                 {% if user.id == customuser.id %}
                     <p><a class="btn btn-danger" disabled="disabled" data-toggle="tooltip" data-placement="right" title="You can not delete yourself">Delete user</a></p>
                 {% else %}
+                    {% if perms.login.delete_customuser %}
                     <p><a class="btn btn-danger" href="{% url 'deleteuser' customuser.id %}">Delete user</a></p>
+                    {% else %}
+                    <p><a class="btn btn-danger" disabled="disabled" data-toggle="tooltip" data-placement="right" title="Sorry. You have no permission for this action">Delete user</a></p>
+                    {% endif %}
                 {% endif %}
                 <div class="alert alert-warning"><h4>This user has no any documents or requests</h4></div>
             {% endif %}

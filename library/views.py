@@ -69,7 +69,7 @@ def my_documents(request, pk):
     return render(request, 'library/my_documents_list.html', {'user': CustomUser.objects.get(id=pk)})
 
 
-@permission_required('library.can_create')
+@permission_required('library.add_document')
 def add_book(request):
     """
     View function for adding a book.
@@ -102,7 +102,7 @@ def add_book(request):
     return render(request, 'add_book.html', {'book_form': book_form, 'author_form': author_form, 'tag_form': tag_form})
 
 
-@permission_required('library.can_create')
+@permission_required('library.add_document')
 def add_article(request):
     """
     Add article view.
@@ -136,7 +136,7 @@ def add_article(request):
                   {'article_form': article_form, 'author_form': author_form, 'tag_form': tag_form})
 
 
-@permission_required('library.can_create')
+@permission_required('library.add_document')
 def add_audio(request):
     """
     Add audio view.
@@ -170,7 +170,7 @@ def add_audio(request):
                   {'audio_form': audio_form, 'author_form': author_form, 'tag_form': tag_form})
 
 
-@permission_required('library.can_create')
+@permission_required('library.add_document')
 def add_video(request):
     """
     Add video view.
@@ -204,7 +204,7 @@ def add_video(request):
                   {'video_form': video_form, 'author_form': author_form, 'tag_form': tag_form})
 
 
-@permission_required('library.can_create')
+@permission_required('library.add_document')
 def add_copies(request, pk):
     """
     Adds copies of document with given id.
@@ -226,7 +226,7 @@ def add_copies(request, pk):
         return HttpResponseRedirect(reverse('document-detail', args=[pk]))
 
 
-@permission_required('library.can_delete')
+@permission_required('library.delete_document')
 def remove_copies(request, pk):
     """
     Removes copies of document with given id.
@@ -246,7 +246,7 @@ def remove_copies(request, pk):
         return HttpResponseRedirect(reverse('document-detail', args=[pk]))
 
 
-@permission_required('library.can_change')
+@permission_required('library.change_document')
 def take_document(request, pk, user_id):
     """
     Return a document to the system.
@@ -264,7 +264,7 @@ def take_document(request, pk, user_id):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-@permission_required('library.can_change')
+@permission_required('library.delete_document')
 def delete_copy(request, pk, user_id):
     """
     Delete a copy of the document
@@ -378,7 +378,7 @@ def quit_queue(request, doc_id):
     return HttpResponseRedirect(reverse('document-detail', args=[doc_id]))
 
 
-@permission_required('library.can_change')
+@permission_required('library.change_document')
 def give_document(request, doc_id, user_id):
     """
     Give document to user.
@@ -395,7 +395,7 @@ def give_document(request, doc_id, user_id):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-@permission_required('library.can_change')
+@permission_required('library.change_document')
 def increase_user_priority(request, doc_id, user_id):
     """
     Increases user priority in queue.
@@ -412,7 +412,7 @@ def increase_user_priority(request, doc_id, user_id):
     return HttpResponseRedirect(reverse('document-detail', args=[doc_id]))
 
 
-@permission_required('library.can_change')
+@permission_required('library.change_document')
 def reset_user_priority(request, doc_id, user_id):
     """
     Resets user priority in queue to default.
@@ -429,7 +429,7 @@ def reset_user_priority(request, doc_id, user_id):
     return HttpResponseRedirect(reverse('document-detail', args=[doc_id]))
 
 
-@permission_required('library.can_delete')
+@permission_required('library.delete_document')
 def delete_document(request, pk):
     """
     Deletes document with the given id.
@@ -444,7 +444,7 @@ def delete_document(request, pk):
     return HttpResponseRedirect(reverse('documents'))
 
 
-@permission_required('library.can_change')
+@permission_required('library.change_document')
 def edit_document(request, pk):
     """
     View function for editing a document.
@@ -495,7 +495,7 @@ def edit_document(request, pk):
     return render(request, 'library/edit_document.html', {'form': form})
 
 
-@permission_required('library.can_change')
+@permission_required('library.change_document')
 def document_outstanding_request(request, doc_id):
     """
     Activate outstanding request for document with given id.
@@ -508,7 +508,7 @@ def document_outstanding_request(request, doc_id):
     return HttpResponseRedirect(reverse('document-detail', args=[doc_id]))
 
 
-@permission_required('library.can_change')
+@permission_required('library.change_document')
 def document_disable_outstanding_request(request, doc_id):
     """
     Deactivates outstanding request for document with given id.
@@ -521,7 +521,7 @@ def document_disable_outstanding_request(request, doc_id):
     return HttpResponseRedirect(reverse('document-detail', args=[doc_id]))
 
 
-@permission_required('library.can_delete')
+@permission_required('library.change_document')
 def ask_for_return(request, pk, user_id):
     """
     Send a notification to user that he needs to return a book.
