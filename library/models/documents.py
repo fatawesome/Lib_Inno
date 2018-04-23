@@ -33,7 +33,7 @@ class Document(models.Model):
         Creates a string for the list of authors.
         :return: string of authors.
         """
-        return self.authors.all()
+        return ', '.join([(author.first_name + ' ' + author.last_name) for author in self.authors.all()])
 
     def display_tags(self):
         """

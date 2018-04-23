@@ -20,9 +20,7 @@
                     <tr>
                     <td><a href = "{{ doc.get_absolute_url }}">{{ doc.title }}</a></td>
                     <td>
-                        {% for author in doc.display_authors %}
-{#                            <a href="{{ author.get_absolute_url }}">#}{{ author.first_name }} {{ author.last_name }}{% if not forloop.last %},{% endif %}{#</a>#} {# TODO uncomment it #}
-                    {% endfor %}
+                        {{doc.display_authors}}
                     </td>
                     </tr>
                 {% endfor %}
@@ -60,9 +58,7 @@
                                 {% endif %}
                                 <td><a href = "{{ rec.document.get_absolute_url }}">{{ rec.document.title }}</a></td>
                                 <td>
-                                    {% for author in rec.document.display_authors %}
-                                        {{ author.first_name }} {{ author.last_name }}{% if not forloop.last %},{% endif %}
-                                    {% endfor %}
+                                    {{rec.document.display_authors}}
                                 </td>
                                 <td><a href="{{rec.user.get_absolute_url}}">{{rec.user}}</a></td>
                                 <td>{{rec.due_to}}</td>
