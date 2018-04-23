@@ -1,0 +1,908 @@
+(0.080) SELECT COUNT(*) AS "__count" FROM "background_task" WHERE "background_task"."task_name" = 'library.tasks.update_reserved_documents'; args=('library.tasks.update_reserved_documents',)
+(0.029) SELECT COUNT(*) AS "__count" FROM "background_task" WHERE "background_task"."task_name" = 'library.tasks.update_reserved_documents'; args=('library.tasks.update_reserved_documents',)
+(0.029) 
+            SELECT c.relname, c.relkind
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid); args=None
+(0.006) SELECT "django_migrations"."app", "django_migrations"."name" FROM "django_migrations"; args=()
+(0.009) 
+            SELECT c.relname, c.relkind
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid); args=None
+(0.002) SELECT "django_migrations"."app", "django_migrations"."name" FROM "django_migrations"; args=()
+(0.005) SELECT COUNT(*) AS "__count" FROM "library_document"; args=()
+(0.007) SELECT COUNT(*) AS "__count" FROM "library_record"; args=()
+(0.002) SELECT COUNT(*) AS "__count" FROM "library_record" WHERE "library_record"."status" = 'a'; args=('a',)
+(0.002) SELECT COUNT(*) AS "__count" FROM "library_author"; args=()
+(0.009) SELECT "django_session"."session_key", "django_session"."session_data", "django_session"."expire_date" FROM "django_session" WHERE ("django_session"."expire_date" > '2018-04-22T09:32:18.927850+00:00'::timestamptz AND "django_session"."session_key" = 'k3vsa7gn1gf1ec4rllwvwnvoy6yanlgb'); args=(datetime.datetime(2018, 4, 22, 9, 32, 18, 927850, tzinfo=<UTC>), 'k3vsa7gn1gf1ec4rllwvwnvoy6yanlgb')
+(0.005) SELECT "login_customuser"."id", "login_customuser"."password", "login_customuser"."last_login", "login_customuser"."is_superuser", "login_customuser"."email", "login_customuser"."first_name", "login_customuser"."last_name", "login_customuser"."phone_number", "login_customuser"."address", "login_customuser"."subtype", "login_customuser"."is_admin", "login_customuser"."is_active" FROM "login_customuser" WHERE "login_customuser"."id" = 1; args=(1,)
+"GET / HTTP/1.1" 200 14116
+(0.003) SELECT COUNT(*) AS "__count" FROM "library_author"; args=()
+(0.006) SELECT "django_session"."session_key", "django_session"."session_data", "django_session"."expire_date" FROM "django_session" WHERE ("django_session"."expire_date" > '2018-04-22T09:32:23.455421+00:00'::timestamptz AND "django_session"."session_key" = 'k3vsa7gn1gf1ec4rllwvwnvoy6yanlgb'); args=(datetime.datetime(2018, 4, 22, 9, 32, 23, 455421, tzinfo=<UTC>), 'k3vsa7gn1gf1ec4rllwvwnvoy6yanlgb')
+(0.005) SELECT "login_customuser"."id", "login_customuser"."password", "login_customuser"."last_login", "login_customuser"."is_superuser", "login_customuser"."email", "login_customuser"."first_name", "login_customuser"."last_name", "login_customuser"."phone_number", "login_customuser"."address", "login_customuser"."subtype", "login_customuser"."is_admin", "login_customuser"."is_active" FROM "login_customuser" WHERE "login_customuser"."id" = 1; args=(1,)
+(0.003) SELECT "library_author"."id", "library_author"."first_name", "library_author"."last_name", "library_author"."date_of_birth", "library_author"."date_of_death" FROM "library_author" ORDER BY "library_author"."last_name" ASC, "library_author"."first_name" ASC LIMIT 1; args=()
+"GET /authors/ HTTP/1.1" 200 14161
+(0.003) SELECT COUNT(*) AS "__count" FROM "library_document"; args=()
+(0.005) SELECT COUNT(*) AS "__count" FROM "library_record"; args=()
+(0.002) SELECT COUNT(*) AS "__count" FROM "library_record" WHERE "library_record"."status" = 'a'; args=('a',)
+(0.004) SELECT COUNT(*) AS "__count" FROM "library_author"; args=()
+(0.006) SELECT "django_session"."session_key", "django_session"."session_data", "django_session"."expire_date" FROM "django_session" WHERE ("django_session"."expire_date" > '2018-04-22T09:32:31.445320+00:00'::timestamptz AND "django_session"."session_key" = 'k3vsa7gn1gf1ec4rllwvwnvoy6yanlgb'); args=(datetime.datetime(2018, 4, 22, 9, 32, 31, 445320, tzinfo=<UTC>), 'k3vsa7gn1gf1ec4rllwvwnvoy6yanlgb')
+(0.003) SELECT "login_customuser"."id", "login_customuser"."password", "login_customuser"."last_login", "login_customuser"."is_superuser", "login_customuser"."email", "login_customuser"."first_name", "login_customuser"."last_name", "login_customuser"."phone_number", "login_customuser"."address", "login_customuser"."subtype", "login_customuser"."is_admin", "login_customuser"."is_active" FROM "login_customuser" WHERE "login_customuser"."id" = 1; args=(1,)
+"GET / HTTP/1.1" 200 14116
+(0.003) SELECT COUNT(*) AS "__count" FROM "library_author"; args=()
+(0.005) SELECT "django_session"."session_key", "django_session"."session_data", "django_session"."expire_date" FROM "django_session" WHERE ("django_session"."expire_date" > '2018-04-22T09:32:32.291438+00:00'::timestamptz AND "django_session"."session_key" = 'k3vsa7gn1gf1ec4rllwvwnvoy6yanlgb'); args=(datetime.datetime(2018, 4, 22, 9, 32, 32, 291438, tzinfo=<UTC>), 'k3vsa7gn1gf1ec4rllwvwnvoy6yanlgb')
+(0.004) SELECT "login_customuser"."id", "login_customuser"."password", "login_customuser"."last_login", "login_customuser"."is_superuser", "login_customuser"."email", "login_customuser"."first_name", "login_customuser"."last_name", "login_customuser"."phone_number", "login_customuser"."address", "login_customuser"."subtype", "login_customuser"."is_admin", "login_customuser"."is_active" FROM "login_customuser" WHERE "login_customuser"."id" = 1; args=(1,)
+(0.002) SELECT "library_author"."id", "library_author"."first_name", "library_author"."last_name", "library_author"."date_of_birth", "library_author"."date_of_death" FROM "library_author" ORDER BY "library_author"."last_name" ASC, "library_author"."first_name" ASC LIMIT 1; args=()
+"GET /authors/ HTTP/1.1" 200 14161
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/usr/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/usr/lib/python3.6/site-packages/django/urls/resolvers.py", line 523, in resolve
+    raise Resolver404({'tried': tried, 'path': new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern '' [name='index']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'documents/' [name='documents']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'my_documents/<int:pk>/' [name='my_documents']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/' [name='document-detail']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'authors/' [name='authors']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_book/' [name='add_book']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_audio/' [name='add_audio']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_video/' [name='add_video']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_copies/<int:pk>/' [name='add_copies']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'remove_copies/<int:pk>/' [name='remove_copies']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/give/<int:user_id>' [name='give_document']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/increase_user_priority/<int:user_id>' [name='increase_user_priority']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/reset_user_priority/<int:user_id>' [name='reset_user_priority']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/reserve/' [name='reserve']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/get_in_queue/' [name='get_in_queue']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/quit_queue/' [name='quit_queue']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/renew/' [name='renew_document']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/take/<int:user_id>' [name='take']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/delete_copy/<int:user_id>' [name='delete_copy']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/delete/' [name='delete']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/editdocument/' [name='editdocument']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/document_outstanding_request/' [name='document_outstanding_request']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/document_disable_outstanding_request/' [name='document_disable_outstanding_request']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_article/' [name='add_article']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/ask/<int:user_id>' [name='ask']>], [<URLResolver <module 'api_v0.urls' from '/libinno/api_v0/urls.py'> (None:None) 'api/v0/'>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'login/' [name='login']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'add_user/' [name='add_user']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/' [name='users']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/' [name='customuser_detail']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/deleteuser/' [name='deleteuser']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/edituser/' [name='edituser']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'logout/' [name='logout']>]], 'path': 'authors/sdfgds'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 849, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 856, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <URLPattern list> (admin:admin) 'admin/'>
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/usr/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/usr/lib/python3.6/site-packages/django/urls/resolvers.py", line 523, in resolve
+    raise Resolver404({'tried': tried, 'path': new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern '' [name='index']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'documents/' [name='documents']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'my_documents/<int:pk>/' [name='my_documents']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/' [name='document-detail']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'authors/' [name='authors']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_book/' [name='add_book']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_audio/' [name='add_audio']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_video/' [name='add_video']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_copies/<int:pk>/' [name='add_copies']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'remove_copies/<int:pk>/' [name='remove_copies']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/give/<int:user_id>' [name='give_document']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/increase_user_priority/<int:user_id>' [name='increase_user_priority']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/reset_user_priority/<int:user_id>' [name='reset_user_priority']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/reserve/' [name='reserve']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/get_in_queue/' [name='get_in_queue']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/quit_queue/' [name='quit_queue']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/renew/' [name='renew_document']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/take/<int:user_id>' [name='take']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/delete_copy/<int:user_id>' [name='delete_copy']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/delete/' [name='delete']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/editdocument/' [name='editdocument']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/document_outstanding_request/' [name='document_outstanding_request']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/document_disable_outstanding_request/' [name='document_disable_outstanding_request']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_article/' [name='add_article']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/ask/<int:user_id>' [name='ask']>], [<URLResolver <module 'api_v0.urls' from '/libinno/api_v0/urls.py'> (None:None) 'api/v0/'>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'login/' [name='login']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'add_user/' [name='add_user']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/' [name='users']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/' [name='customuser_detail']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/deleteuser/' [name='deleteuser']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/edituser/' [name='edituser']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'logout/' [name='logout']>]], 'path': 'authors/sdfgds'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 849, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 856, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <module 'api_v0.urls' from '/libinno/api_v0/urls.py'> (None:None) 'api/v0/'>
+Not Found: /authors/sdfgds
+"GET /authors/sdfgds HTTP/1.1" 404 8401
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/usr/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/usr/lib/python3.6/site-packages/django/urls/resolvers.py", line 523, in resolve
+    raise Resolver404({'tried': tried, 'path': new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern '' [name='index']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'documents/' [name='documents']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'my_documents/<int:pk>/' [name='my_documents']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/' [name='document-detail']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'authors/' [name='authors']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_book/' [name='add_book']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_audio/' [name='add_audio']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_video/' [name='add_video']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_copies/<int:pk>/' [name='add_copies']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'remove_copies/<int:pk>/' [name='remove_copies']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/give/<int:user_id>' [name='give_document']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/increase_user_priority/<int:user_id>' [name='increase_user_priority']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/reset_user_priority/<int:user_id>' [name='reset_user_priority']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/reserve/' [name='reserve']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/get_in_queue/' [name='get_in_queue']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/quit_queue/' [name='quit_queue']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/renew/' [name='renew_document']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/take/<int:user_id>' [name='take']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/delete_copy/<int:user_id>' [name='delete_copy']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/delete/' [name='delete']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/editdocument/' [name='editdocument']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/document_outstanding_request/' [name='document_outstanding_request']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/document_disable_outstanding_request/' [name='document_disable_outstanding_request']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_article/' [name='add_article']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/ask/<int:user_id>' [name='ask']>], [<URLResolver <module 'api_v0.urls' from '/libinno/api_v0/urls.py'> (None:None) 'api/v0/'>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'login/' [name='login']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'add_user/' [name='add_user']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/' [name='users']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/' [name='customuser_detail']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/deleteuser/' [name='deleteuser']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/edituser/' [name='edituser']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'logout/' [name='logout']>]], 'path': 'authors/sdfgds'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 849, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 856, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <URLPattern list> (admin:admin) 'admin/'>
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/usr/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/usr/lib/python3.6/site-packages/django/urls/resolvers.py", line 523, in resolve
+    raise Resolver404({'tried': tried, 'path': new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern '' [name='index']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'documents/' [name='documents']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'my_documents/<int:pk>/' [name='my_documents']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/' [name='document-detail']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'authors/' [name='authors']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_book/' [name='add_book']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_audio/' [name='add_audio']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_video/' [name='add_video']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_copies/<int:pk>/' [name='add_copies']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'remove_copies/<int:pk>/' [name='remove_copies']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/give/<int:user_id>' [name='give_document']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/increase_user_priority/<int:user_id>' [name='increase_user_priority']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/reset_user_priority/<int:user_id>' [name='reset_user_priority']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/reserve/' [name='reserve']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/get_in_queue/' [name='get_in_queue']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/quit_queue/' [name='quit_queue']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/renew/' [name='renew_document']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/take/<int:user_id>' [name='take']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/delete_copy/<int:user_id>' [name='delete_copy']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/delete/' [name='delete']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/editdocument/' [name='editdocument']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/document_outstanding_request/' [name='document_outstanding_request']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/document_disable_outstanding_request/' [name='document_disable_outstanding_request']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_article/' [name='add_article']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/ask/<int:user_id>' [name='ask']>], [<URLResolver <module 'api_v0.urls' from '/libinno/api_v0/urls.py'> (None:None) 'api/v0/'>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'login/' [name='login']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'add_user/' [name='add_user']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/' [name='users']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/' [name='customuser_detail']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/deleteuser/' [name='deleteuser']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/edituser/' [name='edituser']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'logout/' [name='logout']>]], 'path': 'authors/sdfgds'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 849, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 856, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <module 'api_v0.urls' from '/libinno/api_v0/urls.py'> (None:None) 'api/v0/'>
+Not Found: /authors/sdfgds
+"GET /authors/sdfgds HTTP/1.1" 404 8401
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/usr/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/usr/lib/python3.6/site-packages/django/urls/resolvers.py", line 523, in resolve
+    raise Resolver404({'tried': tried, 'path': new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern '' [name='index']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'documents/' [name='documents']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'my_documents/<int:pk>/' [name='my_documents']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/' [name='document-detail']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'authors/' [name='authors']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_book/' [name='add_book']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_audio/' [name='add_audio']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_video/' [name='add_video']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_copies/<int:pk>/' [name='add_copies']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'remove_copies/<int:pk>/' [name='remove_copies']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/give/<int:user_id>' [name='give_document']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/increase_user_priority/<int:user_id>' [name='increase_user_priority']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/reset_user_priority/<int:user_id>' [name='reset_user_priority']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/reserve/' [name='reserve']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/get_in_queue/' [name='get_in_queue']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/quit_queue/' [name='quit_queue']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/renew/' [name='renew_document']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/take/<int:user_id>' [name='take']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/delete_copy/<int:user_id>' [name='delete_copy']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/delete/' [name='delete']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/editdocument/' [name='editdocument']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/document_outstanding_request/' [name='document_outstanding_request']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/document_disable_outstanding_request/' [name='document_disable_outstanding_request']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_article/' [name='add_article']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/ask/<int:user_id>' [name='ask']>], [<URLResolver <module 'api_v0.urls' from '/libinno/api_v0/urls.py'> (None:None) 'api/v0/'>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'login/' [name='login']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'add_user/' [name='add_user']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/' [name='users']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/' [name='customuser_detail']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/deleteuser/' [name='deleteuser']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/edituser/' [name='edituser']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'logout/' [name='logout']>]], 'path': 'authors/sdfgds'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 849, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 856, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <URLPattern list> (admin:admin) 'admin/'>
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/usr/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/usr/lib/python3.6/site-packages/django/urls/resolvers.py", line 523, in resolve
+    raise Resolver404({'tried': tried, 'path': new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern '' [name='index']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'documents/' [name='documents']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'my_documents/<int:pk>/' [name='my_documents']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/' [name='document-detail']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'authors/' [name='authors']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_book/' [name='add_book']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_audio/' [name='add_audio']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_video/' [name='add_video']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_copies/<int:pk>/' [name='add_copies']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'remove_copies/<int:pk>/' [name='remove_copies']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/give/<int:user_id>' [name='give_document']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/increase_user_priority/<int:user_id>' [name='increase_user_priority']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/reset_user_priority/<int:user_id>' [name='reset_user_priority']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/reserve/' [name='reserve']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/get_in_queue/' [name='get_in_queue']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/quit_queue/' [name='quit_queue']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/renew/' [name='renew_document']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/take/<int:user_id>' [name='take']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/delete_copy/<int:user_id>' [name='delete_copy']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/delete/' [name='delete']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/editdocument/' [name='editdocument']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/document_outstanding_request/' [name='document_outstanding_request']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/document_disable_outstanding_request/' [name='document_disable_outstanding_request']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_article/' [name='add_article']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/ask/<int:user_id>' [name='ask']>], [<URLResolver <module 'api_v0.urls' from '/libinno/api_v0/urls.py'> (None:None) 'api/v0/'>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'login/' [name='login']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'add_user/' [name='add_user']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/' [name='users']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/' [name='customuser_detail']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/deleteuser/' [name='deleteuser']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/edituser/' [name='edituser']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'logout/' [name='logout']>]], 'path': 'authors/sdfgds'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 849, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 856, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <module 'api_v0.urls' from '/libinno/api_v0/urls.py'> (None:None) 'api/v0/'>
+Not Found: /authors/sdfgds
+"GET /authors/sdfgds HTTP/1.1" 404 8401
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/usr/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/usr/lib/python3.6/site-packages/django/urls/resolvers.py", line 523, in resolve
+    raise Resolver404({'tried': tried, 'path': new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern '' [name='index']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'documents/' [name='documents']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'my_documents/<int:pk>/' [name='my_documents']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/' [name='document-detail']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'authors/' [name='authors']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_book/' [name='add_book']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_audio/' [name='add_audio']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_video/' [name='add_video']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_copies/<int:pk>/' [name='add_copies']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'remove_copies/<int:pk>/' [name='remove_copies']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/give/<int:user_id>' [name='give_document']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/increase_user_priority/<int:user_id>' [name='increase_user_priority']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/reset_user_priority/<int:user_id>' [name='reset_user_priority']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/reserve/' [name='reserve']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/get_in_queue/' [name='get_in_queue']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/quit_queue/' [name='quit_queue']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/renew/' [name='renew_document']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/take/<int:user_id>' [name='take']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/delete_copy/<int:user_id>' [name='delete_copy']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/delete/' [name='delete']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/editdocument/' [name='editdocument']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/document_outstanding_request/' [name='document_outstanding_request']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/document_disable_outstanding_request/' [name='document_disable_outstanding_request']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_article/' [name='add_article']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/ask/<int:user_id>' [name='ask']>], [<URLResolver <module 'api_v0.urls' from '/libinno/api_v0/urls.py'> (None:None) 'api/v0/'>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'login/' [name='login']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'add_user/' [name='add_user']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/' [name='users']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/' [name='customuser_detail']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/deleteuser/' [name='deleteuser']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/edituser/' [name='edituser']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'logout/' [name='logout']>]], 'path': 'authors/sdfgds'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 849, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 856, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <URLPattern list> (admin:admin) 'admin/'>
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/usr/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/usr/lib/python3.6/site-packages/django/urls/resolvers.py", line 523, in resolve
+    raise Resolver404({'tried': tried, 'path': new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern '' [name='index']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'documents/' [name='documents']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'my_documents/<int:pk>/' [name='my_documents']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/' [name='document-detail']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'authors/' [name='authors']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_book/' [name='add_book']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_audio/' [name='add_audio']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_video/' [name='add_video']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_copies/<int:pk>/' [name='add_copies']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'remove_copies/<int:pk>/' [name='remove_copies']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/give/<int:user_id>' [name='give_document']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/increase_user_priority/<int:user_id>' [name='increase_user_priority']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/reset_user_priority/<int:user_id>' [name='reset_user_priority']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/reserve/' [name='reserve']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/get_in_queue/' [name='get_in_queue']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/quit_queue/' [name='quit_queue']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/renew/' [name='renew_document']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/take/<int:user_id>' [name='take']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/delete_copy/<int:user_id>' [name='delete_copy']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/delete/' [name='delete']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/editdocument/' [name='editdocument']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/document_outstanding_request/' [name='document_outstanding_request']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/document_disable_outstanding_request/' [name='document_disable_outstanding_request']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_article/' [name='add_article']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/ask/<int:user_id>' [name='ask']>], [<URLResolver <module 'api_v0.urls' from '/libinno/api_v0/urls.py'> (None:None) 'api/v0/'>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'login/' [name='login']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'add_user/' [name='add_user']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/' [name='users']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/' [name='customuser_detail']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/deleteuser/' [name='deleteuser']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/edituser/' [name='edituser']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'logout/' [name='logout']>]], 'path': 'authors/sdfgds'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 849, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 856, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <module 'api_v0.urls' from '/libinno/api_v0/urls.py'> (None:None) 'api/v0/'>
+Not Found: /authors/sdfgds
+"GET /authors/sdfgds HTTP/1.1" 404 8401
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/usr/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/usr/lib/python3.6/site-packages/django/urls/resolvers.py", line 523, in resolve
+    raise Resolver404({'tried': tried, 'path': new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern '' [name='index']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'documents/' [name='documents']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'my_documents/<int:pk>/' [name='my_documents']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/' [name='document-detail']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'authors/' [name='authors']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_book/' [name='add_book']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_audio/' [name='add_audio']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_video/' [name='add_video']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_copies/<int:pk>/' [name='add_copies']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'remove_copies/<int:pk>/' [name='remove_copies']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/give/<int:user_id>' [name='give_document']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/increase_user_priority/<int:user_id>' [name='increase_user_priority']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/reset_user_priority/<int:user_id>' [name='reset_user_priority']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/reserve/' [name='reserve']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/get_in_queue/' [name='get_in_queue']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/quit_queue/' [name='quit_queue']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/renew/' [name='renew_document']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/take/<int:user_id>' [name='take']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/delete_copy/<int:user_id>' [name='delete_copy']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/delete/' [name='delete']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/editdocument/' [name='editdocument']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/document_outstanding_request/' [name='document_outstanding_request']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/document_disable_outstanding_request/' [name='document_disable_outstanding_request']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_article/' [name='add_article']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/ask/<int:user_id>' [name='ask']>], [<URLResolver <module 'api_v0.urls' from '/libinno/api_v0/urls.py'> (None:None) 'api/v0/'>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'login/' [name='login']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'add_user/' [name='add_user']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/' [name='users']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/' [name='customuser_detail']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/deleteuser/' [name='deleteuser']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/edituser/' [name='edituser']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'logout/' [name='logout']>]], 'path': 'authors/sdfgds'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 849, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 856, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <URLPattern list> (admin:admin) 'admin/'>
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/usr/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/usr/lib/python3.6/site-packages/django/urls/resolvers.py", line 523, in resolve
+    raise Resolver404({'tried': tried, 'path': new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern '' [name='index']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'documents/' [name='documents']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'my_documents/<int:pk>/' [name='my_documents']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/' [name='document-detail']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'authors/' [name='authors']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_book/' [name='add_book']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_audio/' [name='add_audio']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_video/' [name='add_video']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_copies/<int:pk>/' [name='add_copies']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'remove_copies/<int:pk>/' [name='remove_copies']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/give/<int:user_id>' [name='give_document']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/increase_user_priority/<int:user_id>' [name='increase_user_priority']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/reset_user_priority/<int:user_id>' [name='reset_user_priority']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/reserve/' [name='reserve']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/get_in_queue/' [name='get_in_queue']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/quit_queue/' [name='quit_queue']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/renew/' [name='renew_document']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/take/<int:user_id>' [name='take']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/delete_copy/<int:user_id>' [name='delete_copy']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/delete/' [name='delete']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/editdocument/' [name='editdocument']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/document_outstanding_request/' [name='document_outstanding_request']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/document_disable_outstanding_request/' [name='document_disable_outstanding_request']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_article/' [name='add_article']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/ask/<int:user_id>' [name='ask']>], [<URLResolver <module 'api_v0.urls' from '/libinno/api_v0/urls.py'> (None:None) 'api/v0/'>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'login/' [name='login']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'add_user/' [name='add_user']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/' [name='users']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/' [name='customuser_detail']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/deleteuser/' [name='deleteuser']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/edituser/' [name='edituser']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'logout/' [name='logout']>]], 'path': 'authors/sdfgds'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 849, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 856, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <module 'api_v0.urls' from '/libinno/api_v0/urls.py'> (None:None) 'api/v0/'>
+Not Found: /authors/sdfgds
+"GET /authors/sdfgds HTTP/1.1" 404 8401
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/usr/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/usr/lib/python3.6/site-packages/django/urls/resolvers.py", line 523, in resolve
+    raise Resolver404({'tried': tried, 'path': new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern '' [name='index']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'documents/' [name='documents']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'my_documents/<int:pk>/' [name='my_documents']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/' [name='document-detail']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'authors/' [name='authors']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_book/' [name='add_book']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_audio/' [name='add_audio']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_video/' [name='add_video']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_copies/<int:pk>/' [name='add_copies']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'remove_copies/<int:pk>/' [name='remove_copies']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/give/<int:user_id>' [name='give_document']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/increase_user_priority/<int:user_id>' [name='increase_user_priority']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/reset_user_priority/<int:user_id>' [name='reset_user_priority']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/reserve/' [name='reserve']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/get_in_queue/' [name='get_in_queue']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/quit_queue/' [name='quit_queue']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/renew/' [name='renew_document']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/take/<int:user_id>' [name='take']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/delete_copy/<int:user_id>' [name='delete_copy']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/delete/' [name='delete']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/editdocument/' [name='editdocument']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/document_outstanding_request/' [name='document_outstanding_request']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/document_disable_outstanding_request/' [name='document_disable_outstanding_request']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_article/' [name='add_article']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/ask/<int:user_id>' [name='ask']>], [<URLResolver <module 'api_v0.urls' from '/libinno/api_v0/urls.py'> (None:None) 'api/v0/'>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'login/' [name='login']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'add_user/' [name='add_user']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/' [name='users']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/' [name='customuser_detail']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/deleteuser/' [name='deleteuser']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/edituser/' [name='edituser']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'logout/' [name='logout']>]], 'path': 'authors/sdfgds'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 849, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 856, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <URLPattern list> (admin:admin) 'admin/'>
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/usr/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/usr/lib/python3.6/site-packages/django/urls/resolvers.py", line 523, in resolve
+    raise Resolver404({'tried': tried, 'path': new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern '' [name='index']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'documents/' [name='documents']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'my_documents/<int:pk>/' [name='my_documents']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/' [name='document-detail']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'authors/' [name='authors']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_book/' [name='add_book']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_audio/' [name='add_audio']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_video/' [name='add_video']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_copies/<int:pk>/' [name='add_copies']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'remove_copies/<int:pk>/' [name='remove_copies']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/give/<int:user_id>' [name='give_document']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/increase_user_priority/<int:user_id>' [name='increase_user_priority']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/reset_user_priority/<int:user_id>' [name='reset_user_priority']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/reserve/' [name='reserve']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/get_in_queue/' [name='get_in_queue']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/quit_queue/' [name='quit_queue']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/renew/' [name='renew_document']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/take/<int:user_id>' [name='take']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/delete_copy/<int:user_id>' [name='delete_copy']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/delete/' [name='delete']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/editdocument/' [name='editdocument']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/document_outstanding_request/' [name='document_outstanding_request']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/document_disable_outstanding_request/' [name='document_disable_outstanding_request']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_article/' [name='add_article']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/ask/<int:user_id>' [name='ask']>], [<URLResolver <module 'api_v0.urls' from '/libinno/api_v0/urls.py'> (None:None) 'api/v0/'>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'login/' [name='login']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'add_user/' [name='add_user']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/' [name='users']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/' [name='customuser_detail']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/deleteuser/' [name='deleteuser']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/edituser/' [name='edituser']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'logout/' [name='logout']>]], 'path': 'authors/sdfgds'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 849, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 856, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <module 'api_v0.urls' from '/libinno/api_v0/urls.py'> (None:None) 'api/v0/'>
+Not Found: /authors/sdfgds
+"GET /authors/sdfgds HTTP/1.1" 404 8401
+(0.003) SELECT COUNT(*) AS "__count" FROM "library_author"; args=()
+(0.005) SELECT "django_session"."session_key", "django_session"."session_data", "django_session"."expire_date" FROM "django_session" WHERE ("django_session"."expire_date" > '2018-04-22T09:34:11.686231+00:00'::timestamptz AND "django_session"."session_key" = 'k3vsa7gn1gf1ec4rllwvwnvoy6yanlgb'); args=(datetime.datetime(2018, 4, 22, 9, 34, 11, 686231, tzinfo=<UTC>), 'k3vsa7gn1gf1ec4rllwvwnvoy6yanlgb')
+(0.005) SELECT "login_customuser"."id", "login_customuser"."password", "login_customuser"."last_login", "login_customuser"."is_superuser", "login_customuser"."email", "login_customuser"."first_name", "login_customuser"."last_name", "login_customuser"."phone_number", "login_customuser"."address", "login_customuser"."subtype", "login_customuser"."is_admin", "login_customuser"."is_active" FROM "login_customuser" WHERE "login_customuser"."id" = 1; args=(1,)
+(0.001) SELECT "library_author"."id", "library_author"."first_name", "library_author"."last_name", "library_author"."date_of_birth", "library_author"."date_of_death" FROM "library_author" ORDER BY "library_author"."last_name" ASC, "library_author"."first_name" ASC LIMIT 1; args=()
+"GET /authors/ HTTP/1.1" 200 14161
+(0.003) SELECT COUNT(*) AS "__count" FROM "library_document"; args=()
+(0.005) SELECT "django_session"."session_key", "django_session"."session_data", "django_session"."expire_date" FROM "django_session" WHERE ("django_session"."expire_date" > '2018-04-22T09:34:13.357777+00:00'::timestamptz AND "django_session"."session_key" = 'k3vsa7gn1gf1ec4rllwvwnvoy6yanlgb'); args=(datetime.datetime(2018, 4, 22, 9, 34, 13, 357777, tzinfo=<UTC>), 'k3vsa7gn1gf1ec4rllwvwnvoy6yanlgb')
+(0.004) SELECT "login_customuser"."id", "login_customuser"."password", "login_customuser"."last_login", "login_customuser"."is_superuser", "login_customuser"."email", "login_customuser"."first_name", "login_customuser"."last_name", "login_customuser"."phone_number", "login_customuser"."address", "login_customuser"."subtype", "login_customuser"."is_admin", "login_customuser"."is_active" FROM "login_customuser" WHERE "login_customuser"."id" = 1; args=(1,)
+(0.001) SELECT "library_document"."id", "library_document"."title", "library_document"."price", "library_document"."reference", "library_document"."outstanding" FROM "library_document" LIMIT 6; args=()
+(0.012) SELECT "library_author"."id", "library_author"."first_name", "library_author"."last_name", "library_author"."date_of_birth", "library_author"."date_of_death" FROM "library_author" INNER JOIN "library_document_authors" ON ("library_author"."id" = "library_document_authors"."author_id") WHERE "library_document_authors"."document_id" = 1 ORDER BY "library_author"."last_name" ASC, "library_author"."first_name" ASC; args=(1,)
+(0.003) SELECT "library_author"."id", "library_author"."first_name", "library_author"."last_name", "library_author"."date_of_birth", "library_author"."date_of_death" FROM "library_author" INNER JOIN "library_document_authors" ON ("library_author"."id" = "library_document_authors"."author_id") WHERE "library_document_authors"."document_id" = 34 ORDER BY "library_author"."last_name" ASC, "library_author"."first_name" ASC; args=(34,)
+(0.003) SELECT "library_author"."id", "library_author"."first_name", "library_author"."last_name", "library_author"."date_of_birth", "library_author"."date_of_death" FROM "library_author" INNER JOIN "library_document_authors" ON ("library_author"."id" = "library_document_authors"."author_id") WHERE "library_document_authors"."document_id" = 35 ORDER BY "library_author"."last_name" ASC, "library_author"."first_name" ASC; args=(35,)
+(0.002) SELECT "library_author"."id", "library_author"."first_name", "library_author"."last_name", "library_author"."date_of_birth", "library_author"."date_of_death" FROM "library_author" INNER JOIN "library_document_authors" ON ("library_author"."id" = "library_document_authors"."author_id") WHERE "library_document_authors"."document_id" = 36 ORDER BY "library_author"."last_name" ASC, "library_author"."first_name" ASC; args=(36,)
+(0.003) SELECT "library_author"."id", "library_author"."first_name", "library_author"."last_name", "library_author"."date_of_birth", "library_author"."date_of_death" FROM "library_author" INNER JOIN "library_document_authors" ON ("library_author"."id" = "library_document_authors"."author_id") WHERE "library_document_authors"."document_id" = 37 ORDER BY "library_author"."last_name" ASC, "library_author"."first_name" ASC; args=(37,)
+(0.003) SELECT "library_author"."id", "library_author"."first_name", "library_author"."last_name", "library_author"."date_of_birth", "library_author"."date_of_death" FROM "library_author" INNER JOIN "library_document_authors" ON ("library_author"."id" = "library_document_authors"."author_id") WHERE "library_document_authors"."document_id" = 38 ORDER BY "library_author"."last_name" ASC, "library_author"."first_name" ASC; args=(38,)
+(0.007) SELECT "library_record"."id", "library_record"."document_id", "library_record"."due_to", "library_record"."user_id", "library_record"."renewals_left", "library_record"."status" FROM "library_record" WHERE "library_record"."document_id" = 1 ORDER BY "library_record"."due_to" ASC; args=(1,)
+(0.003) SELECT "library_record"."id", "library_record"."document_id", "library_record"."due_to", "library_record"."user_id", "library_record"."renewals_left", "library_record"."status" FROM "library_record" WHERE "library_record"."document_id" = 34 ORDER BY "library_record"."due_to" ASC; args=(34,)
+(0.003) SELECT "library_record"."id", "library_record"."document_id", "library_record"."due_to", "library_record"."user_id", "library_record"."renewals_left", "library_record"."status" FROM "library_record" WHERE "library_record"."document_id" = 35 ORDER BY "library_record"."due_to" ASC; args=(35,)
+(0.003) SELECT "library_record"."id", "library_record"."document_id", "library_record"."due_to", "library_record"."user_id", "library_record"."renewals_left", "library_record"."status" FROM "library_record" WHERE "library_record"."document_id" = 36 ORDER BY "library_record"."due_to" ASC; args=(36,)
+(0.005) SELECT "library_record"."id", "library_record"."document_id", "library_record"."due_to", "library_record"."user_id", "library_record"."renewals_left", "library_record"."status" FROM "library_record" WHERE "library_record"."document_id" = 37 ORDER BY "library_record"."due_to" ASC; args=(37,)
+(0.003) SELECT "library_record"."id", "library_record"."document_id", "library_record"."due_to", "library_record"."user_id", "library_record"."renewals_left", "library_record"."status" FROM "library_record" WHERE "library_record"."document_id" = 38 ORDER BY "library_record"."due_to" ASC; args=(38,)
+"GET /documents/ HTTP/1.1" 200 18164
+(0.019) SELECT COUNT(*) AS "__count" FROM "background_task" WHERE "background_task"."task_name" = 'library.tasks.update_reserved_documents'; args=('library.tasks.update_reserved_documents',)
+(0.008) 
+            SELECT c.relname, c.relkind
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid); args=None
+(0.003) SELECT "django_migrations"."app", "django_migrations"."name" FROM "django_migrations"; args=()
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/usr/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/usr/lib/python3.6/site-packages/django/urls/resolvers.py", line 523, in resolve
+    raise Resolver404({'tried': tried, 'path': new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern '' [name='index']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'documents/' [name='documents']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'my_documents/<int:pk>/' [name='my_documents']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/' [name='document-detail']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'authors/' [name='authors']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_book/' [name='add_book']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_audio/' [name='add_audio']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_video/' [name='add_video']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_copies/<int:pk>/' [name='add_copies']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'remove_copies/<int:pk>/' [name='remove_copies']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/give/<int:user_id>' [name='give_document']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/increase_user_priority/<int:user_id>' [name='increase_user_priority']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/reset_user_priority/<int:user_id>' [name='reset_user_priority']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/reserve/' [name='reserve']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/get_in_queue/' [name='get_in_queue']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/quit_queue/' [name='quit_queue']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/renew/' [name='renew_document']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/take/<int:user_id>' [name='take']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/delete_copy/<int:user_id>' [name='delete_copy']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/delete/' [name='delete']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/editdocument/' [name='editdocument']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/document_outstanding_request/' [name='document_outstanding_request']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/document_disable_outstanding_request/' [name='document_disable_outstanding_request']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_article/' [name='add_article']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/ask/<int:user_id>' [name='ask']>], [<URLResolver <module 'api_v0.urls' from '/libinno/api_v0/urls.py'> (None:None) 'api/v0/'>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'login/' [name='login']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'add_user/' [name='add_user']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/' [name='users']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/' [name='customuser_detail']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/deleteuser/' [name='deleteuser']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/edituser/' [name='edituser']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'logout/' [name='logout']>]], 'path': 'documentssdfgs'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 849, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 856, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <URLPattern list> (admin:admin) 'admin/'>
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/usr/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/usr/lib/python3.6/site-packages/django/urls/resolvers.py", line 523, in resolve
+    raise Resolver404({'tried': tried, 'path': new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern '' [name='index']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'documents/' [name='documents']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'my_documents/<int:pk>/' [name='my_documents']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/' [name='document-detail']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'authors/' [name='authors']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_book/' [name='add_book']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_audio/' [name='add_audio']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_video/' [name='add_video']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_copies/<int:pk>/' [name='add_copies']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'remove_copies/<int:pk>/' [name='remove_copies']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/give/<int:user_id>' [name='give_document']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/increase_user_priority/<int:user_id>' [name='increase_user_priority']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/reset_user_priority/<int:user_id>' [name='reset_user_priority']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/reserve/' [name='reserve']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/get_in_queue/' [name='get_in_queue']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/quit_queue/' [name='quit_queue']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/renew/' [name='renew_document']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/take/<int:user_id>' [name='take']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/delete_copy/<int:user_id>' [name='delete_copy']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/delete/' [name='delete']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/editdocument/' [name='editdocument']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/document_outstanding_request/' [name='document_outstanding_request']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/document_disable_outstanding_request/' [name='document_disable_outstanding_request']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_article/' [name='add_article']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/ask/<int:user_id>' [name='ask']>], [<URLResolver <module 'api_v0.urls' from '/libinno/api_v0/urls.py'> (None:None) 'api/v0/'>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'login/' [name='login']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'add_user/' [name='add_user']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/' [name='users']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/' [name='customuser_detail']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/deleteuser/' [name='deleteuser']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/edituser/' [name='edituser']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'logout/' [name='logout']>]], 'path': 'documentssdfgs'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 849, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 856, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <module 'api_v0.urls' from '/libinno/api_v0/urls.py'> (None:None) 'api/v0/'>
+Not Found: /documentssdfgs
+"GET /documentssdfgs HTTP/1.1" 404 8401
+(0.003) SELECT COUNT(*) AS "__count" FROM "library_document"; args=()
+(0.004) SELECT COUNT(*) AS "__count" FROM "library_record"; args=()
+(0.002) SELECT COUNT(*) AS "__count" FROM "library_record" WHERE "library_record"."status" = 'a'; args=('a',)
+(0.004) SELECT COUNT(*) AS "__count" FROM "library_author"; args=()
+(0.004) SELECT "django_session"."session_key", "django_session"."session_data", "django_session"."expire_date" FROM "django_session" WHERE ("django_session"."expire_date" > '2018-04-22T09:41:31.226331+00:00'::timestamptz AND "django_session"."session_key" = 'k3vsa7gn1gf1ec4rllwvwnvoy6yanlgb'); args=(datetime.datetime(2018, 4, 22, 9, 41, 31, 226331, tzinfo=<UTC>), 'k3vsa7gn1gf1ec4rllwvwnvoy6yanlgb')
+(0.003) SELECT "login_customuser"."id", "login_customuser"."password", "login_customuser"."last_login", "login_customuser"."is_superuser", "login_customuser"."email", "login_customuser"."first_name", "login_customuser"."last_name", "login_customuser"."phone_number", "login_customuser"."address", "login_customuser"."subtype", "login_customuser"."is_admin", "login_customuser"."is_active" FROM "login_customuser" WHERE "login_customuser"."id" = 1; args=(1,)
+"GET / HTTP/1.1" 200 14116
+"GET /users HTTP/1.1" 301 0
+(0.004) SELECT COUNT(*) AS "__count" FROM "login_customuser"; args=()
+(0.006) SELECT "django_session"."session_key", "django_session"."session_data", "django_session"."expire_date" FROM "django_session" WHERE ("django_session"."expire_date" > '2018-04-22T09:42:05.799333+00:00'::timestamptz AND "django_session"."session_key" = 'k3vsa7gn1gf1ec4rllwvwnvoy6yanlgb'); args=(datetime.datetime(2018, 4, 22, 9, 42, 5, 799333, tzinfo=<UTC>), 'k3vsa7gn1gf1ec4rllwvwnvoy6yanlgb')
+(0.001) SELECT "login_customuser"."id", "login_customuser"."password", "login_customuser"."last_login", "login_customuser"."is_superuser", "login_customuser"."email", "login_customuser"."first_name", "login_customuser"."last_name", "login_customuser"."phone_number", "login_customuser"."address", "login_customuser"."subtype", "login_customuser"."is_admin", "login_customuser"."is_active" FROM "login_customuser" WHERE "login_customuser"."id" = 1; args=(1,)
+(0.001) SELECT "login_customuser"."id", "login_customuser"."password", "login_customuser"."last_login", "login_customuser"."is_superuser", "login_customuser"."email", "login_customuser"."first_name", "login_customuser"."last_name", "login_customuser"."phone_number", "login_customuser"."address", "login_customuser"."subtype", "login_customuser"."is_admin", "login_customuser"."is_active" FROM "login_customuser" LIMIT 4; args=()
+(0.003) SELECT COUNT(*) AS "__count" FROM "library_record" WHERE ("library_record"."user_id" = 3 AND "library_record"."status" = 'o'); args=(3, 'o')
+(0.001) SELECT COUNT(*) AS "__count" FROM "library_record" WHERE ("library_record"."user_id" = 2 AND "library_record"."status" = 'o'); args=(2, 'o')
+(0.002) SELECT COUNT(*) AS "__count" FROM "library_record" WHERE ("library_record"."user_id" = 36 AND "library_record"."status" = 'o'); args=(36, 'o')
+(0.002) SELECT COUNT(*) AS "__count" FROM "library_record" WHERE ("library_record"."user_id" = 1 AND "library_record"."status" = 'o'); args=(1, 'o')
+(0.011) SELECT "auth_group"."id", "auth_group"."name" FROM "auth_group" INNER JOIN "login_customuser_groups" ON ("auth_group"."id" = "login_customuser_groups"."group_id") WHERE "login_customuser_groups"."customuser_id" = 3; args=(3,)
+(0.003) SELECT "auth_group"."id", "auth_group"."name" FROM "auth_group" INNER JOIN "login_customuser_groups" ON ("auth_group"."id" = "login_customuser_groups"."group_id") WHERE "login_customuser_groups"."customuser_id" = 2; args=(2,)
+(0.004) SELECT "auth_group"."id", "auth_group"."name" FROM "auth_group" INNER JOIN "login_customuser_groups" ON ("auth_group"."id" = "login_customuser_groups"."group_id") WHERE "login_customuser_groups"."customuser_id" = 36; args=(36,)
+(0.003) SELECT "auth_group"."id", "auth_group"."name" FROM "auth_group" INNER JOIN "login_customuser_groups" ON ("auth_group"."id" = "login_customuser_groups"."group_id") WHERE "login_customuser_groups"."customuser_id" = 1; args=(1,)
+(0.002) SELECT "library_record"."id", "library_record"."document_id", "library_record"."due_to", "library_record"."user_id", "library_record"."renewals_left", "library_record"."status" FROM "library_record" WHERE "library_record"."user_id" = 3 ORDER BY "library_record"."due_to" ASC; args=(3,)
+(0.004) SELECT "auth_group"."id", "auth_group"."name" FROM "auth_group" INNER JOIN "login_customuser_groups" ON ("auth_group"."id" = "login_customuser_groups"."group_id") WHERE "login_customuser_groups"."customuser_id" = 3 ORDER BY "auth_group"."id" ASC LIMIT 1; args=(3,)
+(0.003) SELECT "auth_group"."id", "auth_group"."name" FROM "auth_group" INNER JOIN "login_customuser_groups" ON ("auth_group"."id" = "login_customuser_groups"."group_id") WHERE "login_customuser_groups"."customuser_id" = 3 ORDER BY "auth_group"."id" ASC LIMIT 1; args=(3,)
+(0.001) SELECT "library_record"."id", "library_record"."document_id", "library_record"."due_to", "library_record"."user_id", "library_record"."renewals_left", "library_record"."status" FROM "library_record" WHERE "library_record"."user_id" = 3 ORDER BY "library_record"."due_to" ASC; args=(3,)
+(0.001) SELECT "library_record"."id", "library_record"."document_id", "library_record"."due_to", "library_record"."user_id", "library_record"."renewals_left", "library_record"."status" FROM "library_record" WHERE "library_record"."user_id" = 2 ORDER BY "library_record"."due_to" ASC; args=(2,)
+(0.002) SELECT "auth_group"."id", "auth_group"."name" FROM "auth_group" INNER JOIN "login_customuser_groups" ON ("auth_group"."id" = "login_customuser_groups"."group_id") WHERE "login_customuser_groups"."customuser_id" = 2 ORDER BY "auth_group"."id" ASC LIMIT 1; args=(2,)
+(0.001) SELECT "library_record"."id", "library_record"."document_id", "library_record"."due_to", "library_record"."user_id", "library_record"."renewals_left", "library_record"."status" FROM "library_record" WHERE "library_record"."user_id" = 2 ORDER BY "library_record"."due_to" ASC; args=(2,)
+(0.002) SELECT "library_record"."id", "library_record"."document_id", "library_record"."due_to", "library_record"."user_id", "library_record"."renewals_left", "library_record"."status" FROM "library_record" WHERE "library_record"."user_id" = 36 ORDER BY "library_record"."due_to" ASC; args=(36,)
+(0.002) SELECT "auth_group"."id", "auth_group"."name" FROM "auth_group" INNER JOIN "login_customuser_groups" ON ("auth_group"."id" = "login_customuser_groups"."group_id") WHERE "login_customuser_groups"."customuser_id" = 36 ORDER BY "auth_group"."id" ASC LIMIT 1; args=(36,)
+(0.001) SELECT "library_record"."id", "library_record"."document_id", "library_record"."due_to", "library_record"."user_id", "library_record"."renewals_left", "library_record"."status" FROM "library_record" WHERE "library_record"."user_id" = 36 ORDER BY "library_record"."due_to" ASC; args=(36,)
+"GET /users/ HTTP/1.1" 200 16069
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/usr/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/usr/lib/python3.6/site-packages/django/urls/resolvers.py", line 523, in resolve
+    raise Resolver404({'tried': tried, 'path': new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern '' [name='index']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'documents/' [name='documents']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'my_documents/<int:pk>/' [name='my_documents']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/' [name='document-detail']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'authors/' [name='authors']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_book/' [name='add_book']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_audio/' [name='add_audio']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_video/' [name='add_video']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_copies/<int:pk>/' [name='add_copies']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'remove_copies/<int:pk>/' [name='remove_copies']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/give/<int:user_id>' [name='give_document']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/increase_user_priority/<int:user_id>' [name='increase_user_priority']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/reset_user_priority/<int:user_id>' [name='reset_user_priority']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/reserve/' [name='reserve']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/get_in_queue/' [name='get_in_queue']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/quit_queue/' [name='quit_queue']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/renew/' [name='renew_document']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/take/<int:user_id>' [name='take']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/delete_copy/<int:user_id>' [name='delete_copy']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/delete/' [name='delete']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/editdocument/' [name='editdocument']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/document_outstanding_request/' [name='document_outstanding_request']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/document_disable_outstanding_request/' [name='document_disable_outstanding_request']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_article/' [name='add_article']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/ask/<int:user_id>' [name='ask']>], [<URLResolver <module 'api_v0.urls' from '/libinno/api_v0/urls.py'> (None:None) 'api/v0/'>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'login/' [name='login']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'add_user/' [name='add_user']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/' [name='users']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/' [name='customuser_detail']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/deleteuser/' [name='deleteuser']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/edituser/' [name='edituser']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'logout/' [name='logout']>]], 'path': 'users/sdfgsdfgsdf'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 849, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 856, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <URLPattern list> (admin:admin) 'admin/'>
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/usr/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/usr/lib/python3.6/site-packages/django/urls/resolvers.py", line 523, in resolve
+    raise Resolver404({'tried': tried, 'path': new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern '' [name='index']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'documents/' [name='documents']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'my_documents/<int:pk>/' [name='my_documents']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/' [name='document-detail']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'authors/' [name='authors']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_book/' [name='add_book']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_audio/' [name='add_audio']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_video/' [name='add_video']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_copies/<int:pk>/' [name='add_copies']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'remove_copies/<int:pk>/' [name='remove_copies']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/give/<int:user_id>' [name='give_document']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/increase_user_priority/<int:user_id>' [name='increase_user_priority']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/reset_user_priority/<int:user_id>' [name='reset_user_priority']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/reserve/' [name='reserve']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/get_in_queue/' [name='get_in_queue']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/quit_queue/' [name='quit_queue']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/renew/' [name='renew_document']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/take/<int:user_id>' [name='take']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/delete_copy/<int:user_id>' [name='delete_copy']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/delete/' [name='delete']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/editdocument/' [name='editdocument']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/document_outstanding_request/' [name='document_outstanding_request']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/document_disable_outstanding_request/' [name='document_disable_outstanding_request']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_article/' [name='add_article']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/ask/<int:user_id>' [name='ask']>], [<URLResolver <module 'api_v0.urls' from '/libinno/api_v0/urls.py'> (None:None) 'api/v0/'>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'login/' [name='login']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'add_user/' [name='add_user']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/' [name='users']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/' [name='customuser_detail']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/deleteuser/' [name='deleteuser']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/edituser/' [name='edituser']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'logout/' [name='logout']>]], 'path': 'users/sdfgsdfgsdf'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 849, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 856, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <module 'api_v0.urls' from '/libinno/api_v0/urls.py'> (None:None) 'api/v0/'>
+Not Found: /users/sdfgsdfgsdf
+"GET /users/sdfgsdfgsdf HTTP/1.1" 404 8410
+(0.017) SELECT COUNT(*) AS "__count" FROM "background_task" WHERE "background_task"."task_name" = 'library.tasks.update_reserved_documents'; args=('library.tasks.update_reserved_documents',)
+(0.010) 
+            SELECT c.relname, c.relkind
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid); args=None
+(0.002) SELECT "django_migrations"."app", "django_migrations"."name" FROM "django_migrations"; args=()
+(0.014) SELECT COUNT(*) AS "__count" FROM "background_task" WHERE "background_task"."task_name" = 'library.tasks.update_reserved_documents'; args=('library.tasks.update_reserved_documents',)
+(0.009) 
+            SELECT c.relname, c.relkind
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid); args=None
+(0.002) SELECT "django_migrations"."app", "django_migrations"."name" FROM "django_migrations"; args=()
+(0.007) SELECT COUNT(*) AS "__count" FROM "login_customuser"; args=()
+(0.006) SELECT "django_session"."session_key", "django_session"."session_data", "django_session"."expire_date" FROM "django_session" WHERE ("django_session"."expire_date" > '2018-04-22T09:54:04.036861+00:00'::timestamptz AND "django_session"."session_key" = 'k3vsa7gn1gf1ec4rllwvwnvoy6yanlgb'); args=(datetime.datetime(2018, 4, 22, 9, 54, 4, 36861, tzinfo=<UTC>), 'k3vsa7gn1gf1ec4rllwvwnvoy6yanlgb')
+(0.002) SELECT "login_customuser"."id", "login_customuser"."password", "login_customuser"."last_login", "login_customuser"."is_superuser", "login_customuser"."email", "login_customuser"."first_name", "login_customuser"."last_name", "login_customuser"."phone_number", "login_customuser"."address", "login_customuser"."subtype", "login_customuser"."is_admin", "login_customuser"."is_active" FROM "login_customuser" WHERE "login_customuser"."id" = 1; args=(1,)
+(0.002) SELECT "login_customuser"."id", "login_customuser"."password", "login_customuser"."last_login", "login_customuser"."is_superuser", "login_customuser"."email", "login_customuser"."first_name", "login_customuser"."last_name", "login_customuser"."phone_number", "login_customuser"."address", "login_customuser"."subtype", "login_customuser"."is_admin", "login_customuser"."is_active" FROM "login_customuser" LIMIT 4; args=()
+(0.004) SELECT COUNT(*) AS "__count" FROM "library_record" WHERE ("library_record"."user_id" = 3 AND "library_record"."status" = 'o'); args=(3, 'o')
+(0.002) SELECT COUNT(*) AS "__count" FROM "library_record" WHERE ("library_record"."user_id" = 2 AND "library_record"."status" = 'o'); args=(2, 'o')
+(0.002) SELECT COUNT(*) AS "__count" FROM "library_record" WHERE ("library_record"."user_id" = 36 AND "library_record"."status" = 'o'); args=(36, 'o')
+(0.002) SELECT COUNT(*) AS "__count" FROM "library_record" WHERE ("library_record"."user_id" = 1 AND "library_record"."status" = 'o'); args=(1, 'o')
+(0.012) SELECT "auth_group"."id", "auth_group"."name" FROM "auth_group" INNER JOIN "login_customuser_groups" ON ("auth_group"."id" = "login_customuser_groups"."group_id") WHERE "login_customuser_groups"."customuser_id" = 3; args=(3,)
+(0.004) SELECT "auth_group"."id", "auth_group"."name" FROM "auth_group" INNER JOIN "login_customuser_groups" ON ("auth_group"."id" = "login_customuser_groups"."group_id") WHERE "login_customuser_groups"."customuser_id" = 2; args=(2,)
+(0.003) SELECT "auth_group"."id", "auth_group"."name" FROM "auth_group" INNER JOIN "login_customuser_groups" ON ("auth_group"."id" = "login_customuser_groups"."group_id") WHERE "login_customuser_groups"."customuser_id" = 36; args=(36,)
+(0.003) SELECT "auth_group"."id", "auth_group"."name" FROM "auth_group" INNER JOIN "login_customuser_groups" ON ("auth_group"."id" = "login_customuser_groups"."group_id") WHERE "login_customuser_groups"."customuser_id" = 1; args=(1,)
+(0.002) SELECT "library_record"."id", "library_record"."document_id", "library_record"."due_to", "library_record"."user_id", "library_record"."renewals_left", "library_record"."status" FROM "library_record" WHERE "library_record"."user_id" = 3 ORDER BY "library_record"."due_to" ASC; args=(3,)
+(0.003) SELECT "auth_group"."id", "auth_group"."name" FROM "auth_group" INNER JOIN "login_customuser_groups" ON ("auth_group"."id" = "login_customuser_groups"."group_id") WHERE "login_customuser_groups"."customuser_id" = 3 ORDER BY "auth_group"."id" ASC LIMIT 1; args=(3,)
+(0.002) SELECT "auth_group"."id", "auth_group"."name" FROM "auth_group" INNER JOIN "login_customuser_groups" ON ("auth_group"."id" = "login_customuser_groups"."group_id") WHERE "login_customuser_groups"."customuser_id" = 3 ORDER BY "auth_group"."id" ASC LIMIT 1; args=(3,)
+(0.001) SELECT "library_record"."id", "library_record"."document_id", "library_record"."due_to", "library_record"."user_id", "library_record"."renewals_left", "library_record"."status" FROM "library_record" WHERE "library_record"."user_id" = 3 ORDER BY "library_record"."due_to" ASC; args=(3,)
+(0.002) SELECT "library_record"."id", "library_record"."document_id", "library_record"."due_to", "library_record"."user_id", "library_record"."renewals_left", "library_record"."status" FROM "library_record" WHERE "library_record"."user_id" = 2 ORDER BY "library_record"."due_to" ASC; args=(2,)
+(0.003) SELECT "auth_group"."id", "auth_group"."name" FROM "auth_group" INNER JOIN "login_customuser_groups" ON ("auth_group"."id" = "login_customuser_groups"."group_id") WHERE "login_customuser_groups"."customuser_id" = 2 ORDER BY "auth_group"."id" ASC LIMIT 1; args=(2,)
+(0.001) SELECT "library_record"."id", "library_record"."document_id", "library_record"."due_to", "library_record"."user_id", "library_record"."renewals_left", "library_record"."status" FROM "library_record" WHERE "library_record"."user_id" = 2 ORDER BY "library_record"."due_to" ASC; args=(2,)
+(0.001) SELECT "library_record"."id", "library_record"."document_id", "library_record"."due_to", "library_record"."user_id", "library_record"."renewals_left", "library_record"."status" FROM "library_record" WHERE "library_record"."user_id" = 36 ORDER BY "library_record"."due_to" ASC; args=(36,)
+(0.003) SELECT "auth_group"."id", "auth_group"."name" FROM "auth_group" INNER JOIN "login_customuser_groups" ON ("auth_group"."id" = "login_customuser_groups"."group_id") WHERE "login_customuser_groups"."customuser_id" = 36 ORDER BY "auth_group"."id" ASC LIMIT 1; args=(36,)
+(0.002) SELECT "library_record"."id", "library_record"."document_id", "library_record"."due_to", "library_record"."user_id", "library_record"."renewals_left", "library_record"."status" FROM "library_record" WHERE "library_record"."user_id" = 36 ORDER BY "library_record"."due_to" ASC; args=(36,)
+"GET /users/ HTTP/1.1" 200 16069
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/usr/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/usr/lib/python3.6/site-packages/django/urls/resolvers.py", line 523, in resolve
+    raise Resolver404({'tried': tried, 'path': new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern '' [name='index']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'documents/' [name='documents']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'my_documents/<int:pk>/' [name='my_documents']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/' [name='document-detail']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'authors/' [name='authors']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_book/' [name='add_book']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_audio/' [name='add_audio']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_video/' [name='add_video']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_copies/<int:pk>/' [name='add_copies']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'remove_copies/<int:pk>/' [name='remove_copies']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/give/<int:user_id>' [name='give_document']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/increase_user_priority/<int:user_id>' [name='increase_user_priority']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/reset_user_priority/<int:user_id>' [name='reset_user_priority']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/reserve/' [name='reserve']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/get_in_queue/' [name='get_in_queue']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/quit_queue/' [name='quit_queue']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/renew/' [name='renew_document']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/take/<int:user_id>' [name='take']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/delete_copy/<int:user_id>' [name='delete_copy']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/delete/' [name='delete']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/editdocument/' [name='editdocument']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/document_outstanding_request/' [name='document_outstanding_request']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/document_disable_outstanding_request/' [name='document_disable_outstanding_request']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_article/' [name='add_article']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/ask/<int:user_id>' [name='ask']>], [<URLResolver <module 'api_v0.urls' from '/libinno/api_v0/urls.py'> (None:None) 'api/v0/'>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'login/' [name='login']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'add_user/' [name='add_user']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/' [name='users']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/' [name='customuser_detail']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/deleteuser/' [name='deleteuser']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/edituser/' [name='edituser']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'logout/' [name='logout']>]], 'path': 'users/asdfadsf'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 849, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 856, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <URLPattern list> (admin:admin) 'admin/'>
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/usr/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/usr/lib/python3.6/site-packages/django/urls/resolvers.py", line 523, in resolve
+    raise Resolver404({'tried': tried, 'path': new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern '' [name='index']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'documents/' [name='documents']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'my_documents/<int:pk>/' [name='my_documents']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/' [name='document-detail']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'authors/' [name='authors']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_book/' [name='add_book']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_audio/' [name='add_audio']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_video/' [name='add_video']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_copies/<int:pk>/' [name='add_copies']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'remove_copies/<int:pk>/' [name='remove_copies']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/give/<int:user_id>' [name='give_document']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/increase_user_priority/<int:user_id>' [name='increase_user_priority']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/reset_user_priority/<int:user_id>' [name='reset_user_priority']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/reserve/' [name='reserve']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/get_in_queue/' [name='get_in_queue']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/quit_queue/' [name='quit_queue']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/renew/' [name='renew_document']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/take/<int:user_id>' [name='take']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/delete_copy/<int:user_id>' [name='delete_copy']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/delete/' [name='delete']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/editdocument/' [name='editdocument']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/document_outstanding_request/' [name='document_outstanding_request']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:doc_id>/document_disable_outstanding_request/' [name='document_disable_outstanding_request']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'add_article/' [name='add_article']>], [<URLResolver <module 'library.urls' from '/libinno/library/urls.py'> (None:None) ''>, <URLPattern 'document/<int:pk>/ask/<int:user_id>' [name='ask']>], [<URLResolver <module 'api_v0.urls' from '/libinno/api_v0/urls.py'> (None:None) 'api/v0/'>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'login/' [name='login']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'add_user/' [name='add_user']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/' [name='users']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/' [name='customuser_detail']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/deleteuser/' [name='deleteuser']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'users/<int:pk>/edituser/' [name='edituser']>], [<URLResolver <module 'login.urls' from '/libinno/login/urls.py'> (None:None) ''>, <URLPattern 'logout/' [name='logout']>]], 'path': 'users/asdfadsf'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 849, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/django/template/base.py", line 856, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <module 'api_v0.urls' from '/libinno/api_v0/urls.py'> (None:None) 'api/v0/'>
+Not Found: /users/asdfadsf
+"GET /users/asdfadsf HTTP/1.1" 404 8401
+(0.016) SELECT COUNT(*) AS "__count" FROM "background_task" WHERE "background_task"."task_name" = 'library.tasks.update_reserved_documents'; args=('library.tasks.update_reserved_documents',)
+(0.009) 
+            SELECT c.relname, c.relkind
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid); args=None
+(0.003) SELECT "django_migrations"."app", "django_migrations"."name" FROM "django_migrations"; args=()
+(0.011) SELECT COUNT(*) AS "__count" FROM "background_task" WHERE "background_task"."task_name" = 'library.tasks.update_reserved_documents'; args=('library.tasks.update_reserved_documents',)
+(0.006) 
+            SELECT c.relname, c.relkind
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid); args=None
+(0.002) SELECT "django_migrations"."app", "django_migrations"."name" FROM "django_migrations"; args=()
+(0.075) SELECT COUNT(*) AS "__count" FROM "background_task" WHERE "background_task"."task_name" = 'library.tasks.update_reserved_documents'; args=('library.tasks.update_reserved_documents',)
+(0.020) 
+            SELECT c.relname, c.relkind
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid); args=None
+(0.004) SELECT "django_migrations"."app", "django_migrations"."name" FROM "django_migrations"; args=()
+(0.009) SELECT COUNT(*) AS "__count" FROM "library_document"; args=()
+(0.008) SELECT COUNT(*) AS "__count" FROM "library_record"; args=()
+(0.004) SELECT COUNT(*) AS "__count" FROM "library_record" WHERE "library_record"."status" = 'a'; args=('a',)
+(0.004) SELECT COUNT(*) AS "__count" FROM "library_author"; args=()
+(0.010) SELECT "django_session"."session_key", "django_session"."session_data", "django_session"."expire_date" FROM "django_session" WHERE ("django_session"."expire_date" > '2018-04-22T15:28:40.827815+00:00'::timestamptz AND "django_session"."session_key" = 'k3vsa7gn1gf1ec4rllwvwnvoy6yanlgb'); args=(datetime.datetime(2018, 4, 22, 15, 28, 40, 827815, tzinfo=<UTC>), 'k3vsa7gn1gf1ec4rllwvwnvoy6yanlgb')
+(0.013) SELECT "login_customuser"."id", "login_customuser"."password", "login_customuser"."last_login", "login_customuser"."is_superuser", "login_customuser"."email", "login_customuser"."first_name", "login_customuser"."last_name", "login_customuser"."phone_number", "login_customuser"."address", "login_customuser"."subtype", "login_customuser"."is_admin", "login_customuser"."is_active" FROM "login_customuser" WHERE "login_customuser"."id" = 1; args=(1,)
+"GET / HTTP/1.1" 200 14116
+(0.013) SELECT COUNT(*) AS "__count" FROM "background_task" WHERE "background_task"."task_name" = 'library.tasks.update_reserved_documents'; args=('library.tasks.update_reserved_documents',)
+(0.007) 
+            SELECT c.relname, c.relkind
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid); args=None
+(0.002) SELECT "django_migrations"."app", "django_migrations"."name" FROM "django_migrations"; args=()
+(0.016) SELECT COUNT(*) AS "__count" FROM "background_task" WHERE "background_task"."task_name" = 'library.tasks.update_reserved_documents'; args=('library.tasks.update_reserved_documents',)
+(0.007) 
+            SELECT c.relname, c.relkind
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid); args=None
+(0.002) SELECT "django_migrations"."app", "django_migrations"."name" FROM "django_migrations"; args=()
+(0.024) SELECT COUNT(*) AS "__count" FROM "background_task" WHERE "background_task"."task_name" = 'library.tasks.update_reserved_documents'; args=('library.tasks.update_reserved_documents',)
+(0.008) 
+            SELECT c.relname, c.relkind
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid); args=None
+(0.002) SELECT "django_migrations"."app", "django_migrations"."name" FROM "django_migrations"; args=()
+(0.015) SELECT COUNT(*) AS "__count" FROM "background_task" WHERE "background_task"."task_name" = 'library.tasks.update_reserved_documents'; args=('library.tasks.update_reserved_documents',)
+(0.008) 
+            SELECT c.relname, c.relkind
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid); args=None
+(0.002) SELECT "django_migrations"."app", "django_migrations"."name" FROM "django_migrations"; args=()
+(0.022) SELECT COUNT(*) AS "__count" FROM "background_task" WHERE "background_task"."task_name" = 'library.tasks.update_reserved_documents'; args=('library.tasks.update_reserved_documents',)
+(0.008) 
+            SELECT c.relname, c.relkind
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid); args=None
+(0.002) SELECT "django_migrations"."app", "django_migrations"."name" FROM "django_migrations"; args=()
