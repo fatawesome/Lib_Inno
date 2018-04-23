@@ -10,7 +10,6 @@ from library.views import send_mail_document_reserved_by_user, update_request_qu
 
 @background(schedule=1)
 def update_reserved_documents():
-    print("Hello")
     for doc in Document.objects.all():
         if doc.requestqueueelement_set.all().count() != 0:
             for rec in doc.record_set.filter(status='r'):
