@@ -34,6 +34,12 @@ class CustomUserCreationForm(forms.ModelForm):
             raise forms.ValidationError("Passwords don't match")
         return password2
 
+    def get_or_create_group(self, name):
+        if Group.objects.filter(name=name).count() != 0:
+            return Group.objects.get(name=name)
+        group = Group.objects.create(name=name)
+        return group
+
     def save(self, commit=True):
         """
         Saves the provided password in hashed format
@@ -46,13 +52,13 @@ class CustomUserCreationForm(forms.ModelForm):
             user.save()
 
         if self.cleaned_data['subtype'] == 'Librarians':
-            user.groups.add(Group.objects.get(name='Librarians'))
+            user.groups.add(self.get_or_create_group('Librarians'))
         elif self.cleaned_data['subtype'] == 'Students':
-            user.groups.add(Group.objects.get(name='Students'))
+            user.groups.add(self.get_or_create_group('Students'))
         elif self.cleaned_data['subtype'] == 'Visiting Professors':
-            user.groups.add(Group.objects.get(name='Visiting Professors'))
+            user.groups.add(self.get_or_create_group('Visiting Professors'))
         else: # if self.cleaned_data['subtype'] equal 'Instructors' or 'TAs' or 'Professors'
-            user.groups.add(Group.objects.get(name='Faculty'))
+            user.groups.add(self.get_or_create_group('Faculty'))
 
         if commit:
             user.save()
