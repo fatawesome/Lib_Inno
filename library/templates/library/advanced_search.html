@@ -2,6 +2,59 @@
 
 {% block content %}
 
+    <p align="right">
+        <label class="radio-inline"><input type="checkbox"> Available </label>
+        <label class="radio-inline"><input type="checkbox"> Taken </label>
+        &nbsp;&nbsp;
+        <button class="btn btn-search" type="button"><i class="fa fa-search fa-fw"></i> Search</button>
+    </p>
+
+    <div class="col-md-*">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+            <tr>
+                <th><input class="form-control" type="text" placeholder="Title"></th>
+                <th><input class="form-control" type="text" placeholder="Authors"></th>
+                <th><input class="form-control" type="text" placeholder="Tags"></th>
+            </tr>
+            </thead>
+            <tbody id="DocumentList">
+            {% for doc in search_results %}
+                <tr>
+                    <td><a href="{{ doc.get_absolute_url }}">{{ doc.title }}</a></td>
+                    <td>
+                        {% for author in doc.display_authors %}
+                            {#                            <a href="{{ author.get_absolute_url }}">#}{{ author.first_name }}
+                            {{ author.last_name }}{% if not forloop.last %},{% endif %}{#</a>#} {# TODO uncomment it #}
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <style>
+
+        .btn-search {
+            background: #747edb;
+            border-radius: 7px;
+            color: #fff;
+            border-width: 1px;
+            border-style: solid;
+            border-color: #747edb;
+        }
+
+        .btn-search:link, .btn-search:visited {
+            color: #fff;
+        }
+
+        .btn-search:active, .btn-search:hover {
+            background: #1c1c1c;
+            color: #fff;
+        }
+
+    </style>
 
 
 {% endblock %}
