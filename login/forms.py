@@ -52,7 +52,9 @@ class CustomUserCreationForm(forms.ModelForm):
             user.save()
 
         if self.cleaned_data['subtype'] == 'Librarians':
-            user.groups.add(self.get_or_create_group('Librarians'))
+            user.groups.add(self.get_or_create_group('Librarians (Priv1)'))
+            self.get_or_create_group('Librarians (Priv2)')
+            self.get_or_create_group('Librarians (Priv3)')
         elif self.cleaned_data['subtype'] == 'Students':
             user.groups.add(self.get_or_create_group('Students'))
         elif self.cleaned_data['subtype'] == 'Visiting Professors':

@@ -60,7 +60,7 @@ def edit_user(request, pk):
 
             user.groups.clear()
             if form.cleaned_data['subtype'] == 'Librarians':
-                user.groups.add(Group.objects.get(name='Librarians'))
+                user.groups.add(Group.objects.get(name='Librarians (Priv1)'))
             elif form.cleaned_data['subtype'] == 'Students':
                 user.groups.add(Group.objects.get(name='Students'))
             elif form.cleaned_data['subtype'] == 'Visiting Professors':
