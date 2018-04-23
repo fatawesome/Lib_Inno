@@ -59,6 +59,30 @@ class DocumentDetailView(generic.DetailView):
     model = Document
 
 
+def search_documents(request):
+    if request.method == 'POST':
+        search_form = SearchFrom(request.POST)
+
+        if search_form.is_valid():
+            print('\n\n\n\n')
+            print(search_form.cleaned_data['title'])
+            print('\n\n\n\n')
+
+            taken = set()
+            available = set()
+            title = set()
+            authors = set()
+            tags = set()
+
+
+            search_results = Document.objects.all()
+            return render(request, 'documents', {'search_results': search_results})
+    else:
+        search_form = SearchFrom()
+
+    return render(request, 'library/advanced_search.html', {'search_results': [], 'form': search_form})
+
+
 def my_documents(request, pk):
     """
     View for listing document of user with given id.

@@ -3,6 +3,7 @@
 {% block content %}
 
     <h1>Document List</h1>
+    <p align="right"><a class = "btn btn-warning" href="{% url 'search_documents' %}">Advanced search</a></p>
 
     {% if document_list %}
         <div class="col-md-*">

@@ -19,11 +19,6 @@ class Document(models.Model):
     reference = models.BooleanField(default=False)
     outstanding = models.BooleanField(default=False)
 
-    # class Meta:
-    #     permissions = (('can_create', 'Create new document'),
-    #                    ('can_delete', 'Delete document'),
-    #                    ('can_change', 'Change document'))
-
     def __str__(self):
         return self.title
 

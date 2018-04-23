@@ -6,6 +6,14 @@ from .models import *
 from login.models import CustomUser
 
 
+class SearchFrom(forms.Form):
+    title = models.CharField(max_length=200)
+    authors = models.CharField(max_length=200)
+    tags = models.CharField(max_length=200)
+    available = models.BooleanField(default=False)
+    taken = models.BooleanField(default=False)
+
+
 class TagForm(ModelForm):
     class Meta:
         model = Tag
