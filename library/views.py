@@ -568,7 +568,7 @@ def edit_document(request, pk):
     return render(request, 'library/edit_document.html', {'form': form})
 
 
-@permission_required('library.change_document')
+@permission_required('library.add_document')
 def document_outstanding_request(request, doc_id):
     """
     Activate outstanding request for document with given id.
@@ -581,7 +581,7 @@ def document_outstanding_request(request, doc_id):
     return HttpResponseRedirect(reverse('document-detail', args=[doc_id]))
 
 
-@permission_required('library.change_document')
+@permission_required('library.add_document')
 def document_disable_outstanding_request(request, doc_id):
     """
     Deactivates outstanding request for document with given id.

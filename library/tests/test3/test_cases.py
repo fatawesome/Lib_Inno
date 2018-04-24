@@ -91,7 +91,7 @@ class TestCases(TestCase):
         )
         afonso.groups.add(group_faculty)
         afonso.subtype = 'Professors'
-        afonso.save()  # debily blyad
+        afonso.save()
 
         # second user
         nadia = CustomUser.objects.create_user(
