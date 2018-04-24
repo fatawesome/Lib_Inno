@@ -89,17 +89,16 @@ def search_by_field(field, text):
         return set(Document.objects.all())
     results_by_unit = []
     operands = []
-    current = set()
+    unit = ''
     for word in text.split():
         if word == 'OR' or word == 'AND':
             operands.append(word)
-            results_by_unit.append(current)
-            current = set()
+            results_by_unit.append(search_by_word(field, unit[:-1]))
+            unit = ''
             continue
-        word = word.lower()
-        current = current.union(search_by_word(field, word))
+        unit += word.lower() + ' '
 
-    results_by_unit.append(current)
+    results_by_unit.append(search_by_word(field, unit[:-1]))
 
     to_union = []
     current = set(Document.objects.all())
