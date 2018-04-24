@@ -66,26 +66,61 @@ class DocumentDetailView(generic.DetailView):
 
 
 def search_by_word(field, text):
+    result = set()
     for doc in Document.objects.all():
         compare_with = ''
         if field == 'title':
             compare_with = doc.title
         elif field == 'authors':
-            compare_with = doc.authors.all()
+            compare_with = doc.display_authors()
+        elif field == 'tags':
+            compare_with = doc.display_tags()
+
+        if text in compare_with.lower():
+            result.add(doc)
+
+    return result
 
 
-def search_by_field(field, text, result):
-    results_by_word = []
+def search_by_field(field, text):
+    text = text.lower()
+    if len(text) == 0:
+        return set(Document.objects.all())
+    results_by_unit = []
     operands = []
     current = set()
     for word in text.split():
         if word == 'OR' or word == 'AND':
             operands.append(word)
-            results_by_word.append(current)
+            results_by_unit.append(current)
+            current = set()
             continue
-        current.union(search_by_word(field, word))
+        current = current.union(search_by_word(field, word))
 
+    results_by_unit.append(current)
 
+    print('res_by_unit:', end = '')
+    print(results_by_unit)
+
+    to_union = []
+    current = set(Document.objects.all())
+    for i in range(len(results_by_unit)):
+        if i < len(operands) and operands[i] == 'OR':
+            to_union.append(current)
+            current = set(Document.objects.all())
+            continue
+        current = current.intersection(results_by_unit[i])
+
+    to_union.append(current)
+
+    print('to_union:', end = '')
+    print(to_union)
+
+    result = set()
+    for subresult in to_union:
+        result = result.union(subresult)
+
+    return result
 
 
 def search_documents(request):
@@ -93,10 +128,6 @@ def search_documents(request):
         search_form = SearchFrom(request.POST)
 
         if search_form.is_valid():
-            print('\n\n\n\n')
-            print(search_form.cleaned_data['title'])
-            print('\n\n\n\n')
-
             taken = set()
             available = set()
             title = set()
@@ -110,12 +141,12 @@ def search_documents(request):
                 if search_form.cleaned_data['available'] is False or doc.record_set.filter(status='a').count() != 0:
                     available.add(doc)
 
-                search_by_field('title', search_form.cleaned_data['title'], title)
-                search_by_field('authors', search_form.cleaned_data['authors'], authors)
-                search_by_field('tags', search_form.cleaned_data['tags'], tags)
+                title = search_by_field('title', search_form.cleaned_data['title'])
+                authors = search_by_field('authors', search_form.cleaned_data['authors'])
+                tags = search_by_field('tags', search_form.cleaned_data['tags'])
 
-            search_results = Document.objects.all()
-            return render(request, 'documents', {'search_results': search_results})
+            search_results = list(taken.intersection(available.intersection(title.intersection(authors.intersection(tags)))))
+            return render(request, 'library/advanced_search.html', {'search_results': search_results, 'form': search_form})
     else:
         search_form = SearchFrom()
 

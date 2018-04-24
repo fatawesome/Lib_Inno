@@ -7,11 +7,11 @@ from login.models import CustomUser
 
 
 class SearchFrom(forms.Form):
-    title = models.CharField(max_length=200)
-    authors = models.CharField(max_length=200)
-    tags = models.CharField(max_length=200)
-    available = models.BooleanField(default=False)
-    taken = models.BooleanField(default=False)
+    title = forms.CharField(max_length=200, required=False)
+    authors = forms.CharField(max_length=200, required=False)
+    tags = forms.CharField(max_length=200, required=False)
+    available = forms.BooleanField(initial=False, required=False)
+    taken = forms.BooleanField(initial=False, required=False)
 
 
 class TagForm(ModelForm):

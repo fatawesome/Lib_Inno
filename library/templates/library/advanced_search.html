@@ -5,38 +5,42 @@
 
     <h1 style="color: rgba(123,123,112,0.55) ">Advanced Search</h1>
 
-    <p align="right">
-        <label class="radio-inline"><input type="checkbox"> Available </label>
-        <label class="radio-inline"><input type="checkbox"> Taken </label>
-        &nbsp;&nbsp;
-        <button class="btn btn-search" type="button"><i class="fa fa-search fa-fw"></i> Search</button>
-    </p>
 
+     <form method="POST" action="{% url 'search_documents' %}">
+        {% csrf_token %}
 
-    <div class="col-md-*">
-        <table class="table table-bordered table-striped table-hover">
-            <thead>
-            <tr>
-                <th><input class="form-control" type="text" placeholder="Title"></th>
-                <th><input class="form-control" type="text" placeholder="Authors"></th>
-                <th><input class="form-control" type="text" placeholder="Tags"></th>
-            </tr>
-            </thead>
-            <tbody id="DocumentList">
-            {% for doc in search_results %}
+        <p align="right">
+            <label class="radio-inline"><input type="checkbox" name="available"/> Available </label>
+            <label class="radio-inline"><input type="checkbox" name="taken"/> Taken </label>
+            &nbsp;&nbsp;
+            <i class="fa fa-search fa-fw"><input class="btn btn-search" type="submit" value="Search"/></i>
+        </p>
+
+        <div class="col-md-*">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
                 <tr>
-                    <td><a href="{{ doc.get_absolute_url }}">{{ doc.title }}</a></td>
-                    <td>
-                        {{ doc.display_authors }}
-                    </td>
-                    <td>
-                        {{ doc.display_tags }}
-                    </td>
+                    <th><input class="form-control" type="text" placeholder="Title" name="title"></th>
+                    <th><input class="form-control" type="text" placeholder="Authors" name="authors"></th>
+                    <th><input class="form-control" type="text" placeholder="Tags" name="tags"></th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody id="DocumentList">
+                {% for doc in search_results %}
+                    <tr>
+                        <td><a href="{{ doc.get_absolute_url }}">{{ doc.title }}</a></td>
+                        <td>
+                            {{ doc.display_authors }}
+                        </td>
+                        <td>
+                            {{ doc.display_tags }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+     </form>
 
     <style>
 
