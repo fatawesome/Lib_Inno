@@ -1,7 +1,7 @@
 from django.db.models.signals import post_delete, post_save
 from django.dispatch import receiver
 
-from utils.logging import log_change, log_addition, log_delete
+from utils.logging import log_change, log_addition, log_delete, log_email
 
 from .documents import Document, Book, Article, Audio, Video
 from .tag import Tag
@@ -15,7 +15,6 @@ from .request_queue import RequestQueueElement
 
 @receiver(post_save, sender=RequestQueueElement)
 def post_save_queue_handler(sender, instance, created, using, **kwargs):
-    print("!!!!!!!!!!!!!!!!! IM HERE !!!!!!!!!!!!!!!")
     if isinstance(instance, RequestQueueElement):
         if created:
             log_addition(instance)
@@ -26,6 +25,23 @@ def post_save_queue_handler(sender, instance, created, using, **kwargs):
 @receiver(post_delete, sender=RequestQueueElement)
 def post_delete_queue_handler(sender, instance, using, **kwargs):
     if isinstance(instance, RequestQueueElement):
+        log_delete(instance)
+
+
+# Document handlers
+
+@receiver(post_save, sender=Document)
+def post_save_queue_handler(sender, instance, created, using, **kwargs):
+    if isinstance(instance, Document):
+        if created:
+            log_addition(instance)
+        else:
+            log_change(instance)
+
+
+@receiver(post_delete, sender=Document)
+def post_delete_queue_handler(sender, instance, using, **kwargs):
+    if isinstance(instance, Document):
         log_delete(instance)
 
 
@@ -43,22 +59,6 @@ def post_save_user_handler(sender, instance, created, using, **kwargs):
 @receiver(post_delete, sender=CustomUser)
 def post_delete_user_handler(sender, instance, using, **kwargs):
     if isinstance(instance, CustomUser):
-        log_delete(instance)
-
-
-# Document handlers
-
-@receiver(post_save, sender=Document)
-def post_save_document_handler(sender, instance, created, using, **kwargs):
-    if created:
-        log_addition(instance)
-    else:
-        log_change(instance)
-
-
-@receiver(post_delete, sender=Document)
-def post_delete_document_handler(sender, instance, using, **kwargs):
-    if isinstance(instance, Document):
         log_delete(instance)
 
 
