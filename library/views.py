@@ -140,6 +140,9 @@ def search_documents(request):
                 tags = search_by_field('tags', search_form.cleaned_data['tags'])
 
             search_results = list(taken.intersection(available.intersection(title.intersection(authors.intersection(tags)))))
+            print('\n\n\n====\n\n\n')
+            print(search_form)
+            print('\n\n\n====\n\n\n')
             return render(request, 'library/advanced_search.html', {'search_results': search_results, 'form': search_form})
     else:
         search_form = SearchFrom()

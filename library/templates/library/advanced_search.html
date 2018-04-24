@@ -10,8 +10,8 @@
         {% csrf_token %}
 
         <p align="right">
-            <label class="radio-inline"><input type="checkbox" name="available"/> Available </label>
-            <label class="radio-inline"><input type="checkbox" name="taken"/> Taken </label>
+            <label class="radio-inline"><input type="checkbox" name="available" {% if form.cleaned_data.available %} checked {%endif%}"/> Available </label>
+            <label class="radio-inline"><input type="checkbox" name="taken" {% if form.cleaned_data.taken %} checked {%endif%}/> Taken </label>
             &nbsp;&nbsp;
             <i class="fa fa-search fa-fw"><input class="btn btn-search" type="submit" value="Search"/></i>
         </p>
@@ -20,9 +20,9 @@
             <table class="table table-bordered table-striped table-hover">
                 <thead>
                 <tr>
-                    <th><input class="form-control" type="text" placeholder="Title" name="title"></th>
-                    <th><input class="form-control" type="text" placeholder="Authors" name="authors"></th>
-                    <th><input class="form-control" type="text" placeholder="Tags" name="tags"></th>
+                    <th><input class="form-control" type="text" placeholder="Title" name="title" value="{{form.cleaned_data.title}}"></th>
+                    <th><input class="form-control" type="text" placeholder="Authors" name="authors" value="{{form.cleaned_data.authors}}"></th>
+                    <th><input class="form-control" type="text" placeholder="Tags" name="tags" value="{{form.cleaned_data.tags}}"></th>
                 </tr>
                 </thead>
                 <tbody id="DocumentList">
