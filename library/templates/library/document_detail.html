@@ -60,7 +60,7 @@
 
 
     <br>
-    {% if user.is_authenticated and perms.library.change_document %}
+    {% if user.is_authenticated and perms.library.add_document %}
         <div class="row">
             <div class="col-lg-2">
                 <h4><strong>Add copies:</strong></h4>
@@ -100,6 +100,8 @@
         </div>
 
         <br>
+
+    {% endif %}
 
 
 
@@ -159,8 +161,8 @@
         </div>
 
 
-
-        <br>
+    {% if user.is_authenticated and perms.library.delete_document %}
+    <br>
 
         {% if document|taken_records or document|reserved_records %}
             <p><a class="btn btn-danger" disabled="disabled" data-toggle="tooltip" data-placement="right" title="This book has taken or reserved by someone">Delete document</a></p>
