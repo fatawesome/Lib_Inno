@@ -344,17 +344,9 @@ def update_request_queue(document):
         send_mail_document_reserved_by_user(user, document,
                                             Record.objects.filter(user=user, document=document).first().due_to != None)
 
-        LogEntry.objects.log_action(
-            user_id=1,
-            content_type_id=ContentType.objects.get_for_model(user).id,
-            object_id=user.pk,
-            object_repr=force_text(user),
-            action_flag=ADDITION,
-            change_message='email sent'
-        )
 
-
-def send_mail_document_reserved_by_user(user, document, deadline=False, **kwargs):
+def send_mail_document_reserved_by_user(sender, user, document, using, deadline=False, **kwargs):
+    from utils.logging import log_email
     send_mail(
         'Document is available',
         'Document "' + document.title + '" is available and reserved by You.\n\nYou can take it from the library' + (
@@ -364,6 +356,7 @@ def send_mail_document_reserved_by_user(user, document, deadline=False, **kwargs
         [user.email],
         fail_silently=False
     )
+    log_email(user)
 
 
 def get_in_queue(request, doc_id):

@@ -11,10 +11,6 @@ from login.models import CustomUser
 
 
 def log_email(object):
-    """
-    Log that an object has been successfully added.
-    The default implementation creates an admin LogEntry object.
-    """
     LogEntry.objects.log_action(
         user_id=object.created_by.id,
         content_type_id=ContentType.objects.get_for_model(object).pk,
@@ -26,7 +22,10 @@ def log_email(object):
 
 
 def log_addition(object):
-    type = get_type(object)
+    keys = [str(x) for x in object.__dict__.keys() if not x.startswith('_')]
+    values = [str(x) for x in object.__dict__.values()][1:]
+
+    type = dict(zip(keys, values))
 
     LogEntry.objects.log_action(
         user_id=1,
@@ -34,12 +33,15 @@ def log_addition(object):
         object_id=object.pk,
         object_repr=force_text(object),
         action_flag=ADDITION,
-        change_message=_(str(type) + ' created')
+        change_message=_(str(type))
     )
 
 
 def log_change(object):
-    type = get_type(object)
+    keys = [str(x) for x in object.__dict__.keys() if not x.startswith('_')]
+    values = [str(x) for x in object.__dict__.values()][1:]
+
+    type = dict(zip(keys, values))
 
     LogEntry.objects.log_action(
         user_id=1,
@@ -47,12 +49,15 @@ def log_change(object):
         object_id=object.pk,
         object_repr=force_text(object),
         action_flag=CHANGE,
-        change_message=_(str(type) + ' updated')
+        change_message=_(str(type))
     )
 
 
 def log_delete(object):
-    type = get_type(object)
+    keys = [str(x) for x in object.__dict__.keys() if not x.startswith('_')]
+    values = [str(x) for x in object.__dict__.values()][1:]
+
+    type = dict(zip(keys, values))
 
     LogEntry.objects.log_action(
         user_id=1,
@@ -60,7 +65,7 @@ def log_delete(object):
         object_id=object.pk,
         object_repr=force_text(object),
         action_flag=DELETION,
-        change_message=_(str(type) + ' deleted')
+        change_message=_(str(type))
     )
 
 
@@ -84,4 +89,7 @@ def get_type(object):
     elif isinstance(object, Record):
         return 'Record'
     else:
-        return ValueError('Type does not exist')
+        if object.outstanding:
+            return 'Outstanding request made'
+        else:
+            return 'Outstanding request cancelled'
