@@ -12,11 +12,11 @@ from login.models import CustomUser
 
 def log_email(object):
     LogEntry.objects.log_action(
-        user_id=object.created_by.id,
+        user_id=1,
         content_type_id=ContentType.objects.get_for_model(object).pk,
         object_id=object.pk,
         object_repr=force_text(object),
-        action_flag=ADDITION,
+        action_flag=CHANGE,
         change_message=_('email sent')
     )
 
