@@ -83,7 +83,6 @@ def search_by_word(field, text):
 
 
 def search_by_field(field, text):
-    text = text.lower()
     if len(text) == 0:
         return set(Document.objects.all())
     results_by_unit = []
@@ -95,12 +94,10 @@ def search_by_field(field, text):
             results_by_unit.append(current)
             current = set()
             continue
+        word = word.lower()
         current = current.union(search_by_word(field, word))
 
     results_by_unit.append(current)
-
-    print('res_by_unit:', end = '')
-    print(results_by_unit)
 
     to_union = []
     current = set(Document.objects.all())
@@ -112,9 +109,6 @@ def search_by_field(field, text):
         current = current.intersection(results_by_unit[i])
 
     to_union.append(current)
-
-    print('to_union:', end = '')
-    print(to_union)
 
     result = set()
     for subresult in to_union:
