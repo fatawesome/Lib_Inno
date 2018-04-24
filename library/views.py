@@ -1,27 +1,13 @@
-from django.db.models.signals import post_save
-from django.shortcuts import render
-from django.views import generic
-from django.http import HttpResponseRedirect, HttpResponse
-from django.urls import reverse
-from django.views.generic.edit import CreateView
-from django.contrib.auth.decorators import permission_required
-from django.core.mail import send_mail, BadHeaderError
-from .models.request_queue import RequestQueueElement
-from library import views
-
-import logging
 import datetime
 
-from library.models import *
-from .forms import BookForm
-from .forms import ArticleForm
-from .forms import *
-from login.forms import *
+from django.contrib.auth.decorators import permission_required
+from django.core.mail import send_mail
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from django.views import generic
 
-from django.contrib.admin.models import LogEntry, ADDITION
-from django.contrib.contenttypes.models import ContentType
-from django.utils.translation import ugettext as _
-from django.utils.encoding import force_text
+from login.forms import *
+from .forms import *
 
 
 def index(request):
@@ -425,8 +411,7 @@ def update_request_queue(document):
                                             Record.objects.filter(user=user, document=document).first().due_to != None)
 
 
-def send_mail_document_reserved_by_user(sender, user, document, using, deadline=False, **kwargs):
-    from utils.logging import log_email
+def send_mail_document_reserved_by_user(user, document, deadline=False):
     send_mail(
         'Document is available',
         'Document "' + document.title + '" is available and reserved by You.\n\nYou can take it from the library' + (
@@ -436,7 +421,6 @@ def send_mail_document_reserved_by_user(sender, user, document, using, deadline=
         [user.email],
         fail_silently=False
     )
-    log_email(user)
 
 
 def get_in_queue(request, doc_id):
@@ -628,7 +612,5 @@ def ask_for_return(request, pk, user_id):
         [user.email],
         fail_silently=False
     )
+    log_email(user)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-
-
-from . import tasks  # autodiscovery doesn't work well for some reason
