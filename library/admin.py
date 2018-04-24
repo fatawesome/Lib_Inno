@@ -80,7 +80,7 @@ class CustomUserAdmin(UserAdmin):
             'fields': ('email',)
         }),
         ('Personal info', {
-            'fields': ('first_name', 'last_name', 'phone_number', 'address', 'email_sent')
+            'fields': ('first_name', 'last_name', 'phone_number', 'address')
         }),
         ('Permissions', {
             'fields': ('groups', 'subtype')
