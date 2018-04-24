@@ -13,7 +13,6 @@ class CustomUserListView(generic.ListView):
     Generic class-based view listing all users in the system.
     """
     model = CustomUser
-    paginate_by = 20
 
 
 class CustomUserDetailView(generic.DetailView):

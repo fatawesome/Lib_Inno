@@ -1,3 +1,4 @@
+from django.db.models.signals import post_save
 from django.shortcuts import render
 from django.views import generic
 from django.http import HttpResponseRedirect, HttpResponse
@@ -17,9 +18,10 @@ from .forms import ArticleForm
 from .forms import *
 from login.forms import *
 
-from django.dispatch import receiver
-from django.contrib.admin.models import LogEntry
-from django.db.models.signals import pre_save, post_save, pre_delete, post_delete
+from django.contrib.admin.models import LogEntry, ADDITION
+from django.contrib.contenttypes.models import ContentType
+from django.utils.translation import ugettext as _
+from django.utils.encoding import force_text
 
 
 def index(request):
@@ -339,21 +341,29 @@ def update_request_queue(document):
         document.requestqueueelement_set.get(user=user).delete()
         document.reserve_by_user(user)
 
-        send_mail_document_reserved_by_user(user, document, Record.objects.filter(user=user, document=document).first().due_to != None)
+        send_mail_document_reserved_by_user(user, document,
+                                            Record.objects.filter(user=user, document=document).first().due_to != None)
+
+        LogEntry.objects.log_action(
+            user_id=1,
+            content_type_id=ContentType.objects.get_for_model(user).id,
+            object_id=user.pk,
+            object_repr=force_text(user),
+            action_flag=ADDITION,
+            change_message='email sent'
+        )
 
 
-def send_mail_document_reserved_by_user(user, document, deadline=False):
+def send_mail_document_reserved_by_user(user, document, deadline=False, **kwargs):
     send_mail(
         'Document is available',
-        'Document "' + document.title + '" is available and reserved by You.\n\nYou can take it from the library' + (' till ' + str(user.record_set.filter(document=document).first().due_to) if deadline else '') + '\n\n\n\n-------\nBest regards, \nLibInno \nLibrary managment system',
+        'Document "' + document.title + '" is available and reserved by You.\n\nYou can take it from the library' + (
+            ' till ' + str(user.record_set.filter(
+                document=document).first().due_to) if deadline else '') + '\n\n\n\n-------\nBest regards, \nLibInno \nLibrary managment system',
         'fatawesomeee@yandex.ru',
         [user.email],
         fail_silently=False
     )
-
-
-
-
 
 
 def get_in_queue(request, doc_id):
