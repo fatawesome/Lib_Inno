@@ -45,9 +45,7 @@
                                 <tr>
                                     <td><a href="{{ rec.document.get_absolute_url }}">{{ rec.document.title }}</a></td>
                                     <td>
-                                        {% for author in rec.document.display_authors %}
-                                            {#                            <a href="{{ author.get_absolute_url }}">#}{{ author.first_name }} {{ author.last_name }}{% if not forloop.last %},{% endif %}{#</a>#}{# TODO uncomment it #}
-                                        {% endfor %}
+                                        {{ rec.document.display_authors }}
                                     </td>
                                     <td><a class="btn btn-info" href="{% url 'give_document' rec.document.id customuser.id %}">Give document</a></td>
                                 </tr>
@@ -86,9 +84,7 @@
                                 {% endif %}
                                     <td><a href="{{ rec.document.get_absolute_url }}">{{ rec.document.title }}</a></td>
                                     <td>
-                                        {% for author in rec.document.display_authors %}
-                                            {#                            <a href="{{ author.get_absolute_url }}">#}{{ author.first_name }} {{ author.last_name }}{% if not forloop.last %},{% endif %}{#</a>#}{# TODO uncomment it #}
-                                        {% endfor %}
+                                        {{ rec.document.display_authors }}
                                     </td>
                                     <td>{{ rec.due_to }}</td>
                                     <td><a class="btn btn-success" href="{% url 'take' rec.document.id customuser.id %}">Collect</a></td>

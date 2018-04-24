@@ -65,6 +65,87 @@ class DocumentDetailView(generic.DetailView):
     model = Document
 
 
+def search_by_word(field, text):
+    result = set()
+    for doc in Document.objects.all():
+        compare_with = ''
+        if field == 'title':
+            compare_with = doc.title
+        elif field == 'authors':
+            compare_with = doc.display_authors()
+        elif field == 'tags':
+            compare_with = doc.display_tags()
+
+        if text in compare_with.lower():
+            result.add(doc)
+
+    return result
+
+
+def search_by_field(field, text):
+    if len(text) == 0:
+        return set(Document.objects.all())
+    results_by_unit = []
+    operands = []
+    current = set()
+    for word in text.split():
+        if word == 'OR' or word == 'AND':
+            operands.append(word)
+            results_by_unit.append(current)
+            current = set()
+            continue
+        word = word.lower()
+        current = current.union(search_by_word(field, word))
+
+    results_by_unit.append(current)
+
+    to_union = []
+    current = set(Document.objects.all())
+    for i in range(len(results_by_unit)):
+        current = current.intersection(results_by_unit[i])
+        if i < len(operands) and operands[i] == 'OR':
+            to_union.append(current)
+            current = set(Document.objects.all())
+
+    to_union.append(current)
+
+    result = set()
+    for subresult in to_union:
+        result = result.union(subresult)
+
+    return result
+
+
+def search_documents(request):
+    if request.method == 'POST':
+        search_form = SearchFrom(request.POST)
+
+        if search_form.is_valid():
+            taken = set()
+            available = set()
+            title = set()
+            authors = set()
+            tags = set()
+
+            for doc in Document.objects.all():
+                if search_form.cleaned_data['taken'] is False or doc.record_set.filter(status='o').count() != 0:
+                    taken.add(doc)
+
+                if search_form.cleaned_data['available'] is False or doc.record_set.filter(status='a').count() != 0:
+                    available.add(doc)
+
+                title = search_by_field('title', search_form.cleaned_data['title'])
+                authors = search_by_field('authors', search_form.cleaned_data['authors'])
+                tags = search_by_field('tags', search_form.cleaned_data['tags'])
+
+            search_results = list(taken.intersection(available.intersection(title.intersection(authors.intersection(tags)))))
+            return render(request, 'library/advanced_search.html', {'search_results': search_results, 'form': search_form})
+    else:
+        search_form = SearchFrom()
+
+    return render(request, 'library/advanced_search.html', {'search_results': Document.objects.all(), 'form': search_form})
+
+
 def my_documents(request, pk):
     """
     View for listing document of user with given id.

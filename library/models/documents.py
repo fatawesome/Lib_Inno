@@ -19,11 +19,6 @@ class Document(models.Model):
     reference = models.BooleanField(default=False)
     outstanding = models.BooleanField(default=False)
 
-    # class Meta:
-    #     permissions = (('can_create', 'Create new document'),
-    #                    ('can_delete', 'Delete document'),
-    #                    ('can_change', 'Change document'))
-
     def __str__(self):
         return self.title
 
@@ -38,7 +33,7 @@ class Document(models.Model):
         Creates a string for the list of authors.
         :return: string of authors.
         """
-        return self.authors.all()
+        return ', '.join([(author.first_name + ' ' + author.last_name) for author in self.authors.all()])
 
     def display_tags(self):
         """
