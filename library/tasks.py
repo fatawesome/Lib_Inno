@@ -29,5 +29,5 @@ def update_reserved_documents():
                 update_request_queue(rec.document)
 
 
-# if Task.objects.filter(task_name='library.tasks.update_reserved_documents').count() == 0:
-#    update_reserved_documents(repeat=24 * 60 * 60)  # repeat daily
+if Task.objects.filter(task_name='library.tasks.update_reserved_documents').count() == 0:
+   update_reserved_documents(repeat=24 * 60 * 60)  # repeat daily

@@ -234,7 +234,7 @@ def add_article(request):
 
         if article_form.is_valid():
             document = article_form.save(commit=True)
-            document.creator_email =- request.user.email
+            document.creator_email = request.user.email
             document.save()
             for _ in range(article_form.cleaned_data['num_of_copies']):
                 rec = Record.objects.create(document=document)
@@ -276,7 +276,7 @@ def add_audio(request):
 
         if audio_form.is_valid():
             document = audio_form.save(commit=True)
-            document.creator_email = - request.user.email
+            document.creator_email = request.user.email
             document.save()
             for _ in range(audio_form.cleaned_data['num_of_copies']):
                 rec = Record.objects.create(document=document)
@@ -318,7 +318,7 @@ def add_video(request):
 
         if video_form.is_valid():
             document = video_form.save(commit=True)
-            document.creator_email = - request.user.email
+            document.creator_email = request.user.email
             document.save()
             for _ in range(video_form.cleaned_data['num_of_copies']):
                 rec = Record.objects.create(document=document)
