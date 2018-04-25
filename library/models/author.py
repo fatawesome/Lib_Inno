@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from login.models import CustomUser
 
 
 class AuthorManager(models.Manager):
@@ -15,6 +16,8 @@ class Author(models.Model):
     last_name = models.CharField(max_length=50)
     date_of_birth = models.DateField(null=True, blank=True)
     date_of_death = models.DateField(null=True, blank=True)
+
+    creator_email = models.CharField(max_length=50, null=True, blank=True, default="root@root.com")
 
     objects = AuthorManager()
 

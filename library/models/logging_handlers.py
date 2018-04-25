@@ -28,23 +28,6 @@ def post_delete_queue_handler(sender, instance, using, **kwargs):
         log_delete(instance)
 
 
-# Document handlers
-
-@receiver(post_save, sender=Document)
-def post_save_queue_handler(sender, instance, created, using, **kwargs):
-    if isinstance(instance, Document):
-        if created:
-            log_addition(instance)
-        else:
-            log_change(instance)
-
-
-@receiver(post_delete, sender=Document)
-def post_delete_queue_handler(sender, instance, using, **kwargs):
-    if isinstance(instance, Document):
-        log_delete(instance)
-
-
 # CustomUser handlers
 
 @receiver(post_save, sender=CustomUser)

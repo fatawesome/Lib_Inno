@@ -180,17 +180,25 @@ def add_book(request):
         tag_form = TagForm(request.POST)
 
         if tag_form.is_valid():
-            tag_form.save(commit=True)
+            tag = tag_form.save(commit=True)
+            tag.creator_email = request.user.email
+            tag.save()
             return HttpResponseRedirect(reverse('add_book'))
 
         if author_form.is_valid():
-            author_form.save(commit=True)
+            author = author_form.save(commit=True)
+            author.creator_email = request.user.email
+            author.save()
             return HttpResponseRedirect(reverse('add_book'))
 
         if book_form.is_valid():
             document = book_form.save(commit=True)
+            document.creator_email = request.user.email
+            document.save()
             for _ in range(book_form.cleaned_data['num_of_copies']):
-                Record.objects.create(document=document)
+                rec = Record.objects.create(document=document)
+                rec.creator_email = request.user.email
+                rec.save()
             return HttpResponseRedirect('../')
     else:
         author_form = AuthorForm()
@@ -213,17 +221,25 @@ def add_article(request):
         tag_form = TagForm(request.POST)
 
         if tag_form.is_valid():
-            tag_form.save(commit=True)
+            tag = tag_form.save(commit=True)
+            tag.creator_email = request.user.email
+            tag.save()
             return HttpResponseRedirect(reverse('add_article'))
 
         if author_form.is_valid():
-            author_form.save(commit=True)
+            author = author_form.save(commit=True)
+            author.creator_email = request.user.email
+            author.save()
             return HttpResponseRedirect(reverse('add_article'))
 
         if article_form.is_valid():
             document = article_form.save(commit=True)
+            document.creator_email =- request.user.email
+            document.save()
             for _ in range(article_form.cleaned_data['num_of_copies']):
-                Record.objects.create(document=document)
+                rec = Record.objects.create(document=document)
+                rec.creator_email = request.user.email
+                rec.save()
             return HttpResponseRedirect('../')
     else:
         author_form = AuthorForm()
@@ -247,17 +263,25 @@ def add_audio(request):
         tag_form = TagForm(request.POST)
 
         if tag_form.is_valid():
-            tag_form.save(commit=True)
+            tag = tag_form.save(commit=True)
+            tag.creator_email = request.user.email
+            tag.save()
             return HttpResponseRedirect(reverse('add_audio'))
 
         if author_form.is_valid():
-            author_form.save(commit=True)
+            author = author_form.save(commit=True)
+            author.creator_email = request.user.email
+            author.save()
             return HttpResponseRedirect(reverse('add_audio'))
 
         if audio_form.is_valid():
             document = audio_form.save(commit=True)
+            document.creator_email = - request.user.email
+            document.save()
             for _ in range(audio_form.cleaned_data['num_of_copies']):
-                Record.objects.create(document=document)
+                rec = Record.objects.create(document=document)
+                rec.creator_email = request.user.email
+                rec.save()
             return HttpResponseRedirect('../')
     else:
         author_form = AuthorForm()
@@ -281,17 +305,25 @@ def add_video(request):
         tag_form = TagForm(request.POST)
 
         if tag_form.is_valid():
-            tag_form.save(commit=True)
+            tag = tag_form.save(commit=True)
+            tag.creator_email = request.user.email
+            tag.save()
             return HttpResponseRedirect(reverse('add_video'))
 
         if author_form.is_valid():
-            author_form.save(commit=True)
+            author = author_form.save(commit=True)
+            author.creator_email = request.user.email
+            author.save()
             return HttpResponseRedirect(reverse('add_video'))
 
         if video_form.is_valid():
             document = video_form.save(commit=True)
+            document.creator_email = - request.user.email
+            document.save()
             for _ in range(video_form.cleaned_data['num_of_copies']):
-                Record.objects.create(document=document)
+                rec = Record.objects.create(document=document)
+                rec.creator_email = request.user.email
+                rec.save()
             return HttpResponseRedirect('../')
     else:
         author_form = AuthorForm()
@@ -317,7 +349,9 @@ def add_copies(request, pk):
             number_of_copies = form.cleaned_data['number_of_copies']
 
             for _ in range(number_of_copies):
-                Record.objects.create(document=doc)
+                rec = Record.objects.create(document=doc)
+                rec.creator_email = request.user.email
+                rec.save()
 
             update_request_queue(doc)
 

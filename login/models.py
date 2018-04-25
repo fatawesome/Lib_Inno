@@ -84,6 +84,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     objects = CustomUserManager()
 
+    creator_email = models.CharField(max_length=50, null=True, blank=True, default="root@root.com")
+
     def delete_user(self): # TODO Move it to user manager
         """
         Delete current user

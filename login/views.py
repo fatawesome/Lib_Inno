@@ -123,6 +123,9 @@ def add_user(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST, caller_is_admin=request.user.is_admin)
         if form.is_valid():
+            user = form.save(commit=True)
+            user.creator_email = request.user.email
+            user.save()
             form.save(commit=True)
             return HttpResponseRedirect('../')
     else:

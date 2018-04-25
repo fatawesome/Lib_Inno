@@ -3,6 +3,7 @@ from django.urls import reverse
 
 from .author import Author
 from .tag import Tag
+from login.models import CustomUser
 
 import datetime
 from django.core.mail import send_mail
@@ -18,6 +19,13 @@ class Document(models.Model):
     tags = models.ManyToManyField(Tag, help_text='Add tags for this document')
     reference = models.BooleanField(default=False)
     outstanding = models.BooleanField(default=False)
+
+    creator_email = models.CharField(max_length=50, null=True, blank=True, default="root@root.com")
+
+    class Meta:
+        permissions = (('can_create', 'Create new document'),
+                       ('can_delete', 'Delete document'),
+                       ('can_change', 'Change document'))
 
     def __str__(self):
         return self.title

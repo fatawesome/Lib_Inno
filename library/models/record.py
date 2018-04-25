@@ -35,6 +35,9 @@ class Record(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True)
     renewals_left = models.IntegerField(default=1)
 
+    creator_email = models.CharField(max_length=50, null=True, blank=True, default="root@root.com")
+
+
     # TODO: make enum
     LOAN_STATUS = (
         ('o', 'On loan'),

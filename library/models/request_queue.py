@@ -13,6 +13,8 @@ class RequestQueueElement(models.Model):
     document = models.ForeignKey(Document, on_delete=models.SET_NULL, null=True)
     priority = models.IntegerField(default=0)
 
+    creator_email = models.CharField(max_length=50, null=True, blank=True, default="root@root.com")
+
     def default_priority(self):
         """
         Method calculates default priority depending on user type.
