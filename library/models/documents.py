@@ -41,7 +41,7 @@ class Document(models.Model):
         Creates a string for the list of authors.
         :return: string of authors.
         """
-        return self.authors.all()
+        return ', '.join([(author.first_name + ' ' + author.last_name) for author in self.authors.all()])
 
     def display_tags(self):
         """
@@ -135,7 +135,7 @@ class Document(models.Model):
 
 # TODO: Add tags to creation method.
 class BookManager(models.Manager):
-    def create_book(self, title, price, reference, authors, publisher, is_bestseller, edition, year):
+    def create_book(self, title: object, price: object, reference: object, authors: object, publisher: object, is_bestseller: object, edition: object, year: object) -> object:
         book = self.create(title=title, price=price,
                            reference=reference, publisher=publisher,
                            is_bestseller=is_bestseller, edition=edition, year=year)

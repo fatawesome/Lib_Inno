@@ -4,7 +4,6 @@
 {% block content %}
 
     <h1>Edit user</h1>
-
     <form method="POST" autocomplete="on">
     {% csrf_token %}
         {{ form | crispy }}

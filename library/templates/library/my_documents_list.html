@@ -30,9 +30,7 @@
                         {% endif %}
                             <td><a href="{{ rec.document.get_absolute_url }}">{{ rec.document.title }}</a></td>
                             <td>
-                            {% for author in rec.document.display_authors %}
-    {#                            <a href="{{ author.get_absolute_url }}">#}{{ author.first_name }} {{ author.last_name }}{% if not forloop.last %},{% endif %}{#</a>#}{# TODO uncomment it #}
-                            {% endfor %}
+                                {{ rec.document.display_authors }}
                             </td>
                             <td>{{ rec.due_to }}</td>
                             <td>{{rec.get_overdue_fine}} RUB</td>
@@ -61,9 +59,7 @@
                         <tr>
                             <td><a href="{{ rec.document.get_absolute_url }}">{{ rec.document.title }}</a></td>
                             <td>
-                            {% for author in rec.document.display_authors %}
-    {#                            <a href="{{ author.get_absolute_url }}">#}{{ author.first_name }} {{ author.last_name }}{% if not forloop.last %},{% endif %}{#</a>#}{# TODO uncomment it #}
-                            {% endfor %}
+                                {{rec.document.display_authors}}
                             </td>
                         </tr>
                     {% endfor %}
@@ -94,9 +90,7 @@
                             <tr>
                             <td><a href="{{ queue_element.document.get_absolute_url }}">{{ queue_element.document.title }}</a></td>
                             <td>
-                            {% for author in queue_element.document.display_authors %}
-    {#                            <a href="{{ author.get_absolute_url }}">#}{{ author.first_name }} {{ author.last_name }}{% if not forloop.last %},{% endif %}{#</a>#}{# TODO uncomment it #}
-                            {% endfor %}
+                                {{queue_element.document.display_authors}}
                             </td>
                         </tr>
                     {% endfor %}

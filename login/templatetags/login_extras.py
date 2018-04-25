@@ -57,10 +57,10 @@ def users_with_books(customuser_list):
 
 
 @register.filter
-def patrons(customuser_list):
+def patrons(customuser_list, is_admin):
     users = []
     for user in customuser_list:
-        if not 'Librarians' in [x.name for x in user.groups.all()] and not user.is_admin:
+        if (is_admin or 'Librarians (Priv1)' not in [x.name for x in user.groups.all()] and 'Librarians (Priv2)' not in [x.name for x in user.groups.all()] and 'Librarians (Priv3)' not in [x.name for x in user.groups.all()]) and not user.is_admin:
             users.append(user)
     return users
 

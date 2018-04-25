@@ -1,7 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.admin.models import LogEntry, DELETION
-
 from library.models import *
 from login.models import CustomUser
 from login.forms import CustomUserCreationForm, CustomUserChangeForm
@@ -94,7 +93,7 @@ class CustomUserAdmin(UserAdmin):
         (None, {
             'classes': ('wide',),
             'fields': ('email', 'first_name', 'last_name', 'phone_number',
-                       'address', 'groups', 'password1', 'password2')}
+                       'address', 'groups', 'subtype', 'password1', 'password2')}
          ),
     )
     search_fields = ('email', 'first_name', 'last_name')

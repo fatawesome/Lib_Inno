@@ -53,6 +53,110 @@ class DocumentDetailView(generic.DetailView):
     model = Document
 
 
+def search_by_word(field, text):
+    """
+    Helper function for search_by_field
+    Takes all documents which contains 'text' in the 'field'
+    :param field: field for search: 'title', 'authors' or 'tags'
+    :param text: string to search
+    :return: set of all found documents
+    """
+    result = set()
+    for doc in Document.objects.all():
+        compare_with = ''
+        if field == 'title':
+            compare_with = doc.title
+        elif field == 'authors':
+            compare_with = doc.display_authors()
+        elif field == 'tags':
+            compare_with = doc.display_tags()
+
+        if text in compare_with.lower():
+            result.add(doc)
+
+    return result
+
+
+def search_by_field(field, text):
+    """
+    Helper function for search_documents
+    Parse 'text' by substrings, work with operands and takes all documents wich contains 'text' in the 'field'
+    :param field: field for search: 'title', 'authors' or 'tags'
+    :param text: string to search
+    :return: set of all found documents
+    """
+    if len(text) == 0:
+        return set(Document.objects.all())
+    operands = []
+    unit = ''  # substring between two operands
+    results_by_unit = []  # list of sets with documents
+    for word in text.split():
+        if word == 'OR' or word == 'AND':
+            operands.append(word)
+            results_by_unit.append(search_by_word(field, unit[:-1]))
+            unit = ''
+            continue
+        unit += word.lower() + ' '
+
+    results_by_unit.append(search_by_word(field, unit[:-1]))
+
+    to_union = []
+    current = set(Document.objects.all())
+    for i in range(len(results_by_unit)):
+        current = current.intersection(results_by_unit[i])
+        if i < len(operands) and operands[i] == 'OR':
+            to_union.append(current)
+            current = set(Document.objects.all())
+
+    to_union.append(current)
+
+    result = set()
+    for subresult in to_union:
+        result = result.union(subresult)
+
+    return result
+
+
+def search_documents(request):
+    """
+    Advanced search by all documents
+    :param request: HTTP request
+    :return: rendered page with list of found documents (stored in search_results)
+    """
+    if request.method == 'POST':
+        search_form = SearchFrom(request.POST)
+
+        if search_form.is_valid():
+            # results by every field are stored in sets
+            taken = set()
+            available = set()
+            title = set()
+            authors = set()
+            tags = set()
+
+            for doc in Document.objects.all():
+                if search_form.cleaned_data['taken'] is False or doc.record_set.filter(status='o').count() != 0:
+                    taken.add(doc)
+
+                if search_form.cleaned_data['available'] is False or doc.record_set.filter(status='a').count() != 0:
+                    available.add(doc)
+
+                title = search_by_field('title', search_form.cleaned_data['title'])
+                authors = search_by_field('authors', search_form.cleaned_data['authors'])
+                tags = search_by_field('tags', search_form.cleaned_data['tags'])
+
+            # intersection of results by every field
+            search_results = list(
+                taken.intersection(available.intersection(title.intersection(authors.intersection(tags)))))
+            return render(request, 'library/advanced_search.html',
+                          {'search_results': search_results, 'form': search_form})
+    else:
+        search_form = SearchFrom()
+
+    return render(request, 'library/advanced_search.html',
+                  {'search_results': Document.objects.all(), 'form': search_form})
+
+
 def my_documents(request, pk):
     """
     View for listing document of user with given id.
@@ -63,7 +167,7 @@ def my_documents(request, pk):
     return render(request, 'library/my_documents_list.html', {'user': CustomUser.objects.get(id=pk)})
 
 
-@permission_required('library.can_create')
+@permission_required('library.add_document')
 def add_book(request):
     """
     View function for adding a book.
@@ -104,7 +208,7 @@ def add_book(request):
     return render(request, 'add_book.html', {'book_form': book_form, 'author_form': author_form, 'tag_form': tag_form})
 
 
-@permission_required('library.can_create')
+@permission_required('library.add_document')
 def add_article(request):
     """
     Add article view.
@@ -146,7 +250,7 @@ def add_article(request):
                   {'article_form': article_form, 'author_form': author_form, 'tag_form': tag_form})
 
 
-@permission_required('library.can_create')
+@permission_required('library.add_document')
 def add_audio(request):
     """
     Add audio view.
@@ -188,7 +292,7 @@ def add_audio(request):
                   {'audio_form': audio_form, 'author_form': author_form, 'tag_form': tag_form})
 
 
-@permission_required('library.can_create')
+@permission_required('library.add_document')
 def add_video(request):
     """
     Add video view.
@@ -230,7 +334,7 @@ def add_video(request):
                   {'video_form': video_form, 'author_form': author_form, 'tag_form': tag_form})
 
 
-@permission_required('library.can_create')
+@permission_required('library.add_document')
 def add_copies(request, pk):
     """
     Adds copies of document with given id.
@@ -254,7 +358,7 @@ def add_copies(request, pk):
         return HttpResponseRedirect(reverse('document-detail', args=[pk]))
 
 
-@permission_required('library.can_delete')
+@permission_required('library.delete_document')
 def remove_copies(request, pk):
     """
     Removes copies of document with given id.
@@ -274,7 +378,7 @@ def remove_copies(request, pk):
         return HttpResponseRedirect(reverse('document-detail', args=[pk]))
 
 
-@permission_required('library.can_change')
+@permission_required('library.change_document')
 def take_document(request, pk, user_id):
     """
     Return a document to the system.
@@ -292,7 +396,7 @@ def take_document(request, pk, user_id):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-@permission_required('library.can_change')
+@permission_required('library.delete_document')
 def delete_copy(request, pk, user_id):
     """
     Delete a copy of the document
@@ -405,7 +509,7 @@ def quit_queue(request, doc_id):
     return HttpResponseRedirect(reverse('document-detail', args=[doc_id]))
 
 
-@permission_required('library.can_change')
+@permission_required('library.change_document')
 def give_document(request, doc_id, user_id):
     """
     Give document to user.
@@ -422,7 +526,7 @@ def give_document(request, doc_id, user_id):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-@permission_required('library.can_change')
+@permission_required('library.change_document')
 def increase_user_priority(request, doc_id, user_id):
     """
     Increases user priority in queue.
@@ -439,7 +543,7 @@ def increase_user_priority(request, doc_id, user_id):
     return HttpResponseRedirect(reverse('document-detail', args=[doc_id]))
 
 
-@permission_required('library.can_change')
+@permission_required('library.change_document')
 def reset_user_priority(request, doc_id, user_id):
     """
     Resets user priority in queue to default.
@@ -456,7 +560,7 @@ def reset_user_priority(request, doc_id, user_id):
     return HttpResponseRedirect(reverse('document-detail', args=[doc_id]))
 
 
-@permission_required('library.can_delete')
+@permission_required('library.delete_document')
 def delete_document(request, pk):
     """
     Deletes document with the given id.
@@ -471,7 +575,7 @@ def delete_document(request, pk):
     return HttpResponseRedirect(reverse('documents'))
 
 
-@permission_required('library.can_change')
+@permission_required('library.change_document')
 def edit_document(request, pk):
     """
     View function for editing a document.
@@ -522,7 +626,7 @@ def edit_document(request, pk):
     return render(request, 'library/edit_document.html', {'form': form})
 
 
-@permission_required('library.can_change')
+@permission_required('library.add_document')
 def document_outstanding_request(request, doc_id):
     """
     Activate outstanding request for document with given id.
@@ -535,7 +639,7 @@ def document_outstanding_request(request, doc_id):
     return HttpResponseRedirect(reverse('document-detail', args=[doc_id]))
 
 
-@permission_required('library.can_change')
+@permission_required('library.add_document')
 def document_disable_outstanding_request(request, doc_id):
     """
     Deactivates outstanding request for document with given id.
@@ -548,7 +652,7 @@ def document_disable_outstanding_request(request, doc_id):
     return HttpResponseRedirect(reverse('document-detail', args=[doc_id]))
 
 
-@permission_required('library.can_delete')
+@permission_required('library.change_document')
 def ask_for_return(request, pk, user_id):
     """
     Send a notification to user that he needs to return a book.

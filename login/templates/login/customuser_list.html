@@ -71,7 +71,11 @@
     </div>
 
     <div class="alert alert-info">
-        <h3>All patrons</h3>
+        {% if request.user.is_admin %}
+            <h3> All users </h3>
+        {% else %}
+            <h3> All patrons </h3>
+        {% endif %}
         <div class="col-md-*">
             <input class="form-control" id="UsersSearch" type="text" placeholder="Search..">
             <table class="table table-bordered table-striped table-hover">
@@ -84,7 +88,7 @@
                 </tr>
                 </thead>
                 <tbody id="UserList">
-                {% for user in customuser_list|patrons %}
+                {% for user in customuser_list|patrons:request.user.is_admin %}
                     {% if user|is_debtor %}
                         <tr class="danger">
                     {% else %}

@@ -4,7 +4,7 @@
 
 {% block content %}
     <h1>{{ document.title }}
-        {% if user.is_authenticated and perms.library.can_change %}
+        {% if user.is_authenticated and perms.library.change_document %}
             <a class="btn btn-primary" href="{% url 'editdocument' document.id %}">Edit&nbsp;&nbsp;<i class="glyphicon glyphicon-edit"></i></a>
             {% if not document.outstanding %}
                 <a class="btn btn-warning" href="{% url 'document_outstanding_request' document.id %}">Outstanding request</a>
@@ -25,7 +25,7 @@
         <p><strong>Year:</strong> {{ document|get_year }}</p>
     {% endif %}
 
-    {% if user.is_authenticated and not perms.library.can_change %}
+    {% if user.is_authenticated and not perms.library.change_document %}
         {% if document|is_reference_book %}
             <p><a class="btn btn-success" data-toggle="tooltip" data-placement="right" title="This book is a reference book" disabled="disabled">Reserve</a></p>
         {% elif document|is_owned_by_user:user %}
@@ -60,7 +60,7 @@
 
 
     <br>
-    {% if user.is_authenticated and perms.library.can_change %}
+    {% if user.is_authenticated and perms.library.add_document %}
         <div class="row">
             <div class="col-lg-2">
                 <h4><strong>Add copies:</strong></h4>
@@ -101,9 +101,11 @@
 
         <br>
 
+    {% endif %}
 
 
-        <button type="button" class="btn btn-success" data-toggle="collapse" data-target="#ShowRequestQueue">Show request queue</button>
+
+        <button type="button" class="btn btn-success" data-toggle="collapse" data-target="#ShowRequestQueue">Hide request queue</button>
         <br>
         <br>
         <div id="ShowRequestQueue" class="collapse in">
@@ -159,8 +161,8 @@
         </div>
 
 
-
-        <br>
+    {% if user.is_authenticated and perms.library.delete_document %}
+    <br>
 
         {% if document|taken_records or document|reserved_records %}
             <p><a class="btn btn-danger" disabled="disabled" data-toggle="tooltip" data-placement="right" title="This book has taken or reserved by someone">Delete document</a></p>
@@ -245,7 +247,11 @@
                 {% endif %}
             </div>
         {% else %}
-            <p><a class="btn btn-danger" href="{% url 'delete' document.id %}">Delete document</a></p>
+            {% if perms.library.delete_document %}
+                <p><a class="btn btn-danger" href="{% url 'delete' document.id %}">Delete document</a></p>
+            {% else %}
+                <p><a class="btn btn-danger" disabled="disabled" data-toggle="tooltip" data-placement="right" title="Sorry. You have no permission for this action">Delete document</a></p>
+            {% endif %}
         {% endif %}
     {% endif %}
 {% endblock %}

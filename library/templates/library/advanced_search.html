@@ -1,0 +1,69 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+
+    <h1 style="color: rgba(123,123,112,0.55) ">Advanced Search</h1>
+
+
+     <form method="POST" action="{% url 'search_documents' %}">
+        {% csrf_token %}
+
+        <p align="right">
+            <label class="radio-inline"><input type="checkbox" name="available" {% if form.cleaned_data.available %} checked {%endif%}"/> Available </label>
+            <label class="radio-inline"><input type="checkbox" name="taken" {% if form.cleaned_data.taken %} checked {%endif%}/> Taken </label>
+            &nbsp;&nbsp;
+            <i class="fa fa-search fa-fw"><input class="btn btn-search" type="submit" value="Search"/></i>
+        </p>
+
+        <div class="col-md-*">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                    <th><input class="form-control" type="text" placeholder="Title" name="title" value="{{form.cleaned_data.title}}"></th>
+                    <th><input class="form-control" type="text" placeholder="Authors" name="authors" value="{{form.cleaned_data.authors}}"></th>
+                    <th><input class="form-control" type="text" placeholder="Tags" name="tags" value="{{form.cleaned_data.tags}}"></th>
+                </tr>
+                </thead>
+                <tbody id="DocumentList">
+                {% for doc in search_results %}
+                    <tr>
+                        <td><a href="{{ doc.get_absolute_url }}">{{ doc.title }}</a></td>
+                        <td>
+                            {{ doc.display_authors }}
+                        </td>
+                        <td>
+                            {{ doc.display_tags }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+     </form>
+
+    <style>
+
+        .btn-search {
+            background: #747edb;
+            border-radius: 7px;
+            color: #fff;
+            border-width: 1px;
+            border-style: solid;
+            border-color: #747edb;
+        }
+
+        .btn-search:link, .btn-search:visited {
+            color: #fff;
+        }
+
+        .btn-search:active, .btn-search:hover {
+            background: #1c1c1c;
+            color: #fff;
+        }
+
+
+    </style>
+
+
+{% endblock %}
