@@ -32,9 +32,9 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]', '[0.0.0.0:8000]']
 # Application definition
 
 INSTALLED_APPS = [
+    'login',
     'background_task',
     'library',
-    'login',
     'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
