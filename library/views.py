@@ -54,6 +54,13 @@ class DocumentDetailView(generic.DetailView):
 
 
 def search_by_word(field, text):
+    """
+    Helper function for search_by_field
+    Takes all documents which contains 'text' in the 'field'
+    :param field: field for search: 'title', 'authors' or 'tags'
+    :param text: string to search
+    :return: set of all found documents
+    """
     result = set()
     for doc in Document.objects.all():
         compare_with = ''
@@ -71,11 +78,18 @@ def search_by_word(field, text):
 
 
 def search_by_field(field, text):
+    """
+    Helper function for search_documents
+    Parse 'text' by substrings, work with operands and takes all documents wich contains 'text' in the 'field'
+    :param field: field for search: 'title', 'authors' or 'tags'
+    :param text: string to search
+    :return: set of all found documents
+    """
     if len(text) == 0:
         return set(Document.objects.all())
-    results_by_unit = []
     operands = []
-    unit = ''
+    unit = ''  # substring between two operands
+    results_by_unit = []  # list of sets with documents
     for word in text.split():
         if word == 'OR' or word == 'AND':
             operands.append(word)
@@ -104,10 +118,16 @@ def search_by_field(field, text):
 
 
 def search_documents(request):
+    """
+    Advanced search by all documents
+    :param request: HTTP request
+    :return: rendered page with list of found documents (stored in search_results)
+    """
     if request.method == 'POST':
         search_form = SearchFrom(request.POST)
 
         if search_form.is_valid():
+            # results by every field are stored in sets
             taken = set()
             available = set()
             title = set()
@@ -125,12 +145,16 @@ def search_documents(request):
                 authors = search_by_field('authors', search_form.cleaned_data['authors'])
                 tags = search_by_field('tags', search_form.cleaned_data['tags'])
 
-            search_results = list(taken.intersection(available.intersection(title.intersection(authors.intersection(tags)))))
-            return render(request, 'library/advanced_search.html', {'search_results': search_results, 'form': search_form})
+            # intersection of results by every field
+            search_results = list(
+                taken.intersection(available.intersection(title.intersection(authors.intersection(tags)))))
+            return render(request, 'library/advanced_search.html',
+                          {'search_results': search_results, 'form': search_form})
     else:
         search_form = SearchFrom()
 
-    return render(request, 'library/advanced_search.html', {'search_results': Document.objects.all(), 'form': search_form})
+    return render(request, 'library/advanced_search.html',
+                  {'search_results': Document.objects.all(), 'form': search_form})
 
 
 def my_documents(request, pk):
